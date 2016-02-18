@@ -22,12 +22,12 @@ public class MainActivity extends AppCompatActivity {
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                Toast.makeText(MainActivity.this, "권한허용함", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                Toast.makeText(MainActivity.this, "권한허용하지 않음\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
             }
 
 
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         new TedPermission(this)
                 .setPermissionListener(permissionlistener)
-                .setDeniedMessage("권한을 허용해야 사용할 수 있어요\n\n[설정] > [권한] 에서 권한을 허용할 수 있어요")
+                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
                 .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
                 .check();
 
