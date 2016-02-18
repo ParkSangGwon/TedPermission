@@ -16,7 +16,7 @@ public class TedInstance {
     public String[] permissions;
     public String denyMessage;
     public boolean hasSettingBtn = true;
-    public int deniedCloseButtonText=-1;
+    public int deniedCloseButtonText=R.string.close;
     Context context;
 
 
