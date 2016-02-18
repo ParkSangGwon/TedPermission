@@ -70,11 +70,12 @@ public class TedPermissionActivity extends Activity {
 
     private void permissionGranted() {
         BusProvider.getInstance().post(new PermissionEvent(true, null));
+        finish();
     }
 
     private void permissionDenied(ArrayList<String> deniedpermissions) {
         BusProvider.getInstance().post(new PermissionEvent(false, deniedpermissions));
-
+        finish();
     }
 
 
