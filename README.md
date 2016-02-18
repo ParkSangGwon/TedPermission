@@ -10,7 +10,7 @@ When you use dangerous permissons(ex. CAMERA, READ_CONTACTS, READ_PHONE_STATE), 
 You can make check function yourself.<br/>
 ([How to Requesting Permissions at RunTime](http://developer.android.com/intl/ko/training/permissions/requesting.html))<br/>
 
-But original check function is sooooooo complex..<br/>
+But original check function is so complex and hard..<br/>
 (`checkSelfPermission()`, `requestPermissions()`, `onRequestPermissionsResult()`, `onActivityResult()` ...)
 
 TedPermission is simple permission check helper.
