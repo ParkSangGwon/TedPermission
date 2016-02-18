@@ -2,6 +2,7 @@ package com.gun0912.tedpermission;
 
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.StringRes;
 import android.text.TextUtils;
 
 import com.gun0912.tedpermission.util.Dlog;
@@ -15,6 +16,8 @@ public class TedPermission {
     public static final String TAG = "tedpark";
 
     private static TedInstance instance;
+
+
 
 
     public TedPermission(Context context) {
@@ -38,6 +41,21 @@ public class TedPermission {
 
     public TedPermission setDeniedMessage(String denyMessage) {
         instance.denyMessage = denyMessage;
+        return this;
+    }
+
+    public TedPermission setGotoSettingButton(boolean hasSettingBtn){
+        instance.hasSettingBtn = hasSettingBtn;
+        return this;
+    }
+
+    public TedPermission setDeniedCloseButtonText(@StringRes int stringRes) {
+        if (stringRes <= 0)
+            throw new IllegalArgumentException("Invalid value for DeniedCloseButtonText");
+
+
+        instance.deniedCloseButtonText=stringRes;
+
         return this;
     }
 

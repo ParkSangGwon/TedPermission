@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">test_Permission_Otto</string>
+    <string name="app_name">TedPermissionDemo</string>
+
+
+    <string name="custom_close_text">Custom Close</string>
+
 </resources>

@@ -12,11 +12,13 @@ import com.squareup.otto.Subscribe;
  */
 public class TedInstance {
 
-    public  PermissionListener listener;
-    Context context;
+    public PermissionListener listener;
     public String[] permissions;
-
     public String denyMessage;
+    public boolean hasSettingBtn = true;
+    public int deniedCloseButtonText=-1;
+    Context context;
+
 
     public TedInstance(Context context) {
 
@@ -26,18 +28,16 @@ public class TedInstance {
     }
 
 
-
-
-
-
     public void checkPermissions() {
 
         //start transparent activity
 
         Intent intent = new Intent(context, TedPermissionActivity.class);
-        intent.putExtra(TedPermissionActivity.EXTRA_PERMISSIONS,permissions);
-        intent.putExtra(TedPermissionActivity.EXTRA_DENY_MESSAGE,denyMessage);
-        intent.putExtra(TedPermissionActivity.EXTRA_PACKAGE_NAME,context.getPackageName());
+        intent.putExtra(TedPermissionActivity.EXTRA_PERMISSIONS, permissions);
+        intent.putExtra(TedPermissionActivity.EXTRA_DENY_MESSAGE, denyMessage);
+        intent.putExtra(TedPermissionActivity.EXTRA_PACKAGE_NAME, context.getPackageName());
+        intent.putExtra(TedPermissionActivity.EXTRA_SETTING_BUTTON, hasSettingBtn);
+        intent.putExtra(TedPermissionActivity.EXTRA_DENIED_DIALOG_CLOSE_TEXT, deniedCloseButtonText);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
@@ -45,11 +45,11 @@ public class TedInstance {
 
 
     @Subscribe
-    public void onPermissionResult(PermissionEvent event){
+    public void onPermissionResult(PermissionEvent event) {
 
-        if(event.hasPermission()){
+        if (event.hasPermission()) {
             listener.onPermissionGranted();
-        }else{
+        } else {
             listener.onPermissionDenied(event.getDeniedPermissions());
         }
 

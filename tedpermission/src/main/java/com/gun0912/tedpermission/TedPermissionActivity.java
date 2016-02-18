@@ -30,10 +30,15 @@ public class TedPermissionActivity extends Activity {
     public static final String EXTRA_PERMISSIONS = "permissions";
     public static final String EXTRA_DENY_MESSAGE = "deny_message";
     public static final String EXTRA_PACKAGE_NAME = "package_name";
+    public static final String EXTRA_SETTING_BUTTON = "setting_button";
+    public static final String EXTRA_DENIED_DIALOG_CLOSE_TEXT = "denied_dialog_close_text";
 
     String denyMessage;
     String[] permissions;
     String packageName;
+    boolean hasSettingButton;
+
+    int deniedCloseButtonText;
 
 
     @Override
@@ -50,10 +55,16 @@ public class TedPermissionActivity extends Activity {
             permissions = savedInstanceState.getStringArray(EXTRA_PERMISSIONS);
             denyMessage = savedInstanceState.getString(EXTRA_DENY_MESSAGE);
             packageName = savedInstanceState.getString(EXTRA_PACKAGE_NAME);
+            hasSettingButton = savedInstanceState.getBoolean(EXTRA_SETTING_BUTTON, true);
+            deniedCloseButtonText = savedInstanceState.getInt(EXTRA_DENIED_DIALOG_CLOSE_TEXT,R.string.close);
         } else {
-            permissions = getIntent().getStringArrayExtra(EXTRA_PERMISSIONS);
-            denyMessage = getIntent().getStringExtra(EXTRA_DENY_MESSAGE);
-            packageName = getIntent().getStringExtra(EXTRA_PACKAGE_NAME);
+
+            Intent intent = getIntent();
+            permissions = intent.getStringArrayExtra(EXTRA_PERMISSIONS);
+            denyMessage = intent.getStringExtra(EXTRA_DENY_MESSAGE);
+            packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME);
+            hasSettingButton = intent.getBooleanExtra(EXTRA_SETTING_BUTTON, true);
+            deniedCloseButtonText =intent.getIntExtra(EXTRA_DENIED_DIALOG_CLOSE_TEXT,R.string.close);
         }
 
 
@@ -64,6 +75,9 @@ public class TedPermissionActivity extends Activity {
         outState.putStringArray(EXTRA_PERMISSIONS, permissions);
         outState.putString(EXTRA_DENY_MESSAGE, denyMessage);
         outState.putString(EXTRA_PACKAGE_NAME, packageName);
+        outState.putBoolean(EXTRA_SETTING_BUTTON,hasSettingButton);
+        outState.putInt(EXTRA_SETTING_BUTTON,deniedCloseButtonText);
+
         super.onSaveInstanceState(outState);
     }
 
@@ -149,30 +163,38 @@ public class TedPermissionActivity extends Activity {
 
         builder.setMessage(denyMessage)
                 .setCancelable(false)
-                .setPositiveButton(getString(R.string.setting), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
 
-                        try {
-                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                                    .setData(Uri.parse("package:" + packageName));
-                            startActivityForResult(intent, REQ_CODE_REQUEST_SETTING);
-                        } catch (ActivityNotFoundException e) {
-                            e.printStackTrace();
-                            Dlog.e(e.toString());
-                            Intent intent = new Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
-                            startActivityForResult(intent, REQ_CODE_REQUEST_SETTING);
-                        }
-
-                    }
-                })
-                .setNegativeButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(deniedCloseButtonText), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         permissionDenied(deniedPermissions);
                     }
-                })
-                .show();
+                });
+
+        if (hasSettingButton) {
+
+            builder.setPositiveButton(getString(R.string.setting), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    try {
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                .setData(Uri.parse("package:" + packageName));
+                        startActivityForResult(intent, REQ_CODE_REQUEST_SETTING);
+                    } catch (ActivityNotFoundException e) {
+                        e.printStackTrace();
+                        Dlog.e(e.toString());
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
+                        startActivityForResult(intent, REQ_CODE_REQUEST_SETTING);
+                    }
+
+                }
+            });
+
+        }
+
+
+        builder.show();
 
     }
 
