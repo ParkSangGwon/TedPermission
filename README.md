@@ -16,6 +16,7 @@ But original check function is sooooooo complex..<br/>
 TedPermission is simple permission check helper.
 
 
+<br/><br/>
 
 
 
@@ -30,7 +31,7 @@ TedPermission is simple permission check helper.
 
 
 
-
+<br/><br/>
 
 
 ##Setup
@@ -47,14 +48,14 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.ParkSangGwon:TedPermission:v1.0.2'
+    compile 'com.github.ParkSangGwon:TedPermission:v1.0.3'
 }
 
 ```
 
 
 
-
+<br/><br/>
 
 
 
@@ -84,7 +85,7 @@ You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 
 ```
 
-
+<br/>
 #####2. Start TedPermission
 TedPermission class need `setPermissionListener()`, `setDeniedMessage()`, `setPermissions()`.
 and `check()` will start check permissions
@@ -102,7 +103,7 @@ and `check()` will start check permissions
 
 
 
-
+<br/>
 
 
 ##Customize
@@ -115,6 +116,45 @@ You can customize something ...<br />
 * `setDeniedCloseButtonText(R.string.xxx) (default: close / 닫기)`
 
 
+<br/><br/>
+
+
+
+##Number of Cases
+1. Check permissions -> have permissions<br/>
+: `onPermissionGranted()` called<br/>
+
+2. Check permissions -> don't have permissions<br/>
+: show request dialog<br/>
+![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/request_dialog.png?raw=true)<br/>
+
+
+3. show request dialog -> granted permissions<br/>
+: `onPermissionGranted()` called<br/>
+
+4. show request dialog -> denied permissions<br/>
+: show denied dialog<br/>
+![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/denied_dialog.png?raw=true)<br/>
+
+5. show denied dialog -> close<br/>
+: `onPermissionDenied()` called<br/>
+
+6. show denied dialog -> setting<br/>
+: `startActivityForResult()` to `setting` activity<br/>
+![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/setting_activity.png?raw=true)<br/>
+
+
+7. setting activity -> `onActivityResult()`<br/>
+: check permission<br/>
+
+8. check permission -> granted permissions<br/>
+: `onPermissionGranted()` called<br/>
+
+9. check permission -> denied permissions<br/>
+: `onPermissionDenied()` called<br/>
+ 
+<br/><br/>
+
 
 
 
@@ -124,7 +164,7 @@ You can customize something ...<br />
 
 
 
-
+<br/><br/>
 
 
 ##License 
