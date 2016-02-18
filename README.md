@@ -156,6 +156,7 @@ You can customize something ...<br />
 <br/><br/>
 
 
+![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/Screenshot_cases.png?raw=true)    
 
 
 ##Thanks 
