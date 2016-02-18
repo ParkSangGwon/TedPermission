@@ -32,6 +32,8 @@ public class TedInstance {
 
     public void checkPermissions() {
 
+        //start transparent activity
+
         Intent intent = new Intent(context, TedPermissionActivity.class);
         intent.putExtra(TedPermissionActivity.EXTRA_PERMISSIONS,permissions);
         intent.putExtra(TedPermissionActivity.EXTRA_DENY_MESSAGE,denyMessage);

@@ -27,7 +27,6 @@ import com.squareup.otto.Bus;
  * interested classes.
  */
 public final class BusProvider extends Bus{
-	//private static final CustomBus BUS = new CustomBus();
 
 	private static BusProvider instance;
 
@@ -44,16 +43,6 @@ public final class BusProvider extends Bus{
 
 	@Override
 	public void post(final Object event) {
-
-/*
-
-		mHandler.post(new Runnable() {
-			@Override
-			public void run() {
-				BusProvider.getInstance().post(event);
-			}
-		});
-*/
 
 
 		if (Looper.myLooper() == Looper.getMainLooper()) {
