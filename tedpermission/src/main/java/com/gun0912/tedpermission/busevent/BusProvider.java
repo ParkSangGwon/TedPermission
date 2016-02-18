@@ -1,0 +1,72 @@
+package com.gun0912.tedpermission.busevent;
+
+/*
+ * Copyright (C) 2012 Square, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import android.os.Handler;
+import android.os.Looper;
+
+import com.squareup.otto.Bus;
+
+/**
+ * Maintains a singleton instance for obtaining the bus. Ideally this would be
+ * replaced with a more efficient means such as through injection directly into
+ * interested classes.
+ */
+public final class BusProvider extends Bus{
+	//private static final CustomBus BUS = new CustomBus();
+
+	private static BusProvider instance;
+
+	public static BusProvider getInstance() {
+
+		if(instance==null)
+			instance = new BusProvider();
+
+		return instance;
+	}
+
+
+	private final Handler mHandler = new Handler(Looper.getMainLooper());
+
+	@Override
+	public void post(final Object event) {
+
+/*
+
+		mHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				BusProvider.getInstance().post(event);
+			}
+		});
+*/
+
+
+		if (Looper.myLooper() == Looper.getMainLooper()) {
+			super.post(event);
+		} else {
+			mHandler.post(new Runnable() {
+				@Override
+				public void run() {
+					BusProvider.getInstance().post(event);
+				}
+			});
+		}
+
+
+	}
+}
