@@ -38,7 +38,7 @@ TedPermission is simple permission check helper.
 
 
 #####Gradle
-We will use cwac-camera for take a picture. And get library from  [jitpack.io](https://jitpack.io/)
+Get library from  [jitpack.io](https://jitpack.io/)
 ```javascript
 
 repositories {
