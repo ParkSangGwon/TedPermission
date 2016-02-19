@@ -5,13 +5,13 @@ import java.util.ArrayList;
 /**
  * Created by TedPark on 16. 2. 17..
  */
-public class PermissionEvent {
+public class TedPermissionEvent {
 
     public boolean permission;
     public ArrayList<String> deniedPermissions;
 
 
-    public PermissionEvent(boolean permission, ArrayList<String> deniedPermissions
+    public TedPermissionEvent(boolean permission, ArrayList<String> deniedPermissions
     ) {
         this.permission = permission;
         this.deniedPermissions = deniedPermissions;

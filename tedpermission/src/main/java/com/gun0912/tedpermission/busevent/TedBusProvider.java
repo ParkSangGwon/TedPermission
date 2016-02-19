@@ -26,14 +26,14 @@ import com.squareup.otto.Bus;
  * replaced with a more efficient means such as through injection directly into
  * interested classes.
  */
-public final class BusProvider extends Bus{
+public final class TedBusProvider extends Bus{
 
-	private static BusProvider instance;
+	private static TedBusProvider instance;
 
-	public static BusProvider getInstance() {
+	public static TedBusProvider getInstance() {
 
 		if(instance==null)
-			instance = new BusProvider();
+			instance = new TedBusProvider();
 
 		return instance;
 	}
@@ -51,7 +51,7 @@ public final class BusProvider extends Bus{
 			mHandler.post(new Runnable() {
 				@Override
 				public void run() {
-					BusProvider.getInstance().post(event);
+					TedBusProvider.getInstance().post(event);
 				}
 			});
 		}

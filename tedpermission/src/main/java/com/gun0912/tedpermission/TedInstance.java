@@ -3,8 +3,8 @@ package com.gun0912.tedpermission;
 import android.content.Context;
 import android.content.Intent;
 
-import com.gun0912.tedpermission.busevent.BusProvider;
-import com.gun0912.tedpermission.busevent.PermissionEvent;
+import com.gun0912.tedpermission.busevent.TedBusProvider;
+import com.gun0912.tedpermission.busevent.TedPermissionEvent;
 import com.squareup.otto.Subscribe;
 
 /**
@@ -24,7 +24,7 @@ public class TedInstance {
 
         this.context = context;
 
-        BusProvider.getInstance().register(this);
+        TedBusProvider.getInstance().register(this);
     }
 
 
@@ -45,7 +45,7 @@ public class TedInstance {
 
 
     @Subscribe
-    public void onPermissionResult(PermissionEvent event) {
+    public void onPermissionResult(TedPermissionEvent event) {
 
         if (event.hasPermission()) {
             listener.onPermissionGranted();

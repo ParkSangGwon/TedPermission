@@ -13,8 +13,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.WindowManager;
 
-import com.gun0912.tedpermission.busevent.BusProvider;
-import com.gun0912.tedpermission.busevent.PermissionEvent;
+import com.gun0912.tedpermission.busevent.TedBusProvider;
+import com.gun0912.tedpermission.busevent.TedPermissionEvent;
 import com.gun0912.tedpermission.util.Dlog;
 
 import java.util.ArrayList;
@@ -83,12 +83,12 @@ public class TedPermissionActivity extends Activity {
 
 
     private void permissionGranted() {
-        BusProvider.getInstance().post(new PermissionEvent(true, null));
+        TedBusProvider.getInstance().post(new TedPermissionEvent(true, null));
         finish();
     }
 
     private void permissionDenied(ArrayList<String> deniedpermissions) {
-        BusProvider.getInstance().post(new PermissionEvent(false, deniedpermissions));
+        TedBusProvider.getInstance().post(new TedPermissionEvent(false, deniedpermissions));
         finish();
     }
 
