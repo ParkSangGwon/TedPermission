@@ -18,6 +18,7 @@ public class TedPermissionEvent {
     }
 
 
+
     public boolean hasPermission() {
         return permission;
     }
