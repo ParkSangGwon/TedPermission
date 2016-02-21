@@ -4,5 +4,6 @@
 
     <string name="setting">Setting</string>
     <string name="close">Close</string>
+    <string name="confirm">Confirm</string>
 
 </resources>

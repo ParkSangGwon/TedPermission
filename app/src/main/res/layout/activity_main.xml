@@ -1,17 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.gun0912.tedpermissiondemo.MainActivity">
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <TextView
+
+    <Button
+        android:id="@+id/btn_rationale_deny"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"/>
-</RelativeLayout>
+        android:text="Rationale and Deny Dialog(Reccomand)"
+        />
+
+
+    <Button
+        android:id="@+id/btn_only_deny_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Only Deny Dialog"
+        />
+
+
+    <Button
+        android:id="@+id/btn_only_rationale_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Only Rationale Dialog"
+        />
+
+    <Button
+        android:id="@+id/btn_nomessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Dialog(Permission check Only)"
+        />
+
+</LinearLayout>

@@ -1,52 +1,60 @@
 package com.gun0912.tedpermissiondemo;
 
-import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+import android.view.View;
 
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
-
-import java.util.ArrayList;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+
+    }
 
 
-        PermissionListener permissionlistener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                Toast.makeText(MainActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
-            }
+    @OnClick({R.id.btn_nomessage,R.id.btn_only_deny_message,R.id.btn_only_rationale_message,R.id.btn_rationale_deny})
+    public void onButtonClick(View view){
 
-            @Override
-            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                Toast.makeText(MainActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
-            }
+        int id = view.getId();
+
+        Intent intent=null;
+
+        switch (id){
+            case R.id.btn_nomessage:
+                intent = new Intent(this,NoDialogActivity.class);
+                break;
+
+            case R.id.btn_only_deny_message:
+                intent = new Intent(this,DenyActivity.class);
+                break;
+
+            case R.id.btn_only_rationale_message:
+                intent = new Intent(this,RationaleActivity.class);
+                break;
+
+            case R.id.btn_rationale_deny:
+                intent = new Intent(this,RationaleDenyActivity.class);
+                break;
 
 
-        };
+        }
 
-
-        new TedPermission(this)
-                .setPermissionListener(permissionlistener)
-                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
-                .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
-                .check();
-
-
+        if(intent!=null){
+            startActivity(intent);
+        }
 
 
 
     }
-
 
 
 }
