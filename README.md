@@ -114,9 +114,10 @@ You can customize something ...<br />
 #####Function
 
 * `setGotoSettingButton(boolean) (default: true)`
-* `setDeniedCloseButtonText(R.string.xxx or String) (default: close / 닫기)`
 * `setRationaleMessage(R.string.xxx or String)`
 * `setRationaleConfirmText(R.string.xxx or String) (default: confirm / 확인)`
+* `setDeniedMessage(R.string.xxx or String)`
+* `setDeniedCloseButtonText(R.string.xxx or String) (default: close / 닫기)`
 
 <br/><br/>
 
