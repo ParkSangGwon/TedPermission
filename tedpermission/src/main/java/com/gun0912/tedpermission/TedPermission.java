@@ -45,15 +45,47 @@ public class TedPermission {
     }
 
 
+    public TedPermission setRationaleMessage(@StringRes int stringRes) {
+
+        if (stringRes <= 0)
+            throw new IllegalArgumentException("Invalid value for RationaleMessage");
+
+        instance.rationaleMessage = instance.context.getString(stringRes);
+        return this;
+    }
+
+
+
     public TedPermission setDeniedMessage(String denyMessage) {
 
         instance.denyMessage = denyMessage;
         return this;
     }
 
+
+
+    public TedPermission setDeniedMessage(@StringRes int stringRes) {
+
+        if (stringRes <= 0)
+            throw new IllegalArgumentException("Invalid value for DeniedMessage");
+
+        instance.rationaleMessage = instance.context.getString(stringRes);
+        return this;
+    }
+
+
     public TedPermission setGotoSettingButton(boolean hasSettingBtn) {
 
         instance.hasSettingBtn = hasSettingBtn;
+        return this;
+    }
+
+
+
+
+    public TedPermission setRationaleConfirmText(String rationaleConfirmText) {
+
+        instance.rationaleConfirmText = rationaleConfirmText;
         return this;
     }
 
@@ -64,8 +96,16 @@ public class TedPermission {
             throw new IllegalArgumentException("Invalid value for RationaleConfirmText");
 
 
-        instance.rationaleConfirmText = stringRes;
+        instance.rationaleConfirmText = instance.context.getString(stringRes);
 
+        return this;
+    }
+
+
+
+    public TedPermission setDeniedCloseButtonText(String deniedCloseButtonText) {
+
+        instance.deniedCloseButtonText = deniedCloseButtonText;
         return this;
     }
 
@@ -76,7 +116,7 @@ public class TedPermission {
             throw new IllegalArgumentException("Invalid value for DeniedCloseButtonText");
 
 
-        instance.deniedCloseButtonText = stringRes;
+        instance.deniedCloseButtonText = instance.context.getString(stringRes);
 
         return this;
     }

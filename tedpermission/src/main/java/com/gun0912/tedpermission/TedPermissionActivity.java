@@ -43,8 +43,8 @@ public class TedPermissionActivity extends AppCompatActivity {
     String packageName;
     boolean hasSettingButton;
 
-    int deniedCloseButtonText;
-    int rationaleConfirmText;
+    String deniedCloseButtonText;
+    String rationaleConfirmText;
 
 
     @Override
@@ -66,8 +66,8 @@ public class TedPermissionActivity extends AppCompatActivity {
 
             hasSettingButton = savedInstanceState.getBoolean(EXTRA_SETTING_BUTTON, true);
 
-            rationaleConfirmText = savedInstanceState.getInt(EXTRA_RATIONALE_CONFIRM_TEXT, R.string.confirm);
-            deniedCloseButtonText = savedInstanceState.getInt(EXTRA_DENIED_DIALOG_CLOSE_TEXT, R.string.close);
+            rationaleConfirmText = savedInstanceState.getString(EXTRA_RATIONALE_CONFIRM_TEXT);
+            deniedCloseButtonText = savedInstanceState.getString(EXTRA_DENIED_DIALOG_CLOSE_TEXT);
         } else {
 
             Intent intent = getIntent();
@@ -76,8 +76,8 @@ public class TedPermissionActivity extends AppCompatActivity {
             denyMessage = intent.getStringExtra(EXTRA_DENY_MESSAGE);
             packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME);
             hasSettingButton = intent.getBooleanExtra(EXTRA_SETTING_BUTTON, true);
-            rationaleConfirmText = intent.getIntExtra(EXTRA_RATIONALE_CONFIRM_TEXT, R.string.confirm);
-            deniedCloseButtonText = intent.getIntExtra(EXTRA_DENIED_DIALOG_CLOSE_TEXT, R.string.close);
+            rationaleConfirmText = intent.getStringExtra(EXTRA_RATIONALE_CONFIRM_TEXT);
+            deniedCloseButtonText = intent.getStringExtra(EXTRA_DENIED_DIALOG_CLOSE_TEXT);
 
         }
 
@@ -91,7 +91,8 @@ public class TedPermissionActivity extends AppCompatActivity {
         outState.putString(EXTRA_DENY_MESSAGE, denyMessage);
         outState.putString(EXTRA_PACKAGE_NAME, packageName);
         outState.putBoolean(EXTRA_SETTING_BUTTON, hasSettingButton);
-        outState.putInt(EXTRA_SETTING_BUTTON, deniedCloseButtonText);
+        outState.putString(EXTRA_SETTING_BUTTON, deniedCloseButtonText);
+        outState.putString(EXTRA_RATIONALE_CONFIRM_TEXT, rationaleConfirmText);
 
         super.onSaveInstanceState(outState);
     }
@@ -209,7 +210,7 @@ public class TedPermissionActivity extends AppCompatActivity {
                 .setMessage(rationale_message)
                 .setCancelable(false)
 
-                .setNegativeButton(getString(rationaleConfirmText), new DialogInterface.OnClickListener() {
+                .setNegativeButton(rationaleConfirmText, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         requestPermissions(needPermissions);
@@ -236,7 +237,7 @@ public class TedPermissionActivity extends AppCompatActivity {
         builder.setMessage(denyMessage)
                 .setCancelable(false)
 
-                .setNegativeButton(getString(deniedCloseButtonText), new DialogInterface.OnClickListener() {
+                .setNegativeButton(deniedCloseButtonText, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         permissionDenied(deniedPermissions);
@@ -245,7 +246,7 @@ public class TedPermissionActivity extends AppCompatActivity {
 
         if (hasSettingButton) {
 
-            builder.setPositiveButton(getString(R.string.setting), new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(getString(R.string.tedpermission_setting), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 

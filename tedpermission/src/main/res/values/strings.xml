@@ -2,8 +2,8 @@
     <string name="app_name">TedPermission</string>
 
 
-    <string name="setting">Setting</string>
-    <string name="close">Close</string>
-    <string name="confirm">Confirm</string>
+    <string name="tedpermission_setting">Setting</string>
+    <string name="tedpermission_close">Close</string>
+    <string name="tedpermission_confirm">Confirm</string>
 
 </resources>

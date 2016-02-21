@@ -2,7 +2,7 @@
 
 
 
-    <string name="setting">설정</string>
-    <string name="close">닫기</string>
-    <string name="confirm">확인</string>
+    <string name="tedpermission_setting">설정</string>
+    <string name="tedpermission_close">닫기</string>
+    <string name="tedpermission_confirm">확인</string>
 </resources>

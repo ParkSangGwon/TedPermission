@@ -18,8 +18,9 @@ public class TedInstance {
     public String rationaleMessage;
     public String denyMessage;
     public boolean hasSettingBtn = true;
-    public int deniedCloseButtonText=R.string.close;
-    public int rationaleConfirmText=R.string.confirm;
+
+    public String deniedCloseButtonText;
+    public String rationaleConfirmText;
     Context context;
 
 
@@ -28,12 +29,13 @@ public class TedInstance {
         this.context = context;
 
         TedBusProvider.getInstance().register(this);
+
+        deniedCloseButtonText = context.getString(R.string.tedpermission_close);
+        rationaleConfirmText = context.getString(R.string.tedpermission_confirm);
     }
 
 
-
     public void checkPermissions() {
-
 
 
         Intent intent = new Intent(context, TedPermissionActivity.class);
@@ -49,7 +51,6 @@ public class TedInstance {
 
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
-
 
 
     }
