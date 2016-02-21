@@ -48,7 +48,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.ParkSangGwon:TedPermission:v1.0.5'
+    compile 'com.github.ParkSangGwon:TedPermission:v1.0.6'
 }
 
 ```
@@ -87,8 +87,10 @@ You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 
 <br/>
 #####2. Start TedPermission
-TedPermission class need `setPermissionListener()`, `setDeniedMessage()`, `setPermissions()`.
+TedPermission class need `setPermissionListener()`, `setPermissions()`.
 and `check()` will start check permissions
+
+`setRationaleMessage()`,`setDeniedMessage()` is optional method.
 
 ```javascript
 
