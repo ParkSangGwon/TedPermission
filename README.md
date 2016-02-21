@@ -48,7 +48,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.ParkSangGwon:TedPermission:v1.0.4'
+    compile 'com.github.ParkSangGwon:TedPermission:v1.0.5'
 }
 
 ```
@@ -112,9 +112,9 @@ You can customize something ...<br />
 #####Function
 
 * `setGotoSettingButton(boolean) (default: true)`
-
-* `setDeniedCloseButtonText(R.string.xxx) (default: close / 닫기)`
-
+* `setDeniedCloseButtonText(R.string.xxx or String) (default: close / 닫기)`
+* `setRationaleMessage(R.string.xxx or String)`
+* `setRationaleConfirmText(R.string.xxx or String) (default: confirm / 확인)`
 
 <br/><br/>
 
