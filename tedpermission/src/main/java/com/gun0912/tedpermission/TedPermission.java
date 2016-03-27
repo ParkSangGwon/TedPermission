@@ -69,7 +69,7 @@ public class TedPermission {
         if (stringRes <= 0)
             throw new IllegalArgumentException("Invalid value for DeniedMessage");
 
-        instance.rationaleMessage = instance.context.getString(stringRes);
+        instance.denyMessage = instance.context.getString(stringRes);
         return this;
     }
 
