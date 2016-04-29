@@ -49,7 +49,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.ParkSangGwon:TedPermission:v1.0.6'
+    compile 'com.github.ParkSangGwon:TedPermission:v1.0.8'
 }
 
 ```
