@@ -34,6 +34,7 @@ public class TedPermissionActivity extends AppCompatActivity {
     public static final String EXTRA_DENY_MESSAGE = "deny_message";
     public static final String EXTRA_PACKAGE_NAME = "package_name";
     public static final String EXTRA_SETTING_BUTTON = "setting_button";
+    public static final String EXTRA_SETTING_BUTTON_TEXT = "setting_button_text";
     public static final String EXTRA_RATIONALE_CONFIRM_TEXT = "rationale_confirm_text";
     public static final String EXTRA_DENIED_DIALOG_CLOSE_TEXT = "denied_dialog_close_text";
 
@@ -42,6 +43,7 @@ public class TedPermissionActivity extends AppCompatActivity {
     String[] permissions;
     String packageName;
     boolean hasSettingButton;
+    String settingButtonText;
 
     String deniedCloseButtonText;
     String rationaleConfirmText;
@@ -68,6 +70,9 @@ public class TedPermissionActivity extends AppCompatActivity {
 
             rationaleConfirmText = savedInstanceState.getString(EXTRA_RATIONALE_CONFIRM_TEXT);
             deniedCloseButtonText = savedInstanceState.getString(EXTRA_DENIED_DIALOG_CLOSE_TEXT);
+
+
+            settingButtonText =savedInstanceState.getString(EXTRA_SETTING_BUTTON_TEXT);
         } else {
 
             Intent intent = getIntent();
@@ -78,6 +83,7 @@ public class TedPermissionActivity extends AppCompatActivity {
             hasSettingButton = intent.getBooleanExtra(EXTRA_SETTING_BUTTON, true);
             rationaleConfirmText = intent.getStringExtra(EXTRA_RATIONALE_CONFIRM_TEXT);
             deniedCloseButtonText = intent.getStringExtra(EXTRA_DENIED_DIALOG_CLOSE_TEXT);
+            settingButtonText = intent.getStringExtra(EXTRA_SETTING_BUTTON_TEXT);
 
         }
 
@@ -93,6 +99,7 @@ public class TedPermissionActivity extends AppCompatActivity {
         outState.putBoolean(EXTRA_SETTING_BUTTON, hasSettingButton);
         outState.putString(EXTRA_SETTING_BUTTON, deniedCloseButtonText);
         outState.putString(EXTRA_RATIONALE_CONFIRM_TEXT, rationaleConfirmText);
+        outState.putString(EXTRA_SETTING_BUTTON_TEXT, settingButtonText);
 
         super.onSaveInstanceState(outState);
     }
@@ -246,7 +253,12 @@ public class TedPermissionActivity extends AppCompatActivity {
 
         if (hasSettingButton) {
 
-            builder.setPositiveButton(getString(R.string.tedpermission_setting), new DialogInterface.OnClickListener() {
+
+            if(TextUtils.isEmpty(settingButtonText)){
+                settingButtonText = getString(R.string.tedpermission_setting);
+            }
+
+            builder.setPositiveButton(settingButtonText, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 

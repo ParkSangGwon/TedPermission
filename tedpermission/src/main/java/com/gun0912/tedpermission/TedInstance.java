@@ -17,6 +17,7 @@ public class TedInstance {
     public String[] permissions;
     public String rationaleMessage;
     public String denyMessage;
+    public String settingButtonText;
     public boolean hasSettingBtn = true;
 
     public String deniedCloseButtonText;
@@ -47,6 +48,8 @@ public class TedInstance {
         intent.putExtra(TedPermissionActivity.EXTRA_SETTING_BUTTON, hasSettingBtn);
         intent.putExtra(TedPermissionActivity.EXTRA_DENIED_DIALOG_CLOSE_TEXT, deniedCloseButtonText);
         intent.putExtra(TedPermissionActivity.EXTRA_RATIONALE_CONFIRM_TEXT, rationaleConfirmText);
+        intent.putExtra(TedPermissionActivity.EXTRA_SETTING_BUTTON_TEXT, settingButtonText);
+
 
 
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

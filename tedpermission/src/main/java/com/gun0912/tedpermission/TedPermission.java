@@ -83,6 +83,30 @@ public class TedPermission {
 
 
 
+
+
+
+    public TedPermission setGotoSettingButtonText(String rationaleConfirmText) {
+
+        instance.settingButtonText = rationaleConfirmText;
+        return this;
+    }
+
+
+    public TedPermission setGotoSettingButtonText(@StringRes int stringRes) {
+
+        if (stringRes <= 0)
+            throw new IllegalArgumentException("Invalid value for setGotoSettingButtonText");
+
+
+        instance.settingButtonText = instance.context.getString(stringRes);
+
+        return this;
+    }
+
+
+
+
     public TedPermission setRationaleConfirmText(String rationaleConfirmText) {
 
         instance.rationaleConfirmText = rationaleConfirmText;
