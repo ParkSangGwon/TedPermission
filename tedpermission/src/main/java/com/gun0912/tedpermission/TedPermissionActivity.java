@@ -129,19 +129,20 @@ public class TedPermissionActivity extends AppCompatActivity {
 
         ArrayList<String> needPermissions = new ArrayList<>();
 
+        boolean showRationale = false;
 
         for (String permission : permissions) {
 
 
-
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
                 needPermissions.add(permission);
+                showRationale=true;
             }
 
         }
 
 
-        boolean showRationale = false;
+/*
 
         for(String permission:needPermissions){
 
@@ -151,6 +152,7 @@ public class TedPermissionActivity extends AppCompatActivity {
 
         }
 
+*/
 
 
         if (needPermissions.isEmpty()) {
