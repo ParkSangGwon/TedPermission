@@ -51,12 +51,18 @@ public class TedPermissionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Dlog.d("");
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         setupFromSavedInstanceState(savedInstanceState);
         checkPermissions(false);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Dlog.d("");
+    }
 
     private void setupFromSavedInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
