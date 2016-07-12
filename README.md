@@ -108,6 +108,18 @@ and `check()` will start check permissions
 
 <br/>
 
+##Proguard
+If you use proguard, you have to add this code.
+```javascript
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @com.squareup.otto.Subscribe public *;
+    @com.squareup.otto.Produce public *;
+}
+````
+
+
+<br/>
 
 ##Customize
 You can customize something ...<br />
