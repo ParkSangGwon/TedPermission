@@ -39,9 +39,11 @@ public class NoDialogActivity extends AppCompatActivity{
 
         new TedPermission(this)
                 .setPermissionListener(permissionlistener)
-                .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
+                .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SYSTEM_ALERT_WINDOW)
                 .check();
 
+
+//        android.permission.SYSTEM_ALERT_WINDOW
 
     }
 }

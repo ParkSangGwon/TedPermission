@@ -1,10 +1,12 @@
 package com.gun0912.tedpermission;
 
+import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -27,6 +29,7 @@ public class TedPermissionActivity extends AppCompatActivity {
 
     public static final int REQ_CODE_PERMISSION_REQUEST = 10;
     public static final int REQ_CODE_REQUEST_SETTING = 20;
+    public static final int REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST = 30;
 
 
     public static final String EXTRA_PERMISSIONS = "permissions";
@@ -48,6 +51,8 @@ public class TedPermissionActivity extends AppCompatActivity {
     String deniedCloseButtonText;
     String rationaleConfirmText;
 
+    boolean hasCheckWindowPermissionRequest;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +60,12 @@ public class TedPermissionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         setupFromSavedInstanceState(savedInstanceState);
-        checkPermissions(false);
+        // check windows
+        if(needWindowPermission()){
+            requestWindowPermission();
+        }else {
+            checkPermissions(false);
+        }
     }
 
     @Override
@@ -78,7 +88,7 @@ public class TedPermissionActivity extends AppCompatActivity {
             deniedCloseButtonText = savedInstanceState.getString(EXTRA_DENIED_DIALOG_CLOSE_TEXT);
 
 
-            settingButtonText =savedInstanceState.getString(EXTRA_SETTING_BUTTON_TEXT);
+            settingButtonText = savedInstanceState.getString(EXTRA_SETTING_BUTTON_TEXT);
         } else {
 
             Intent intent = getIntent();
@@ -124,6 +134,25 @@ public class TedPermissionActivity extends AppCompatActivity {
     }
 
 
+    private boolean needWindowPermission() {
+        for (String permission : permissions) {
+            if (permission.equals(Manifest.permission.SYSTEM_ALERT_WINDOW)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    return !Settings.canDrawOverlays(getApplicationContext());
+                }
+            }
+        }
+        return false;
+    }
+
+    private void requestWindowPermission() {
+        Uri uri = Uri.fromParts("package", packageName, null);
+        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, uri);
+        startActivityForResult(intent, REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST);
+    }
+
+
+
     private void checkPermissions(boolean fromOnActivityResult) {
         Dlog.d("");
 
@@ -132,59 +161,40 @@ public class TedPermissionActivity extends AppCompatActivity {
         boolean showRationale = false;
 
         for (String permission : permissions) {
-
-
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                needPermissions.add(permission);
-                showRationale=true;
+                if(permission.equals(Manifest.permission.SYSTEM_ALERT_WINDOW)){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if(!Settings.canDrawOverlays(getApplicationContext())){
+                            needPermissions.add(permission);
+                        }
+                    }
+                }else {
+                    needPermissions.add(permission);
+                    showRationale = true;
+                }
             }
-
         }
-
-
-/*
-
-        for(String permission:needPermissions){
-
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this,permission)){
-                showRationale=true;
-            }
-
-        }
-
-*/
-
 
         if (needPermissions.isEmpty()) {
             permissionGranted();
-        }
-        //From Setting Activity
-        else if (fromOnActivityResult) {
+        } else if (fromOnActivityResult) { //From Setting Activity
             permissionDenied(needPermissions);
-        }
-        //Need Show Rationale
-        else if (showRationale && !TextUtils.isEmpty(rationale_message)) {
-
+        } else if (needPermissions.size() == 1 &&
+                needPermissions.contains(Manifest.permission.SYSTEM_ALERT_WINDOW)
+                && hasCheckWindowPermissionRequest){   // window permission deny
+            permissionDenied(needPermissions);
+        } else if (showRationale && !TextUtils.isEmpty(rationale_message)) { // //Need Show Rationale
             showRationaleDialog(needPermissions);
-
-
+        } else { // //Need Request Permissions
+            if(!needPermissions.isEmpty()) {
+                requestPermissions(needPermissions);
+            }
         }
-        //Need Request Permissions
-        else {
-
-            requestPermissions(needPermissions);
-
-
-        }
-
-
     }
 
     public void requestPermissions(ArrayList<String> needPermissions) {
         ActivityCompat.requestPermissions(this, needPermissions.toArray(new String[needPermissions.size()]), REQ_CODE_PERMISSION_REQUEST);
-
     }
-
 
 
     @Override
@@ -216,7 +226,6 @@ public class TedPermissionActivity extends AppCompatActivity {
 
 
     }
-
 
 
     private void showRationaleDialog(final ArrayList<String> needPermissions) {
@@ -262,7 +271,7 @@ public class TedPermissionActivity extends AppCompatActivity {
         if (hasSettingButton) {
 
 
-            if(TextUtils.isEmpty(settingButtonText)){
+            if (TextUtils.isEmpty(settingButtonText)) {
                 settingButtonText = getString(R.string.tedpermission_setting);
             }
 
@@ -285,10 +294,7 @@ public class TedPermissionActivity extends AppCompatActivity {
             });
 
         }
-
-
         builder.show();
-
     }
 
 
@@ -297,6 +303,10 @@ public class TedPermissionActivity extends AppCompatActivity {
         switch (requestCode) {
             case REQ_CODE_REQUEST_SETTING:
                 checkPermissions(true);
+                break;
+            case REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST:
+                hasCheckWindowPermissionRequest = true;
+                checkPermissions(false);
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
