@@ -186,9 +186,7 @@ public class TedPermissionActivity extends AppCompatActivity {
         } else if (showRationale && !TextUtils.isEmpty(rationale_message)) { // //Need Show Rationale
             showRationaleDialog(needPermissions);
         } else { // //Need Request Permissions
-            if(!needPermissions.isEmpty()) {
-                requestPermissions(needPermissions);
-            }
+            requestPermissions(needPermissions);
         }
     }
 
