@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -145,8 +144,23 @@ public class TedPermissionActivity extends AppCompatActivity {
 
     private void requestWindowPermission() {
         Uri uri = Uri.fromParts("package", packageName, null);
-        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, uri);
-        startActivityForResult(intent, REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST);
+        final Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, uri);
+
+        if(!TextUtils.isEmpty(rationale_message)) {
+            new AlertDialog.Builder(this)
+                    .setMessage(rationale_message)
+                    .setCancelable(false)
+
+                    .setNegativeButton(rationaleConfirmText, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            startActivityForResult(intent, REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST);
+                        }
+                    })
+                    .show();
+        }else {
+            startActivityForResult(intent, REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST);
+        }
     }
 
 
@@ -155,17 +169,17 @@ public class TedPermissionActivity extends AppCompatActivity {
 
         ArrayList<String> needPermissions = new ArrayList<>();
 
-        boolean showRationale = false;
+        boolean showRationale = true;
 
         for (String permission : permissions) {
             if (permission.equals(Manifest.permission.SYSTEM_ALERT_WINDOW)) {
                 if (!Settings.canDrawOverlays(getApplicationContext())) {
                     needPermissions.add(permission);
+                    showRationale = fromOnActivityResult;
                 }
             } else {
                 if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
                     needPermissions.add(permission);
-                    showRationale = true;
                 }
             }
         }
