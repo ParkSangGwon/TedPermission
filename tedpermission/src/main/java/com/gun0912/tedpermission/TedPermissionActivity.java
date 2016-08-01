@@ -137,9 +137,7 @@ public class TedPermissionActivity extends AppCompatActivity {
     private boolean needWindowPermission() {
         for (String permission : permissions) {
             if (permission.equals(Manifest.permission.SYSTEM_ALERT_WINDOW)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    return !Settings.canDrawOverlays(getApplicationContext());
-                }
+                return !Settings.canDrawOverlays(getApplicationContext());
             }
         }
         return false;
@@ -152,7 +150,6 @@ public class TedPermissionActivity extends AppCompatActivity {
     }
 
 
-
     private void checkPermissions(boolean fromOnActivityResult) {
         Dlog.d("");
 
@@ -161,14 +158,12 @@ public class TedPermissionActivity extends AppCompatActivity {
         boolean showRationale = false;
 
         for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                if(permission.equals(Manifest.permission.SYSTEM_ALERT_WINDOW)){
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if(!Settings.canDrawOverlays(getApplicationContext())){
-                            needPermissions.add(permission);
-                        }
-                    }
-                }else {
+            if (permission.equals(Manifest.permission.SYSTEM_ALERT_WINDOW)) {
+                if (!Settings.canDrawOverlays(getApplicationContext())) {
+                    needPermissions.add(permission);
+                }
+            } else {
+                if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
                     needPermissions.add(permission);
                     showRationale = true;
                 }
