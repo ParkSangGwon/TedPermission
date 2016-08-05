@@ -136,10 +136,14 @@ public class TedPermissionActivity extends AppCompatActivity {
     private boolean needWindowPermission() {
         for (String permission : permissions) {
             if (permission.equals(Manifest.permission.SYSTEM_ALERT_WINDOW)) {
-                return !Settings.canDrawOverlays(getApplicationContext());
+                return !hasWindowPermission();
             }
         }
         return false;
+    }
+
+    private boolean hasWindowPermission(){
+        return Settings.canDrawOverlays(getApplicationContext());
     }
 
     private void requestWindowPermission() {
@@ -173,7 +177,7 @@ public class TedPermissionActivity extends AppCompatActivity {
 
         for (String permission : permissions) {
             if (permission.equals(Manifest.permission.SYSTEM_ALERT_WINDOW)) {
-                if (!Settings.canDrawOverlays(getApplicationContext())) {
+                if (!hasWindowPermission()) {
                     needPermissions.add(permission);
                     showRationale = fromOnActivityResult;
                 }
@@ -304,6 +308,37 @@ public class TedPermissionActivity extends AppCompatActivity {
         builder.show();
     }
 
+    public void showWindowPermissionDenyDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(denyMessage)
+                .setCancelable(false)
+                .setNegativeButton(deniedCloseButtonText, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ArrayList arrayList = new ArrayList<String>();
+                        arrayList.add(Manifest.permission.SYSTEM_ALERT_WINDOW);
+                        permissionDenied(arrayList);
+                    }
+                });
+
+        if (hasSettingButton) {
+            if (TextUtils.isEmpty(settingButtonText)) {
+                settingButtonText = getString(R.string.tedpermission_setting);
+            }
+
+            builder.setPositiveButton(settingButtonText, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Uri uri = Uri.fromParts("package", packageName, null);
+                    final Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, uri);
+                    startActivityForResult(intent, REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST);
+                }
+            });
+
+        }
+        builder.show();
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -312,13 +347,26 @@ public class TedPermissionActivity extends AppCompatActivity {
                 checkPermissions(true);
                 break;
             case REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST:
-                hasCheckWindowPermissionRequest = true;
-                checkPermissions(false);
+                if(!hasWindowPermission() && !TextUtils.isEmpty(denyMessage)){  // 권한이 거부되고 denyMessage 가 있는 경우
+                    if(!hasCheckWindowPermissionRequest) {      // 최초 거부에서만 dialog 를 뛰운다
+                        showWindowPermissionDenyDialog();
+                        hasCheckWindowPermissionRequest = true;
+                    }else{                                      // 최초가 아니면 deny 처리하고 종료
+                       ArrayList arrayList = new ArrayList<String>();
+                        arrayList.add(Manifest.permission.SYSTEM_ALERT_WINDOW);
+                        permissionDenied(arrayList);
+                    }
+                }else {     // 권한있거나 또는 denyMessage가 없는 경우는 일반 permission 을 확인한다.
+                    hasCheckWindowPermissionRequest = true;
+                    checkPermissions(false);
+                }
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
         }
 
     }
+
+
 
 }
