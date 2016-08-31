@@ -39,17 +39,11 @@ TedPermission is simple permission check helper.
 
 
 #####Gradle
-Get library from  [jitpack.io](https://jitpack.io/)
+
 ```javascript
 
-repositories {
-    
-    maven { url "https://jitpack.io" }
-
-}
-
 dependencies {
-    compile 'com.github.ParkSangGwon:TedPermission:v1.0.12'
+    compile 'gun0912.ted:tedpermission:1.0.0'
 }
 
 ```
@@ -63,7 +57,7 @@ dependencies {
 ##How to use
 
 
-#####1. Make PermissionListener
+###1. Make PermissionListener
 We will use PermissionListener for Permission Result.
 You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 
@@ -87,7 +81,7 @@ You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 ```
 
 <br/>
-#####2. Start TedPermission
+###2. Start TedPermission
 TedPermission class need `setPermissionListener()`, `setPermissions()`.
 and `check()` will start check permissions
 
@@ -124,7 +118,6 @@ If you use proguard, you have to add this code.
 ##Customize
 You can customize something ...<br />
 
-#####Function
 
 * `setGotoSettingButton(boolean) (default: true)`
 * `setRationaleMessage(R.string.xxx or String)`
