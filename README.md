@@ -3,7 +3,7 @@
 
 #What is TedPermission?
 
-After Android Marshmallow, you have to not only decalare permisions in `AndroidManifest.xml` but request permissions at runtime.<br/>
+After Android Marshmallow, you have to not only decalare permisions in `AndroidManifest.xml` but also request permissions at runtime.<br/>
 Furthermore anytime user can on/off permissions at application setting.<br/>
 When you use dangerous permissons(ex. CAMERA, READ_CONTACTS, READ_PHONE_STATE), you have to check and request permissions runtime.<br/>
 ([See dangerous permissions](http://developer.android.com/intl/ko/guide/topics/security/permissions.html#normal-dangerous))<br/>
