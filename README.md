@@ -38,7 +38,7 @@ TedPermission is simple permission check helper.
 ##Setup
 
 
-#####Gradle
+###Gradle
 
 ```javascript
 
