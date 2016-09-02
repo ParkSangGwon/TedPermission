@@ -316,9 +316,7 @@ public class TedPermissionActivity extends AppCompatActivity {
                 .setNegativeButton(deniedCloseButtonText, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        ArrayList arrayList = new ArrayList<String>();
-                        arrayList.add(Manifest.permission.SYSTEM_ALERT_WINDOW);
-                        permissionDenied(arrayList);
+                        checkPermissions(false);
                     }
                 });
 
@@ -351,10 +349,8 @@ public class TedPermissionActivity extends AppCompatActivity {
                     if(!hasCheckWindowPermissionRequest) {      // 최초 거부에서만 dialog 를 뛰운다
                         showWindowPermissionDenyDialog();
                         hasCheckWindowPermissionRequest = true;
-                    }else{                                      // 최초가 아니면 deny 처리하고 종료
-                       ArrayList arrayList = new ArrayList<String>();
-                        arrayList.add(Manifest.permission.SYSTEM_ALERT_WINDOW);
-                        permissionDenied(arrayList);
+                    }else{
+                        checkPermissions(false);
                     }
                 }else {     // 권한있거나 또는 denyMessage가 없는 경우는 일반 permission 을 확인한다.
                     hasCheckWindowPermissionRequest = true;
