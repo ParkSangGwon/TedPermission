@@ -29,6 +29,7 @@ public class TedPermissionActivity extends AppCompatActivity {
     public static final int REQ_CODE_PERMISSION_REQUEST = 10;
     public static final int REQ_CODE_REQUEST_SETTING = 20;
     public static final int REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST = 30;
+    public static final int REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST_SETTING = 31;
 
 
     public static final String EXTRA_PERMISSIONS = "permissions";
@@ -49,9 +50,7 @@ public class TedPermissionActivity extends AppCompatActivity {
 
     String deniedCloseButtonText;
     String rationaleConfirmText;
-
-    boolean hasCheckWindowPermissionRequest;
-
+    boolean isShownRationalDilaog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,6 +161,7 @@ public class TedPermissionActivity extends AppCompatActivity {
                         }
                     })
                     .show();
+            isShownRationalDilaog = true;
         }else {
             startActivityForResult(intent, REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST);
         }
@@ -173,13 +173,11 @@ public class TedPermissionActivity extends AppCompatActivity {
 
         ArrayList<String> needPermissions = new ArrayList<>();
 
-        boolean showRationale = true;
 
         for (String permission : permissions) {
             if (permission.equals(Manifest.permission.SYSTEM_ALERT_WINDOW)) {
                 if (!hasWindowPermission()) {
                     needPermissions.add(permission);
-                    showRationale = fromOnActivityResult;
                 }
             } else {
                 if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -192,11 +190,9 @@ public class TedPermissionActivity extends AppCompatActivity {
             permissionGranted();
         } else if (fromOnActivityResult) { //From Setting Activity
             permissionDenied(needPermissions);
-        } else if (needPermissions.size() == 1 &&
-                needPermissions.contains(Manifest.permission.SYSTEM_ALERT_WINDOW)
-                && hasCheckWindowPermissionRequest){   // window permission deny
+        } else if (needPermissions.size() == 1 && needPermissions.contains(Manifest.permission.SYSTEM_ALERT_WINDOW)){   // window permission deny
             permissionDenied(needPermissions);
-        } else if (showRationale && !TextUtils.isEmpty(rationale_message)) { // //Need Show Rationale
+        } else if (!isShownRationalDilaog && !TextUtils.isEmpty(rationale_message)) { // //Need Show Rationale
             showRationaleDialog(needPermissions);
         } else { // //Need Request Permissions
             requestPermissions(needPermissions);
@@ -253,6 +249,7 @@ public class TedPermissionActivity extends AppCompatActivity {
                     }
                 })
                 .show();
+        isShownRationalDilaog = true;
 
 
     }
@@ -330,7 +327,7 @@ public class TedPermissionActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     Uri uri = Uri.fromParts("package", packageName, null);
                     final Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, uri);
-                    startActivityForResult(intent, REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST);
+                    startActivityForResult(intent, REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST_SETTING);
                 }
             });
 
@@ -344,18 +341,15 @@ public class TedPermissionActivity extends AppCompatActivity {
             case REQ_CODE_REQUEST_SETTING:
                 checkPermissions(true);
                 break;
-            case REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST:
+            case REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST:   // 최초 ALERT WINDOW 요청에 대한 결과
                 if(!hasWindowPermission() && !TextUtils.isEmpty(denyMessage)){  // 권한이 거부되고 denyMessage 가 있는 경우
-                    if(!hasCheckWindowPermissionRequest) {      // 최초 거부에서만 dialog 를 뛰운다
-                        showWindowPermissionDenyDialog();
-                        hasCheckWindowPermissionRequest = true;
-                    }else{
-                        checkPermissions(false);
-                    }
+                    showWindowPermissionDenyDialog();
                 }else {     // 권한있거나 또는 denyMessage가 없는 경우는 일반 permission 을 확인한다.
-                    hasCheckWindowPermissionRequest = true;
                     checkPermissions(false);
                 }
+                break;
+            case REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST_SETTING:   //  ALERT WINDOW 권한 설정 실패후 재 요청에 대한 결과
+                    checkPermissions(false);
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
