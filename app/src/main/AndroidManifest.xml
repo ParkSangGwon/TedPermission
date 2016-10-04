@@ -26,6 +26,7 @@
         <activity android:name=".RationaleActivity"/>
         <activity android:name=".RationaleDenyActivity"/>
         <activity android:name=".NoDialogActivity"/>
+        <activity android:name=".WindowPermissionActivity"/>
 
     </application>
 

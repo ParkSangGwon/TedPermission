@@ -12,9 +12,9 @@ import com.gun0912.tedpermission.TedPermission;
 import java.util.ArrayList;
 
 /**
- * Created by TedPark on 16. 2. 21..
+ * Created by babosamo on 16. 10. 4..
  */
-public class NoDialogActivity extends AppCompatActivity{
+public class WindowPermissionActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,12 +25,12 @@ public class NoDialogActivity extends AppCompatActivity{
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                Toast.makeText(NoDialogActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(WindowPermissionActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                Toast.makeText(NoDialogActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(WindowPermissionActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
             }
 
 
@@ -39,8 +39,10 @@ public class NoDialogActivity extends AppCompatActivity{
 
         new TedPermission(this)
                 .setPermissionListener(permissionlistener)
-                .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
+                .setRationaleMessage("we need permission for read contact, find your location and system alert window")
+                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                .setGotoSettingButtonText("setting")
+                .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SYSTEM_ALERT_WINDOW)
                 .check();
-
     }
 }

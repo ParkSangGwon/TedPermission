@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.btn_nomessage,R.id.btn_only_deny_message,R.id.btn_only_rationale_message,R.id.btn_rationale_deny})
+    @OnClick({R.id.btn_nomessage,R.id.btn_only_deny_message,R.id.btn_only_rationale_message,R.id.btn_rationale_deny,R.id.btn_windowPermission})
     public void onButtonClick(View view){
 
         int id = view.getId();
@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(this,RationaleDenyActivity.class);
                 break;
 
+            case R.id.btn_windowPermission:
+                intent = new Intent(this,WindowPermissionActivity.class);
+                break;
 
         }
 
