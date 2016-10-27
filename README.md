@@ -43,7 +43,7 @@ TedPermission is simple permission check helper.
 ```javascript
 
 dependencies {
-    compile 'gun0912.ted:tedpermission:1.0.0'
+    compile 'gun0912.ted:tedpermission:1.0.2'
 }
 
 ```
