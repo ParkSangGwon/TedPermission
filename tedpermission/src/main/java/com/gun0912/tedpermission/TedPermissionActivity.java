@@ -50,7 +50,7 @@ public class TedPermissionActivity extends AppCompatActivity {
 
     String deniedCloseButtonText;
     String rationaleConfirmText;
-    boolean isShownRationaleDilaog;
+    boolean isShownRationaleDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,7 +161,7 @@ public class TedPermissionActivity extends AppCompatActivity {
                         }
                     })
                     .show();
-            isShownRationaleDilaog = true;
+            isShownRationaleDialog = true;
         }else {
             startActivityForResult(intent, REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST);
         }
@@ -192,7 +192,7 @@ public class TedPermissionActivity extends AppCompatActivity {
             permissionDenied(needPermissions);
         } else if (needPermissions.size() == 1 && needPermissions.contains(Manifest.permission.SYSTEM_ALERT_WINDOW)){   // window permission deny
             permissionDenied(needPermissions);
-        } else if (!isShownRationaleDilaog && !TextUtils.isEmpty(rationale_message)) { // //Need Show Rationale
+        } else if (!isShownRationaleDialog && !TextUtils.isEmpty(rationale_message)) { // //Need Show Rationale
             showRationaleDialog(needPermissions);
         } else { // //Need Request Permissions
             requestPermissions(needPermissions);
@@ -249,7 +249,7 @@ public class TedPermissionActivity extends AppCompatActivity {
                     }
                 })
                 .show();
-        isShownRationaleDilaog = true;
+        isShownRationaleDialog = true;
 
 
     }
