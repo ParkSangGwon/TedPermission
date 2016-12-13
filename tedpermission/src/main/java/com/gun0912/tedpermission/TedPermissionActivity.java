@@ -1,11 +1,14 @@
 package com.gun0912.tedpermission;
 
 import android.Manifest;
+import android.app.AppOpsManager;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -23,6 +26,7 @@ import java.util.ArrayList;
 
 /**
  * Created by TedPark on 16. 2. 17..
+ * Usage Stats Permission by Darkhost on 16. 12. 13
  */
 public class TedPermissionActivity extends AppCompatActivity {
 
@@ -30,6 +34,8 @@ public class TedPermissionActivity extends AppCompatActivity {
     public static final int REQ_CODE_REQUEST_SETTING = 20;
     public static final int REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST = 30;
     public static final int REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST_SETTING = 31;
+    public static final int REQ_CODE_PACKAGE_USAGE_STATS_PERMISSION_REQUEST = 40;
+    public static final int REQ_CODE_PACKAGE_USAGE_STATS_PERMISSION_REQUEST_SETTING = 41;
 
 
     public static final String EXTRA_PERMISSIONS = "permissions";
@@ -168,6 +174,46 @@ public class TedPermissionActivity extends AppCompatActivity {
     }
 
 
+    private boolean needUsageStatsPermission() {
+        for (String permission : permissions) {
+            if (permission.equals(Manifest.permission.PACKAGE_USAGE_STATS)) {
+                return !hasUsageStatsPermission();
+            }
+        }
+        return false;
+    }
+
+    // http://stackoverflow.com/questions/28921136/how-to-check-if-android-permission-package-usage-stats-permission-is-given
+    private boolean hasUsageStatsPermission(){
+        AppOpsManager appOpsManager = (AppOpsManager) getApplicationContext().getSystemService(Context.APP_OPS_SERVICE);
+        int mode = appOpsManager.checkOpNoThrow("android:get_usage_stats", android.os.Process.myUid(), getApplicationContext().getPackageName());
+        boolean granted = mode == AppOpsManager.MODE_ALLOWED;
+        return granted;
+    }
+
+    private void requestUsageStatsPermission() {
+        Uri uri = Uri.fromParts("package", packageName, null);
+        final Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS, uri);
+
+        if(!TextUtils.isEmpty(rationale_message)) {
+            new AlertDialog.Builder(this)
+                    .setMessage(rationale_message)
+                    .setCancelable(false)
+
+                    .setNegativeButton(rationaleConfirmText, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            startActivityForResult(intent, REQ_CODE_PACKAGE_USAGE_STATS_PERMISSION_REQUEST);
+                        }
+                    })
+                    .show();
+            isShownRationaleDialog = true;
+        }else {
+            startActivityForResult(intent, REQ_CODE_PACKAGE_USAGE_STATS_PERMISSION_REQUEST);
+        }
+    }
+
+
     private void checkPermissions(boolean fromOnActivityResult) {
         Dlog.d("");
 
@@ -175,8 +221,8 @@ public class TedPermissionActivity extends AppCompatActivity {
 
 
         for (String permission : permissions) {
-            if (permission.equals(Manifest.permission.SYSTEM_ALERT_WINDOW)) {
-                if (!hasWindowPermission()) {
+            if (permission.equals(Manifest.permission.SYSTEM_ALERT_WINDOW) || permission.equals(Manifest.permission.PACKAGE_USAGE_STATS)) {
+                if (!hasWindowPermission() || !hasUsageStatsPermission()) {
                     needPermissions.add(permission);
                 }
             } else {
@@ -190,7 +236,9 @@ public class TedPermissionActivity extends AppCompatActivity {
             permissionGranted();
         } else if (fromOnActivityResult) { //From Setting Activity
             permissionDenied(needPermissions);
-        } else if (needPermissions.size() == 1 && needPermissions.contains(Manifest.permission.SYSTEM_ALERT_WINDOW)){   // window permission deny
+        } else if (needPermissions.size() == 1 && needPermissions.contains(Manifest.permission.SYSTEM_ALERT_WINDOW)) {   // window permission deny
+            permissionDenied(needPermissions);
+        } else if (needPermissions.size() == 1 && needPermissions.contains(Manifest.permission.PACKAGE_USAGE_STATS)) { // Usage Stats Permission Deny
             permissionDenied(needPermissions);
         } else if (!isShownRationaleDialog && !TextUtils.isEmpty(rationale_message)) { // //Need Show Rationale
             showRationaleDialog(needPermissions);
@@ -335,6 +383,36 @@ public class TedPermissionActivity extends AppCompatActivity {
         builder.show();
     }
 
+    public void showUsageStatsPermissionDenyDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(denyMessage)
+                .setCancelable(false)
+                .setNegativeButton(deniedCloseButtonText, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        checkPermissions(false);
+                    }
+                });
+
+        if (hasSettingButton) {
+            if (TextUtils.isEmpty(settingButtonText)) {
+                settingButtonText = getString(R.string.tedpermission_setting);
+            }
+
+            builder.setPositiveButton(settingButtonText, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Uri uri = Uri.fromParts("package", packageName, null);
+                    final Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS, uri);
+                    startActivityForResult(intent, REQ_CODE_PACKAGE_USAGE_STATS_PERMISSION_REQUEST_SETTING);
+                }
+            });
+
+        }
+        builder.show();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -349,6 +427,16 @@ public class TedPermissionActivity extends AppCompatActivity {
                 }
                 break;
             case REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST_SETTING:   //  ALERT WINDOW 권한 설정 실패후 재 요청에 대한 결과
+                    checkPermissions(false);
+                break;
+            case REQ_CODE_PACKAGE_USAGE_STATS_PERMISSION_REQUEST:
+                if(!hasUsageStatsPermission() && !TextUtils.isEmpty(denyMessage)){
+                    showUsageStatsPermissionDenyDialog();
+                }else {
+                    checkPermissions(false);
+                }
+                break;
+            case REQ_CODE_PACKAGE_USAGE_STATS_PERMISSION_REQUEST_SETTING:
                     checkPermissions(false);
                 break;
             default:
