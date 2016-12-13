@@ -65,8 +65,10 @@ public class TedPermissionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         setupFromSavedInstanceState(savedInstanceState);
+        if(needWindowPermission()) {
             requestWindowPermission();
-        }else {
+        }
+        else {
             checkPermissions(false);
         }
     }
@@ -146,6 +148,7 @@ public class TedPermissionActivity extends AppCompatActivity {
         return false;
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
     private boolean hasWindowPermission(){
         return Settings.canDrawOverlays(getApplicationContext());
     }
@@ -181,13 +184,17 @@ public class TedPermissionActivity extends AppCompatActivity {
         return false;
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
     // http://stackoverflow.com/questions/28921136/how-to-check-if-android-permission-package-usage-stats-permission-is-given
+    private boolean hasUsageStatsPermission() {
         AppOpsManager appOpsManager = (AppOpsManager) getApplicationContext().getSystemService(Context.APP_OPS_SERVICE);
+        int mode = appOpsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, android.os.Process.myUid(), getApplicationContext().getPackageName());
         boolean granted = mode == AppOpsManager.MODE_ALLOWED;
         return granted;
     }
 
     private void requestUsageStatsPermission() {
+        final Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
 
         if(!TextUtils.isEmpty(rationale_message)) {
             new AlertDialog.Builder(this)
@@ -210,6 +217,10 @@ public class TedPermissionActivity extends AppCompatActivity {
 
     private void checkPermissions(boolean fromOnActivityResult) {
         Dlog.d("");
+
+        if(needWindowPermission()) {
+            requestWindowPermission();
+        }
 
         ArrayList<String> needPermissions = new ArrayList<>();
 
@@ -397,6 +408,7 @@ public class TedPermissionActivity extends AppCompatActivity {
             builder.setPositiveButton(settingButtonText, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    final Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
                     startActivityForResult(intent, REQ_CODE_PACKAGE_USAGE_STATS_PERMISSION_REQUEST_SETTING);
                 }
             });
