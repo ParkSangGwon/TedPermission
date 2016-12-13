@@ -42,7 +42,7 @@ public class WindowPermissionActivity extends AppCompatActivity{
                 .setRationaleMessage("we need permission for read contact, find your location and system alert window")
                 .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
                 .setGotoSettingButtonText("setting")
-                .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SYSTEM_ALERT_WINDOW)
+                .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.PACKAGE_USAGE_STATS)
                 .check();
     }
 }

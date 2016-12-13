@@ -1,6 +1,7 @@
 package com.gun0912.tedpermission;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.AppOpsManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -64,8 +65,6 @@ public class TedPermissionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         setupFromSavedInstanceState(savedInstanceState);
-        // check windows
-        if(needWindowPermission()){
             requestWindowPermission();
         }else {
             checkPermissions(false);
@@ -173,7 +172,6 @@ public class TedPermissionActivity extends AppCompatActivity {
         }
     }
 
-
     private boolean needUsageStatsPermission() {
         for (String permission : permissions) {
             if (permission.equals(Manifest.permission.PACKAGE_USAGE_STATS)) {
@@ -184,16 +182,12 @@ public class TedPermissionActivity extends AppCompatActivity {
     }
 
     // http://stackoverflow.com/questions/28921136/how-to-check-if-android-permission-package-usage-stats-permission-is-given
-    private boolean hasUsageStatsPermission(){
         AppOpsManager appOpsManager = (AppOpsManager) getApplicationContext().getSystemService(Context.APP_OPS_SERVICE);
-        int mode = appOpsManager.checkOpNoThrow("android:get_usage_stats", android.os.Process.myUid(), getApplicationContext().getPackageName());
         boolean granted = mode == AppOpsManager.MODE_ALLOWED;
         return granted;
     }
 
     private void requestUsageStatsPermission() {
-        Uri uri = Uri.fromParts("package", packageName, null);
-        final Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS, uri);
 
         if(!TextUtils.isEmpty(rationale_message)) {
             new AlertDialog.Builder(this)
@@ -403,8 +397,6 @@ public class TedPermissionActivity extends AppCompatActivity {
             builder.setPositiveButton(settingButtonText, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Uri uri = Uri.fromParts("package", packageName, null);
-                    final Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS, uri);
                     startActivityForResult(intent, REQ_CODE_PACKAGE_USAGE_STATS_PERMISSION_REQUEST_SETTING);
                 }
             });
