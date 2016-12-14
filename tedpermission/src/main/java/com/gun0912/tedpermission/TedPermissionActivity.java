@@ -235,11 +235,18 @@ public class TedPermissionActivity extends AppCompatActivity {
 
 
         for (String permission : permissions) {
-            if (permission.equals(Manifest.permission.SYSTEM_ALERT_WINDOW) || permission.equals(Manifest.permission.PACKAGE_USAGE_STATS)) {
-                if (!hasWindowPermission() || !hasUsageStatsPermission()) {
+            if (permission.equals(Manifest.permission.SYSTEM_ALERT_WINDOW)) {
+                if (!hasWindowPermission()) {
                     needPermissions.add(permission);
                 }
-            } else {
+            }
+            else if(permission.equals(Manifest.permission.PACKAGE_USAGE_STATS)) {
+                if(!hasUsageStatsPermission()) {
+                    needPermissions.add(permission);
+                }
+            }
+            else
+            {
                 if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
                     needPermissions.add(permission);
                 }
