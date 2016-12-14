@@ -69,7 +69,12 @@ public class TedPermissionActivity extends AppCompatActivity {
             requestWindowPermission();
         }
         else {
-            checkPermissions(false);
+            if(needUsageStatsPermission()) {
+                requestUsageStatsPermission(true);
+            }
+            else {
+                checkPermissions(false);
+            }
         }
     }
 
@@ -193,23 +198,31 @@ public class TedPermissionActivity extends AppCompatActivity {
         return granted;
     }
 
-    private void requestUsageStatsPermission() {
+    private void requestUsageStatsPermission(boolean showDialog) {
         final Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+        // Dialog를 보여주고 싶은경우 (보여주고 싶은 경우는 SYSTEM_ALERT_WINDOW 권한이 없는 앱일경우)
+        // 두 권한을 모두 받는 앱의 경우 같은 창이 두번 뜨므로 추가
+        if(showDialog)
+        {
+            if (!TextUtils.isEmpty(rationale_message)) {
+                new AlertDialog.Builder(this)
+                        .setMessage(rationale_message)
+                        .setCancelable(false)
 
-        if(!TextUtils.isEmpty(rationale_message)) {
-            new AlertDialog.Builder(this)
-                    .setMessage(rationale_message)
-                    .setCancelable(false)
-
-                    .setNegativeButton(rationaleConfirmText, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            startActivityForResult(intent, REQ_CODE_PACKAGE_USAGE_STATS_PERMISSION_REQUEST);
-                        }
-                    })
-                    .show();
-            isShownRationaleDialog = true;
-        }else {
+                        .setNegativeButton(rationaleConfirmText, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                startActivityForResult(intent, REQ_CODE_PACKAGE_USAGE_STATS_PERMISSION_REQUEST);
+                            }
+                        })
+                        .show();
+                isShownRationaleDialog = true;
+            } else {
+                startActivityForResult(intent, REQ_CODE_PACKAGE_USAGE_STATS_PERMISSION_REQUEST);
+            }
+        }
+        else // Dialog를 보여주지 않아도 될경우
+        {
             startActivityForResult(intent, REQ_CODE_PACKAGE_USAGE_STATS_PERMISSION_REQUEST);
         }
     }
@@ -217,10 +230,6 @@ public class TedPermissionActivity extends AppCompatActivity {
 
     private void checkPermissions(boolean fromOnActivityResult) {
         Dlog.d("");
-
-        if(needWindowPermission()) {
-            requestWindowPermission();
-        }
 
         ArrayList<String> needPermissions = new ArrayList<>();
 
@@ -426,12 +435,24 @@ public class TedPermissionActivity extends AppCompatActivity {
             case REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST:   // 최초 ALERT WINDOW 요청에 대한 결과
                 if(!hasWindowPermission() && !TextUtils.isEmpty(denyMessage)){  // 권한이 거부되고 denyMessage 가 있는 경우
                     showWindowPermissionDenyDialog();
-                }else {     // 권한있거나 또는 denyMessage가 없는 경우는 일반 permission 을 확인한다.
-                    checkPermissions(false);
+                }else {     // 권한있거나 또는 denyMessage가 없는 경우
+                    if(needUsageStatsPermission() && !hasUsageStatsPermission()) { // UsageStats 권한이 필요한데 없는경우
+                        requestUsageStatsPermission(false); // UsageStats 권한을 요청한다
+                    }
+                    else // 권한이 필요 없을경우
+                    {
+                        checkPermissions(false); // 일반 Permission 권한을 체크한다.
+                    }
                 }
                 break;
             case REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST_SETTING:   //  ALERT WINDOW 권한 설정 실패후 재 요청에 대한 결과
-                    checkPermissions(false);
+                if(needUsageStatsPermission() && !hasUsageStatsPermission()) { // UsageStats 권한이 필요한데 없는경우
+                    requestUsageStatsPermission(false); // UsageStats 권한을 요청한다
+                }
+                else // 권한이 필요 없을경우
+                {
+                    checkPermissions(false); // 일반 Permission 권한을 체크한다.
+                }
                 break;
             case REQ_CODE_PACKAGE_USAGE_STATS_PERMISSION_REQUEST:
                 if(!hasUsageStatsPermission() && !TextUtils.isEmpty(denyMessage)){
