@@ -13,15 +13,12 @@ import com.gun0912.tedpermission.util.ObjectUtils;
 public class TedPermission {
 
 
-    private static TedInstance instance;
+    private TedInstance instance;
 
 
     public TedPermission(Context context) {
-         instance = new TedInstance(context);
+        instance = new TedInstance(context);
     }
-
-
-
 
 
     public TedPermission setPermissionListener(PermissionListener listener) {
@@ -55,13 +52,11 @@ public class TedPermission {
     }
 
 
-
     public TedPermission setDeniedMessage(String denyMessage) {
 
         instance.denyMessage = denyMessage;
         return this;
     }
-
 
 
     public TedPermission setDeniedMessage(@StringRes int stringRes) {
@@ -79,11 +74,6 @@ public class TedPermission {
         instance.hasSettingBtn = hasSettingBtn;
         return this;
     }
-
-
-
-
-
 
 
     public TedPermission setGotoSettingButtonText(String rationaleConfirmText) {
@@ -105,8 +95,6 @@ public class TedPermission {
     }
 
 
-
-
     public TedPermission setRationaleConfirmText(String rationaleConfirmText) {
 
         instance.rationaleConfirmText = rationaleConfirmText;
@@ -124,7 +112,6 @@ public class TedPermission {
 
         return this;
     }
-
 
 
     public TedPermission setDeniedCloseButtonText(String deniedCloseButtonText) {
@@ -153,6 +140,10 @@ public class TedPermission {
             throw new NullPointerException("You must setPermissionListener() on TedPermission");
         } else if (ObjectUtils.isEmpty(instance.permissions)) {
             throw new NullPointerException("You must setPermissions() on TedPermission");
+        }
+
+        if (ObjectUtils.isEmpty(instance.permissions)) {
+            throw new NullPointerException("You must set permission");
         }
 
 
