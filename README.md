@@ -40,7 +40,7 @@ TedPermission is simple permission check helper.
 
 ###Gradle
 
-```javascript
+```gradle
 
 dependencies {
     compile 'gun0912.ted:tedpermission:1.0.3'
@@ -61,7 +61,7 @@ dependencies {
 We will use PermissionListener for Permission Result.
 You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 
-```javascript
+```java
 
     PermissionListener permissionlistener = new PermissionListener() {
         @Override
@@ -87,7 +87,7 @@ and `check()` will start check permissions
 
 `setRationaleMessage()`,`setDeniedMessage()` is optional method.
 
-```javascript
+```java
 
     new TedPermission(this)
     .setPermissionListener(permissionlistener)
@@ -194,4 +194,5 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-limitations under the License.```
+limitations under the License.
+```
