@@ -40,10 +40,25 @@ TedPermission is simple permission check helper.
 
 ###Gradle
 
+edit `root/build.gradle` like below.
+
+```gradle
+allprojects {
+    repositories {
+        jcenter()
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+<br/>
+edit `root/app/build.gradle` like below.
+
 ```gradle
 
 dependencies {
-    compile 'gun0912.ted:tedpermission:1.0.3'
+    ...
+    compile 'com.github.ParkSangGwon:TedPermission:v1.0.12'
 }
 
 ```
