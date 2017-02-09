@@ -3,18 +3,11 @@
 
 #What is TedPermission?
 
-After Android Marshmallow, you have to not only declare permisions in `AndroidManifest.xml` but also request permissions at runtime.<br/>
-Furthermore, user can on/off permissions at application setting anytime.<br/>
-When you use dangerous permissons(ex. CAMERA, READ_CONTACTS, READ_PHONE_STATE), you have to check and request permissions runtime.<br/>
-([See dangerous permissions](http://developer.android.com/intl/ko/guide/topics/security/permissions.html#normal-dangerous))<br/>
+After the update to Android 6.0 Marshmallow, we have to not only declare permisions in `AndroidManifest.xml`, but also request permissions at runtime. Furthermore, user can on/off permissions at application setting anytime. When you use **dangerous permissons**(ex. `CAMERA`, `READ_CONTACTS`, `READ_PHONE_STATE` **[etc](http://developer.android.com/intl/ko/guide/topics/security/permissions.html#normal-dangerous)**), you must check and request those permissions runtime.<br/>
 
-You can make check function yourself.<br/>
-([How to Requesting Permissions at RunTime](http://developer.android.com/intl/ko/training/permissions/requesting.html))<br/>
+You can make your own permission check logic [like this](http://developer.android.com/intl/ko/training/permissions/requesting.html), but  it's so complex and hard to use functions Google offers: `checkSelfPermission()`, `requestPermissions()`, `onRequestPermissionsResult()`, `onActivityResult()`.
 
-But original check function is so complex and hard..<br/>
-(`checkSelfPermission()`, `requestPermissions()`, `onRequestPermissionsResult()`, `onActivityResult()` ...)
-
-TedPermission is simple permission check helper.
+TedPermission makes it easy to check and request android permissions.
 
 
 <br/><br/>
@@ -73,7 +66,7 @@ dependencies {
 
 
 ###1. Make PermissionListener
-We will use PermissionListener for Permission Result.
+We will use PermissionListener for a result of permission check.
 You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 
 ```java
@@ -97,10 +90,9 @@ You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 
 <br/>
 ###2. Start TedPermission
-TedPermission class need `setPermissionListener()`, `setPermissions()`.
-and `check()` will start check permissions
+TedPermission class needs `setPermissionListener()`, `setPermissions()`, and `check()` that starts permission checking.
 
-`setRationaleMessage()`,`setDeniedMessage()` is optional method.
+`setRationaleMessage()` and `setDeniedMessage()` are optional methods.
 
 ```java
 
