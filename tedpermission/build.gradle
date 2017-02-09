@@ -14,7 +14,7 @@ ext {
     siteUrl = 'https://github.com/ParkSangGwon/TedPermission'
     gitUrl = 'https://github.com/ParkSangGwon/TedPermission.git'
 
-    libraryVersion = '1.0.2'
+    libraryVersion = '1.0.3'
 
     developerId = 'gun0912'
     developerName = 'Ted Park'
