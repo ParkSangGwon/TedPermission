@@ -33,27 +33,13 @@ TedPermission makes it easy to check and request android permissions.
 
 ###Gradle
 
-edit `root/build.gradle` like below.
-
-```gradle
-allprojects {
-    repositories {
-        jcenter()
-        maven { url 'https://jitpack.io' }
-    }
-}
-```
-
-<br/>
 edit `root/app/build.gradle` like below.
 
 ```gradle
-
 dependencies {
     ...
-    compile 'com.github.ParkSangGwon:TedPermission:v1.0.12'
+    compile 'gun0912.ted:tedpermission:1.0.3'
 }
-
 ```
 
 
