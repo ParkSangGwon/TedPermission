@@ -39,7 +39,9 @@ public class RationaleDenyActivity extends AppCompatActivity{
 
         new TedPermission(this)
                 .setPermissionListener(permissionlistener)
-                .setRationaleMessage("we need permission for read contact and find your location")
+                .setRationaleTitle(R.string.rationale_title)
+                .setRationaleMessage(R.string.rationale_message) // "we need permission for read contact and find your location"
+                .setDeniedTitle("Permission denied")
                 .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
                 .setGotoSettingButtonText("bla bla")
                 .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)

@@ -35,7 +35,7 @@ public class TedPermission {
         return this;
     }
 
-    public TedPermission setRationaleMessage(String rationaleMessage) {
+    public TedPermission setRationaleMessage(CharSequence rationaleMessage) {
 
         instance.rationaleMessage = rationaleMessage;
         return this;
@@ -47,10 +47,25 @@ public class TedPermission {
         if (stringRes <= 0)
             throw new IllegalArgumentException("Invalid value for RationaleMessage");
 
-        instance.rationaleMessage = instance.context.getString(stringRes);
+        instance.rationaleMessage = instance.context.getText(stringRes);
         return this;
     }
 
+    public TedPermission setRationaleTitle(CharSequence rationaleMessage) {
+
+        instance.rationaleTitle = rationaleMessage;
+        return this;
+    }
+
+
+    public TedPermission setRationaleTitle(@StringRes int stringRes) {
+
+        if (stringRes <= 0)
+            throw new IllegalArgumentException("Invalid value for RationaleTitle");
+
+        instance.rationaleTitle = instance.context.getText(stringRes);
+        return this;
+    }
 
     public TedPermission setDeniedMessage(String denyMessage) {
 
@@ -64,10 +79,25 @@ public class TedPermission {
         if (stringRes <= 0)
             throw new IllegalArgumentException("Invalid value for DeniedMessage");
 
-        instance.denyMessage = instance.context.getString(stringRes);
+        instance.denyMessage = instance.context.getText(stringRes);
         return this;
     }
 
+    public TedPermission setDeniedTitle(String denyTitle) {
+
+        instance.denyTitle = denyTitle;
+        return this;
+    }
+
+
+    public TedPermission setDeniedTitle(@StringRes int stringRes) {
+
+        if (stringRes <= 0)
+            throw new IllegalArgumentException("Invalid value for DeniedTitle");
+
+        instance.denyTitle = instance.context.getText(stringRes);
+        return this;
+    }
 
     public TedPermission setGotoSettingButton(boolean hasSettingBtn) {
 
