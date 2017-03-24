@@ -33,7 +33,9 @@ public class TedPermissionActivity extends AppCompatActivity {
 
 
     public static final String EXTRA_PERMISSIONS = "permissions";
+    public static final String EXTRA_RATIONALE_TITLE = "rationale_title";
     public static final String EXTRA_RATIONALE_MESSAGE = "rationale_message";
+    public static final String EXTRA_DENY_TITLE = "deny_title";
     public static final String EXTRA_DENY_MESSAGE = "deny_message";
     public static final String EXTRA_PACKAGE_NAME = "package_name";
     public static final String EXTRA_SETTING_BUTTON = "setting_button";
@@ -41,8 +43,10 @@ public class TedPermissionActivity extends AppCompatActivity {
     public static final String EXTRA_RATIONALE_CONFIRM_TEXT = "rationale_confirm_text";
     public static final String EXTRA_DENIED_DIALOG_CLOSE_TEXT = "denied_dialog_close_text";
 
-    String rationale_message;
-    String denyMessage;
+    CharSequence rationaleTitle;
+    CharSequence rationale_message;
+    CharSequence denyTitle;
+    CharSequence denyMessage;
     String[] permissions;
     String packageName;
     boolean hasSettingButton;
@@ -75,8 +79,10 @@ public class TedPermissionActivity extends AppCompatActivity {
     private void setupFromSavedInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             permissions = savedInstanceState.getStringArray(EXTRA_PERMISSIONS);
-            rationale_message = savedInstanceState.getString(EXTRA_RATIONALE_MESSAGE);
-            denyMessage = savedInstanceState.getString(EXTRA_DENY_MESSAGE);
+            rationaleTitle = savedInstanceState.getCharSequence(EXTRA_RATIONALE_TITLE);
+            rationale_message = savedInstanceState.getCharSequence(EXTRA_RATIONALE_MESSAGE);
+            denyTitle = savedInstanceState.getCharSequence(EXTRA_DENY_TITLE);
+            denyMessage = savedInstanceState.getCharSequence(EXTRA_DENY_MESSAGE);
             packageName = savedInstanceState.getString(EXTRA_PACKAGE_NAME);
 
 
@@ -91,8 +97,10 @@ public class TedPermissionActivity extends AppCompatActivity {
 
             Intent intent = getIntent();
             permissions = intent.getStringArrayExtra(EXTRA_PERMISSIONS);
-            rationale_message = intent.getStringExtra(EXTRA_RATIONALE_MESSAGE);
-            denyMessage = intent.getStringExtra(EXTRA_DENY_MESSAGE);
+            rationaleTitle = intent.getCharSequenceExtra(EXTRA_RATIONALE_TITLE);
+            rationale_message = intent.getCharSequenceExtra(EXTRA_RATIONALE_MESSAGE);
+            denyTitle = intent.getCharSequenceExtra(EXTRA_DENY_TITLE);
+            denyMessage = intent.getCharSequenceExtra(EXTRA_DENY_MESSAGE);
             packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME);
             hasSettingButton = intent.getBooleanExtra(EXTRA_SETTING_BUTTON, true);
             rationaleConfirmText = intent.getStringExtra(EXTRA_RATIONALE_CONFIRM_TEXT);
@@ -107,8 +115,10 @@ public class TedPermissionActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putStringArray(EXTRA_PERMISSIONS, permissions);
-        outState.putString(EXTRA_RATIONALE_MESSAGE, rationale_message);
-        outState.putString(EXTRA_DENY_MESSAGE, denyMessage);
+        outState.putCharSequence(EXTRA_RATIONALE_TITLE, rationaleTitle);
+        outState.putCharSequence(EXTRA_RATIONALE_MESSAGE, rationale_message);
+        outState.putCharSequence(EXTRA_DENY_TITLE, denyTitle);
+        outState.putCharSequence(EXTRA_DENY_MESSAGE, denyMessage);
         outState.putString(EXTRA_PACKAGE_NAME, packageName);
         outState.putBoolean(EXTRA_SETTING_BUTTON, hasSettingButton);
         outState.putString(EXTRA_SETTING_BUTTON, deniedCloseButtonText);
@@ -238,6 +248,7 @@ public class TedPermissionActivity extends AppCompatActivity {
     private void showRationaleDialog(final ArrayList<String> needPermissions) {
 
         new AlertDialog.Builder(this)
+                .setTitle(rationaleTitle)
                 .setMessage(rationale_message)
                 .setCancelable(false)
 
@@ -266,7 +277,8 @@ public class TedPermissionActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
 
-        builder.setMessage(denyMessage)
+        builder.setTitle(denyTitle)
+                .setMessage(denyMessage)
                 .setCancelable(false)
 
                 .setNegativeButton(deniedCloseButtonText, new DialogInterface.OnClickListener() {

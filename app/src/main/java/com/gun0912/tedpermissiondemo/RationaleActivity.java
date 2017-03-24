@@ -39,7 +39,8 @@ public class RationaleActivity extends AppCompatActivity{
 
         new TedPermission(this)
                 .setPermissionListener(permissionlistener)
-                .setRationaleMessage("we need permission for read contact and find your location")
+                .setRationaleTitle(R.string.rationale_title)
+                .setRationaleMessage(R.string.rationale_message) // "we need permission for read contact and find your location"
                 .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
                 .check();
 

@@ -15,8 +15,10 @@ public class TedInstance {
 
     public PermissionListener listener;
     public String[] permissions;
-    public String rationaleMessage;
-    public String denyMessage;
+    public CharSequence rationaleTitle;
+    public CharSequence rationaleMessage;
+    public CharSequence denyTitle;
+    public CharSequence denyMessage;
     public String settingButtonText;
     public boolean hasSettingBtn = true;
 
@@ -42,7 +44,9 @@ public class TedInstance {
         Intent intent = new Intent(context, TedPermissionActivity.class);
         intent.putExtra(TedPermissionActivity.EXTRA_PERMISSIONS, permissions);
 
+        intent.putExtra(TedPermissionActivity.EXTRA_RATIONALE_TITLE, rationaleTitle);
         intent.putExtra(TedPermissionActivity.EXTRA_RATIONALE_MESSAGE, rationaleMessage);
+        intent.putExtra(TedPermissionActivity.EXTRA_DENY_TITLE, denyTitle);
         intent.putExtra(TedPermissionActivity.EXTRA_DENY_MESSAGE, denyMessage);
         intent.putExtra(TedPermissionActivity.EXTRA_PACKAGE_NAME, context.getPackageName());
         intent.putExtra(TedPermissionActivity.EXTRA_SETTING_BUTTON, hasSettingBtn);
