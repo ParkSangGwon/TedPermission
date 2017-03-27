@@ -1,7 +1,7 @@
  [![Release](https://jitpack.io/v/ParkSangGwon/TedPermission.svg)](https://jitpack.io/ParkSangGwon/TedPermission)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-TedPermission-green.svg?style=true)](https://android-arsenal.com/details/1/3238)
 
-#What is TedPermission?
+# What is TedPermission?
 
 After Android Marshmallow, you have to not only decalare permisions in `AndroidManifest.xml` but also request permissions at runtime.<br/>
 Furthermore anytime user can on/off permissions at application setting.<br/>
@@ -21,7 +21,7 @@ TedPermission is simple permission check helper.
 
 
 
-##Demo
+## Demo
 
 
 ![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/Screenshot.png?raw=true)    
@@ -35,10 +35,10 @@ TedPermission is simple permission check helper.
 <br/><br/>
 
 
-##Setup
+## Setup
 
 
-###Gradle
+### Gradle
 
 ```javascript
 
@@ -54,10 +54,10 @@ dependencies {
 
 
 
-##How to use
+## How to use
 
 
-###1. Make PermissionListener
+### 1. Make PermissionListener
 We will use PermissionListener for Permission Result.
 You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 
@@ -81,7 +81,7 @@ You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 ```
 
 <br/>
-###2. Start TedPermission
+### 2. Start TedPermission
 TedPermission class need `setPermissionListener()`, `setPermissions()`.
 and `check()` will start check permissions
 
@@ -102,7 +102,7 @@ and `check()` will start check permissions
 
 <br/>
 
-##Proguard
+## Proguard
 If you use proguard, you have to add this code.
 ```javascript
 -keepattributes *Annotation*
@@ -132,7 +132,7 @@ You can customize something ...<br />
 
 
 
-##Number of Cases
+## Number of Cases
 1. Check permissions -> have permissions<br/>
 : `onPermissionGranted()` called<br/>
 
@@ -171,7 +171,7 @@ You can customize something ...<br />
 ![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/Screenshot_cases.png?raw=true)    
 
 
-##Thanks 
+## Thanks 
 * [Otto](https://github.com/square/otto) - An enhanced Guava-based event bus with emphasis on Android support
 
 
@@ -180,7 +180,7 @@ You can customize something ...<br />
 <br/><br/>
 
 
-##License 
+## License 
  ```code
 Copyright 2016 Ted Park
 
