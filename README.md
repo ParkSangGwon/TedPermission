@@ -48,11 +48,11 @@ dependencies {
 
 ```
 
-
+If you think this library is usuful, please press start button at upside.
+<br/>
+<img src="https://phaser.io/content/news/2015/09/10000-stars.png" width="200">
 
 <br/><br/>
-
-
 
 ## How to use
 
