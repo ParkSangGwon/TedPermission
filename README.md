@@ -1,7 +1,7 @@
 [![Release](https://jitpack.io/v/ParkSangGwon/TedPermission.svg)](https://jitpack.io/#ParkSangGwon/TedPermission)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-TedPermission-green.svg?style=true)](https://android-arsenal.com/details/1/3238)
 
-#What is TedPermission?
+# What is TedPermission?
 
 After the update to Android 6.0 Marshmallow, we have to not only declare permissions in `AndroidManifest.xml`, but also request them at runtime. Furthermore, user can on/off permissions in application setting anytime. When you use **dangerous permissons**(ex. `CAMERA`, `READ_CONTACTS`, `READ_PHONE_STATE` **[etc](http://developer.android.com/intl/ko/guide/topics/security/permissions.html#normal-dangerous)**), you must check and request them runtime.<br/>
 
@@ -14,7 +14,7 @@ TedPermission makes it easy to check and request android permissions.
 
 
 
-##Demo
+## Demo
 
 
 ![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/Screenshot.png?raw=true)    
@@ -28,10 +28,10 @@ TedPermission makes it easy to check and request android permissions.
 <br/><br/>
 
 
-##Setup
+## Setup
 
 
-###Gradle
+### Gradle
 
 edit `root/app/build.gradle` like below.
 
@@ -42,17 +42,17 @@ dependencies {
 }
 ```
 
-
+If you think this library is usuful, please press start button at upside.
+<br/>
+<img src="https://phaser.io/content/news/2015/09/10000-stars.png" width="200">
 
 <br/><br/>
 
+## How to use
 
 
-##How to use
-
-
-###1. Make PermissionListener
-We will use PermissionListener for a result of permission check.
+### 1. Make PermissionListener
+We will use PermissionListener for Permission Result.
 You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 
 ```java
@@ -75,8 +75,9 @@ You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 ```
 
 <br/>
-###2. Start TedPermission
-TedPermission class needs `setPermissionListener()`, `setPermissions()`, and `check()` that starts permission checking.
+### 2. Start TedPermission
+TedPermission class requires `setPermissionListener()`, `setPermissions()`, and `check()`
+`check()` will start to check permissions.
 
 `setRationaleMessage()` and `setDeniedMessage()` are optional methods.
 
@@ -95,7 +96,7 @@ TedPermission class needs `setPermissionListener()`, `setPermissions()`, and `ch
 
 <br/>
 
-##Proguard
+## Proguard
 If you use proguard, you have to add this code.
 ```javascript
 -keepattributes *Annotation*
@@ -125,7 +126,7 @@ You can customize something ...<br />
 
 
 
-##Number of Cases
+## Number of Cases
 1. Check permissions -> have permissions<br/>
 : `onPermissionGranted()` called<br/>
 
@@ -164,7 +165,7 @@ You can customize something ...<br />
 ![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/Screenshot_cases.png?raw=true)    
 
 
-##Thanks 
+## Thanks 
 * [Otto](https://github.com/square/otto) - An enhanced Guava-based event bus with emphasis on Android support
 
 
@@ -173,7 +174,7 @@ You can customize something ...<br />
 <br/><br/>
 
 
-##License 
+## License 
  ```code
 Copyright 2016 Ted Park
 
