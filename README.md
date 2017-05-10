@@ -120,8 +120,10 @@ You can customize something ...<br />
 
 
 * `setGotoSettingButton(boolean) (default: true)`
+* `setRationaleTitle(R.string.xxx or String)`
 * `setRationaleMessage(R.string.xxx or String)`
 * `setRationaleConfirmText(R.string.xxx or String) (default: confirm / 확인)`
+* `setDeniedTitle(R.string.xxx or String)`
 * `setDeniedMessage(R.string.xxx or String)`
 * `setDeniedCloseButtonText(R.string.xxx or String) (default: close / 닫기)`
 * `setGotoSettingButtonText(R.string.xxx or String) (default: setting / 설정)`
