@@ -41,6 +41,8 @@ public class RationaleActivity extends AppCompatActivity{
                 .setPermissionListener(permissionlistener)
                 .setRationaleTitle(R.string.rationale_title)
                 .setRationaleMessage(R.string.rationale_message) // "we need permission for read contact and find your location"
+                .setRequestSettingTitle("Permission required in Setting")
+                .setRequestSettingMessage("we need permission for read contact and find your location. you have to grant permission in setting.")
                 .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
                 .check();
 

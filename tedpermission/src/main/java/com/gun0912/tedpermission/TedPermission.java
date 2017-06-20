@@ -99,6 +99,42 @@ public class TedPermission {
         return this;
     }
 
+    public TedPermission setRequestSettingMessage(String requestSettingMessage) {
+
+        instance.requestSettingMessage = requestSettingMessage;
+        return this;
+    }
+
+
+    public TedPermission setRequestSettingMessage(@StringRes int stringRes) {
+
+        if (stringRes <= 0)
+            throw new IllegalArgumentException("Invalid value for DeniedMessage");
+
+        instance.requestSettingMessage = instance.context.getText(stringRes);
+        return this;
+    }
+
+
+
+    public TedPermission setRequestSettingTitle(String requestSettingTitle) {
+
+        instance.requestSettingTitle = requestSettingTitle;
+        return this;
+    }
+
+
+    public TedPermission setRequestSettingTitle(@StringRes int stringRes) {
+
+        if (stringRes <= 0)
+            throw new IllegalArgumentException("Invalid value for DeniedTitle");
+
+        instance.requestSettingTitle = instance.context.getText(stringRes);
+        return this;
+    }
+
+
+
     public TedPermission setGotoSettingButton(boolean hasSettingBtn) {
 
         instance.hasSettingBtn = hasSettingBtn;

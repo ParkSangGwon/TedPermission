@@ -42,6 +42,8 @@ public class TedPermissionActivity extends AppCompatActivity {
     public static final String EXTRA_SETTING_BUTTON_TEXT = "setting_button_text";
     public static final String EXTRA_RATIONALE_CONFIRM_TEXT = "rationale_confirm_text";
     public static final String EXTRA_DENIED_DIALOG_CLOSE_TEXT = "denied_dialog_close_text";
+    public static final String EXTRA_REQUEST_SETTING_TITLE = "request_setting_title";
+    public static final String EXTRA_REQUEST_SETTING_MESSAGE = "request_setting_message";
 
     CharSequence rationaleTitle;
     CharSequence rationale_message;
@@ -55,6 +57,8 @@ public class TedPermissionActivity extends AppCompatActivity {
     String deniedCloseButtonText;
     String rationaleConfirmText;
     boolean isShownRationaleDialog;
+    CharSequence requestSettingTitle;
+    CharSequence requestSettingMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +97,8 @@ public class TedPermissionActivity extends AppCompatActivity {
 
 
             settingButtonText = savedInstanceState.getString(EXTRA_SETTING_BUTTON_TEXT);
+            requestSettingTitle = savedInstanceState.getCharSequence(EXTRA_REQUEST_SETTING_TITLE);
+            requestSettingMessage = savedInstanceState.getCharSequence(EXTRA_REQUEST_SETTING_MESSAGE);
         } else {
 
             Intent intent = getIntent();
@@ -106,7 +112,8 @@ public class TedPermissionActivity extends AppCompatActivity {
             rationaleConfirmText = intent.getStringExtra(EXTRA_RATIONALE_CONFIRM_TEXT);
             deniedCloseButtonText = intent.getStringExtra(EXTRA_DENIED_DIALOG_CLOSE_TEXT);
             settingButtonText = intent.getStringExtra(EXTRA_SETTING_BUTTON_TEXT);
-
+            requestSettingTitle = intent.getCharSequenceExtra(EXTRA_REQUEST_SETTING_TITLE);
+            requestSettingMessage = intent.getCharSequenceExtra(EXTRA_REQUEST_SETTING_MESSAGE);
         }
 
 
@@ -124,7 +131,8 @@ public class TedPermissionActivity extends AppCompatActivity {
         outState.putString(EXTRA_SETTING_BUTTON, deniedCloseButtonText);
         outState.putString(EXTRA_RATIONALE_CONFIRM_TEXT, rationaleConfirmText);
         outState.putString(EXTRA_SETTING_BUTTON_TEXT, settingButtonText);
-
+        outState.putCharSequence(EXTRA_REQUEST_SETTING_TITLE, requestSettingTitle);
+        outState.putCharSequence(EXTRA_REQUEST_SETTING_MESSAGE, requestSettingMessage);
         super.onSaveInstanceState(outState);
     }
 
@@ -182,7 +190,7 @@ public class TedPermissionActivity extends AppCompatActivity {
         Dlog.d("");
 
         ArrayList<String> needPermissions = new ArrayList<>();
-
+        ArrayList<String> neverAskDeniedPermission = new ArrayList<>();
 
         for (String permission : permissions) {
             if (permission.equals(Manifest.permission.SYSTEM_ALERT_WINDOW)) {
@@ -191,18 +199,26 @@ public class TedPermissionActivity extends AppCompatActivity {
                 }
             } else {
                 if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                    needPermissions.add(permission);
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permission)){  // permission denied with checking never asking again
+                        neverAskDeniedPermission.add(permission);
+                    }else {
+                        needPermissions.add(permission);
+                    }
                 }
             }
         }
 
-        if (needPermissions.isEmpty()) {
+        if (needPermissions.isEmpty() && neverAskDeniedPermission.isEmpty()) {
             permissionGranted();
         } else if (fromOnActivityResult) { //From Setting Activity
             permissionDenied(needPermissions);
         } else if (needPermissions.size() == 1 && needPermissions.contains(Manifest.permission.SYSTEM_ALERT_WINDOW)){   // window permission deny
             permissionDenied(needPermissions);
-        } else if (!isShownRationaleDialog && !TextUtils.isEmpty(rationale_message)) { // //Need Show Rationale
+        } else if(needPermissions.isEmpty() && !neverAskDeniedPermission.isEmpty()) {
+            //Only have permissions that denied with checking never asking again
+            //show request setting Dialog, and also skip rationaleDialog
+            showRequestSettingDialog(neverAskDeniedPermission);
+        } else if (!isShownRationaleDialog && !TextUtils.isEmpty(rationale_message) && !needPermissions.isEmpty()) { // //Need Show Rationale
             showRationaleDialog(needPermissions);
         } else { // //Need Request Permissions
             requestPermissions(needPermissions);
@@ -314,6 +330,44 @@ public class TedPermissionActivity extends AppCompatActivity {
             });
 
         }
+        builder.show();
+    }
+
+    private void showRequestSettingDialog(final ArrayList<String> neverAskDeniedPermission) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(requestSettingTitle)
+                .setMessage(requestSettingMessage)
+                .setCancelable(false)
+
+                .setNegativeButton(deniedCloseButtonText, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        permissionDenied(neverAskDeniedPermission);
+                    }
+                });
+
+        if (TextUtils.isEmpty(settingButtonText)) {
+            settingButtonText = getString(R.string.tedpermission_setting);
+        }
+
+        builder.setPositiveButton(settingButtonText, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                try {
+                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                            .setData(Uri.parse("package:" + packageName));
+                    startActivityForResult(intent, REQ_CODE_REQUEST_SETTING);
+                } catch (ActivityNotFoundException e) {
+                    e.printStackTrace();
+                    Dlog.e(e.toString());
+                    Intent intent = new Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
+                    startActivityForResult(intent, REQ_CODE_REQUEST_SETTING);
+                }
+
+            }
+        });
+
         builder.show();
     }
 
