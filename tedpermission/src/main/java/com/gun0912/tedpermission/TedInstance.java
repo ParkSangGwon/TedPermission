@@ -24,6 +24,8 @@ public class TedInstance {
 
     public String deniedCloseButtonText;
     public String rationaleConfirmText;
+    public CharSequence requestSettingTitle;
+    public CharSequence requestSettingMessage;
     Context context;
 
 
@@ -53,6 +55,8 @@ public class TedInstance {
         intent.putExtra(TedPermissionActivity.EXTRA_DENIED_DIALOG_CLOSE_TEXT, deniedCloseButtonText);
         intent.putExtra(TedPermissionActivity.EXTRA_RATIONALE_CONFIRM_TEXT, rationaleConfirmText);
         intent.putExtra(TedPermissionActivity.EXTRA_SETTING_BUTTON_TEXT, settingButtonText);
+        intent.putExtra(TedPermissionActivity.EXTRA_REQUEST_SETTING_TITLE, requestSettingTitle);
+        intent.putExtra(TedPermissionActivity.EXTRA_REQUEST_SETTING_MESSAGE, requestSettingMessage);
 
 
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
