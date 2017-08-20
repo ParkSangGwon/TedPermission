@@ -12,9 +12,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-
         >
-        <activity android:name="com.gun0912.tedpermissiondemo.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -22,11 +21,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".DenyActivity"/>
-        <activity android:name=".RationaleActivity"/>
-        <activity android:name=".RationaleDenyActivity"/>
-        <activity android:name=".NoDialogActivity"/>
-        <activity android:name=".WindowPermissionActivity"/>
+        <activity android:name=".RxJava1Activity"/>
+        <activity android:name=".RxJava2Activity"/>
+        <activity android:name=".NormalActivity"/>
+      <activity android:name=".WindowPermissionActivity"/>
+
 
     </application>
 

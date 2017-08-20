@@ -1,0 +1,23 @@
+ext {
+    versions = [
+            'minSdkVersion'    : 9,
+            'compileSdkVersion': 23,
+            'targetSdkVersion' : 23,
+            'buildToolsVersion': '23.0.2',
+
+            'supportLibrary'   : '23.1.1',
+    ]
+
+    deps = [
+            'rx'     : [
+                    'rxJava1': 'io.reactivex:rxjava:1.1.8',
+                    'rxJava2': 'io.reactivex.rxjava2:rxjava:2.1.2',
+            ],
+
+
+            'support': [
+                    'appcompat': "com.android.support:appcompat-v7:${versions.supportLibrary}",
+            ],
+
+    ]
+}
