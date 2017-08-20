@@ -1,20 +1,13 @@
- [![Release](https://jitpack.io/v/ParkSangGwon/TedPermission.svg)](https://jitpack.io/ParkSangGwon/TedPermission)
+[![Release](https://jitpack.io/v/ParkSangGwon/TedPermission.svg)](https://jitpack.io/#ParkSangGwon/TedPermission)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-TedPermission-green.svg?style=true)](https://android-arsenal.com/details/1/3238)
 
 # What is TedPermission?
 
-After Android Marshmallow, you have to not only decalare permisions in `AndroidManifest.xml` but also request permissions at runtime.<br/>
-Furthermore anytime user can on/off permissions at application setting.<br/>
-When you use dangerous permissons(ex. CAMERA, READ_CONTACTS, READ_PHONE_STATE), you have to check and request permissions runtime.<br/>
-([See dangerous permissions](http://developer.android.com/intl/ko/guide/topics/security/permissions.html#normal-dangerous))<br/>
+After the update to Android 6.0 Marshmallow, we have to not only declare permissions in `AndroidManifest.xml`, but also request them at runtime. Furthermore, user can on/off permissions in application setting anytime. When you use **dangerous permissons**(ex. `CAMERA`, `READ_CONTACTS`, `READ_PHONE_STATE` **[etc](http://developer.android.com/intl/ko/guide/topics/security/permissions.html#normal-dangerous)**), you must check and request them runtime.<br/>
 
-You can make check function yourself.<br/>
-([How to Requesting Permissions at RunTime](http://developer.android.com/intl/ko/training/permissions/requesting.html))<br/>
+You can make your own permission check logic [like this](http://developer.android.com/intl/ko/training/permissions/requesting.html), but  it's so complex and hard to use functions Google offers: `checkSelfPermission()`, `requestPermissions()`, `onRequestPermissionsResult()`, `onActivityResult()`.
 
-But original check function is so complex and hard..<br/>
-(`checkSelfPermission()`, `requestPermissions()`, `onRequestPermissionsResult()`, `onActivityResult()` ...)
-
-TedPermission is simple permission check helper.
+TedPermission makes it easy to check and request android permissions.
 
 
 <br/><br/>
@@ -41,30 +34,27 @@ TedPermission is simple permission check helper.
 
 ### Gradle
 
+edit `root/app/build.gradle` like below.
+
 #### Normal
-
-```javascript
-
+```gradle
 dependencies {
     compile 'gun0912.ted:tedpermission:2.0.0'
 }
-
 ```
-#### RxJava1
-```javascript
 
+#### RxJava1
+```gradle
 dependencies {
     compile 'gun0912.ted:tedpermission-rx1:2.0.0'
 }
-
 ```
-#### RxJava2
-```javascript
 
+#### RxJava2
+```gradle
 dependencies {
     compile 'gun0912.ted:tedpermission-rx2:2.0.0'
 }
-
 ```
 
 If you think this library is useful, please press star button at upside.
@@ -80,7 +70,7 @@ If you think this library is useful, please press star button at upside.
 We will use PermissionListener for Permission Result.
 You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 
-```javascript
+```java
 
     PermissionListener permissionlistener = new PermissionListener() {
         @Override
@@ -95,21 +85,20 @@ You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 
 
     };
-
-
 ```
+
 #### -Start TedPermission 
-TedPermission class need `setPermissionListener()`, `setPermissions()`.
-and `check()` will start check permissions
+TedPermission class requires `setPermissionListener()`, `setPermissions()`, and `check()`
+`check()` will start to check permissions.
 
-```javascript
+`setRationaleMessage()` and `setDeniedMessage()` are optional methods.
 
+```java
     TedPermission.with(this)
     .setPermissionListener(permissionlistener)
     .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
     .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
     .check();
-
 ```
 
 <br/><br/>
@@ -243,4 +232,5 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-limitations under the License.```
+limitations under the License.
+```
