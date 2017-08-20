@@ -8,34 +8,29 @@
 
 
     <Button
-        android:id="@+id/btn_rationale_deny"
+        android:id="@+id/btn_normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rationale and Deny Dialog(Reccomand)"
+        android:text="Normal"
         />
 
 
     <Button
-        android:id="@+id/btn_only_deny_message"
+        android:id="@+id/btn_rxjava1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Only Deny Dialog"
+        android:text="RxJava1"
         />
 
 
     <Button
-        android:id="@+id/btn_only_rationale_message"
+        android:id="@+id/btn_rxjava2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Only Rationale Dialog"
+        android:text="RxJava2"
         />
 
-    <Button
-        android:id="@+id/btn_nomessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No Dialog(Permission check Only)"
-        />
+
 
     <Button
         android:id="@+id/btn_windowPermission"
