@@ -34,7 +34,7 @@ TedPermission makes it easy to check and request android permissions.
 
 ### Gradle
 
-edit `root/app/build.gradle` like below.
+Edit `root/app/build.gradle` like below.
 
 #### Normal
 ```gradle
@@ -108,7 +108,7 @@ TedPermission class requires `setPermissionListener()`, `setPermissions()`, and 
 If you use RxJava1, You can use `request()` method instead `check()`
 When Permission check finish, you can receive tedPermissionResult instance.
 tedPermissionResult instance has `isGranted()`, `getDeniedPermissions()`
-```javascript
+```java
 
     TedRxPermission.with(this)
         .setDeniedMessage(
@@ -135,7 +135,7 @@ tedPermissionResult instance has `isGranted()`, `getDeniedPermissions()`
 ### RxJava2
 Also RxJava2 can use `request()` like RxJava1
 
-```javascript
+```java
     TedRx2Permission.with(this)
         .setRationaleTitle(R.string.rationale_title)
         .setRationaleMessage(R.string.rationale_message) // "we need permission for read contact and find your location"
