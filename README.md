@@ -35,18 +35,40 @@ TedPermission is simple permission check helper.
 <br/><br/>
 
 
+
 ## Setup
 
 
 ### Gradle
 
+#### Normal
+
 ```javascript
 
 dependencies {
-    compile 'gun0912.ted:tedpermission:1.0.3'
+    compile 'gun0912.ted:tedpermission:2.0.0'
 }
 
 ```
+<br/><br/>
+#### RxJava1
+```javascript
+
+dependencies {
+    compile 'gun0912.ted:tedpermission-rx1:2.0.0'
+}
+
+```
+<br/><br/>
+#### RxJava2
+```javascript
+
+dependencies {
+    compile 'gun0912.ted:tedpermission-rx2:2.0.0'
+}
+
+```
+<br/><br/>
 
 If you think this library is useful, please press star button at upside.
 <br/>
@@ -56,8 +78,8 @@ If you think this library is useful, please press star button at upside.
 
 ## How to use
 
-
-### 1. Make PermissionListener
+### Normal
+#### 1. Make PermissionListener
 We will use PermissionListener for Permission Result.
 You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 
@@ -81,15 +103,13 @@ You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 ```
 
 <br/>
-### 2. Start TedPermission
+#### 2. Start TedPermission
 TedPermission class need `setPermissionListener()`, `setPermissions()`.
 and `check()` will start check permissions
 
-`setRationaleMessage()`,`setDeniedMessage()` is optional method.
-
 ```javascript
 
-    new TedPermission(this)
+    TedPermission.with(this)
     .setPermissionListener(permissionlistener)
     .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
     .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -98,26 +118,57 @@ and `check()` will start check permissions
 ```
 
 
-
-
-<br/>
-
-## Proguard
-If you use proguard, you have to add this code.
+### RxJava1
+If you use RxJava1, You can use `request()` method instead `check()`
 ```javascript
--keepattributes *Annotation*
--keepclassmembers class ** {
-    @com.squareup.otto.Subscribe public *;
-    @com.squareup.otto.Produce public *;
-}
-````
+
+    TedRxPermission.with(this)
+        .setDeniedMessage(
+            "If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+        .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
+        .request()
+        .subscribe(tedPermissionResult -> {
+          if (tedPermissionResult.isGranted()) {
+            Toast.makeText(RxJava1Activity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+          } else {
+            Toast.makeText(RxJava1Activity.this,
+                "Permission Denied\n" + tedPermissionResult.getDeniedPermissions().toString(), Toast.LENGTH_SHORT)
+                .show();
+          }
+        }, throwable -> {
+        }, () -> {
+        });
+
+```
+
+### RxJava2
+Also RxJava2 can use `request()` like RxJava1
+
+```javascript
+    TedRx2Permission.with(this)
+        .setRationaleTitle(R.string.rationale_title)
+        .setRationaleMessage(R.string.rationale_message) // "we need permission for read contact and find your location"
+        .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
+        .request()
+        .subscribe(tedPermissionResult -> {
+          if (tedPermissionResult.isGranted()) {
+            Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+          } else {
+            Toast.makeText(this,
+                "Permission Denied\n" + tedPermissionResult.getDeniedPermissions().toString(), Toast.LENGTH_SHORT)
+                .show();
+          }
+        }, throwable -> {
+        }, () -> {
+        });
+```
+
 
 
 <br/>
 
-##Customize
-You can customize something ...<br />
-
+## Customize
+TedPermission support this method<br />
 
 * `setGotoSettingButton(boolean) (default: true)`
 * `setRationaleTitle(R.string.xxx or String)`
@@ -173,18 +224,12 @@ You can customize something ...<br />
 ![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/Screenshot_cases.png?raw=true)    
 
 
-## Thanks 
-* [Otto](https://github.com/square/otto) - An enhanced Guava-based event bus with emphasis on Android support
-
-
-
-
 <br/><br/>
 
 
 ## License 
  ```code
-Copyright 2016 Ted Park
+Copyright 2017 Ted Park
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
