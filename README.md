@@ -1,15 +1,19 @@
-[![Release](https://jitpack.io/v/ParkSangGwon/TedPermission.svg)](https://jitpack.io/#ParkSangGwon/TedPermission)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-TedPermission-green.svg?style=true)](https://android-arsenal.com/details/1/3238)
 
 # What is TedPermission?
 
-After the update to Android 6.0 Marshmallow, we have to not only declare permissions in `AndroidManifest.xml`, but also request them at runtime. Furthermore, user can on/off permissions in application setting anytime. When you use **dangerous permissons**(ex. `CAMERA`, `READ_CONTACTS`, `READ_PHONE_STATE` **[etc](http://developer.android.com/intl/ko/guide/topics/security/permissions.html#normal-dangerous)**), you must check and request them runtime.<br/>
+After the update to Android 6.0 Marshmallow, we have to not only declare permissions in `AndroidManifest.xml`, but also request them at runtime. Furthermore, user can on/off permissions in application setting anytime. 
+<br/>When you use **dangerous permissons**(ex. `CAMERA`, `READ_CONTACTS`, `READ_PHONE_STATE`, ...), you must check and request them runtime.<br/>
+(http://developer.android.com/intl/ko/guide/topics/security/permissions.html#normal-dangerous)
 
 You can make your own permission check logic [like this](http://developer.android.com/intl/ko/training/permissions/requesting.html), but  it's so complex and hard to use functions Google offers: `checkSelfPermission()`, `requestPermissions()`, `onRequestPermissionsResult()`, `onActivityResult()`.
 
 TedPermission makes it easy to check and request android permissions.
 
 
+(For Korean)
+아래 블로그를 통해 마시멜로우 권한관련된 사항을 알아보세요
+<br/>http://gun0912.tistory.com/55
 <br/><br/>
 
 
