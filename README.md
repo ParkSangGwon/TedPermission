@@ -50,7 +50,6 @@ dependencies {
 }
 
 ```
-<br/><br/>
 #### RxJava1
 ```javascript
 
@@ -59,7 +58,6 @@ dependencies {
 }
 
 ```
-<br/><br/>
 #### RxJava2
 ```javascript
 
@@ -68,7 +66,6 @@ dependencies {
 }
 
 ```
-<br/><br/>
 
 If you think this library is useful, please press star button at upside.
 <br/>
@@ -79,7 +76,7 @@ If you think this library is useful, please press star button at upside.
 ## How to use
 
 ### Normal
-#### 1. Make PermissionListener
+#### -Make PermissionListener
 We will use PermissionListener for Permission Result.
 You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 
@@ -101,9 +98,7 @@ You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 
 
 ```
-
-<br/>
-#### 2. Start TedPermission
+#### -Start TedPermission 
 TedPermission class need `setPermissionListener()`, `setPermissions()`.
 and `check()` will start check permissions
 
