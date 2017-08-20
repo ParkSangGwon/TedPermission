@@ -112,9 +112,13 @@ and `check()` will start check permissions
 
 ```
 
+<br/><br/>
+
 
 ### RxJava1
 If you use RxJava1, You can use `request()` method instead `check()`
+When Permission check finish, you can receive tedPermissionResult instance.
+tedPermissionResult instance has `isGranted()`, `getDeniedPermissions()`
 ```javascript
 
     TedRxPermission.with(this)
@@ -135,6 +139,9 @@ If you use RxJava1, You can use `request()` method instead `check()`
         });
 
 ```
+
+<br/><br/>
+
 
 ### RxJava2
 Also RxJava2 can use `request()` like RxJava1
