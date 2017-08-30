@@ -1,22 +1,19 @@
- [![Release](https://jitpack.io/v/ParkSangGwon/TedPermission.svg)](https://jitpack.io/ParkSangGwon/TedPermission)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-TedPermission-green.svg?style=true)](https://android-arsenal.com/details/1/3238)
 
 # What is TedPermission?
 
-After Android Marshmallow, you have to not only decalare permisions in `AndroidManifest.xml` but also request permissions at runtime.<br/>
-Furthermore anytime user can on/off permissions at application setting.<br/>
-When you use dangerous permissons(ex. CAMERA, READ_CONTACTS, READ_PHONE_STATE), you have to check and request permissions runtime.<br/>
-([See dangerous permissions](http://developer.android.com/intl/ko/guide/topics/security/permissions.html#normal-dangerous))<br/>
+After the update to Android 6.0 Marshmallow, we have to not only declare permissions in `AndroidManifest.xml`, but also request them at runtime. Furthermore, user can on/off permissions in application setting anytime. 
+<br/>When you use **dangerous permissons**(ex. `CAMERA`, `READ_CONTACTS`, `READ_PHONE_STATE`, ...), you must check and request them runtime.<br/>
+(http://developer.android.com/intl/ko/guide/topics/security/permissions.html#normal-dangerous)
 
-You can make check function yourself.<br/>
-([How to Requesting Permissions at RunTime](http://developer.android.com/intl/ko/training/permissions/requesting.html))<br/>
+You can make your own permission check logic [like this](http://developer.android.com/intl/ko/training/permissions/requesting.html), but  it's so complex and hard to use functions Google offers: `checkSelfPermission()`, `requestPermissions()`, `onRequestPermissionsResult()`, `onActivityResult()`.
 
-But original check function is so complex and hard..<br/>
-(`checkSelfPermission()`, `requestPermissions()`, `onRequestPermissionsResult()`, `onActivityResult()` ...)
-
-TedPermission is simple permission check helper.
+TedPermission makes it easy to check and request android permissions.
 
 
+(For Korean)
+아래 블로그를 통해 마시멜로우 권한관련된 사항을 알아보세요
+<br/>http://gun0912.tistory.com/55
 <br/><br/>
 
 
@@ -35,17 +32,33 @@ TedPermission is simple permission check helper.
 <br/><br/>
 
 
+
 ## Setup
 
 
 ### Gradle
 
-```javascript
+Edit `root/app/build.gradle` like below.
 
+#### Normal
+```gradle
 dependencies {
-    compile 'gun0912.ted:tedpermission:1.0.3'
+    compile 'gun0912.ted:tedpermission:2.0.0'
 }
+```
 
+#### RxJava1
+```gradle
+dependencies {
+    compile 'gun0912.ted:tedpermission-rx1:2.0.0'
+}
+```
+
+#### RxJava2
+```gradle
+dependencies {
+    compile 'gun0912.ted:tedpermission-rx2:2.0.0'
+}
 ```
 
 If you think this library is useful, please press star button at upside.
@@ -56,12 +69,12 @@ If you think this library is useful, please press star button at upside.
 
 ## How to use
 
-
-### 1. Make PermissionListener
+### Normal
+#### -Make PermissionListener
 We will use PermissionListener for Permission Result.
 You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 
-```javascript
+```java
 
     PermissionListener permissionlistener = new PermissionListener() {
         @Override
@@ -76,48 +89,81 @@ You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 
 
     };
-
-
 ```
 
-<br/>
-### 2. Start TedPermission
-TedPermission class need `setPermissionListener()`, `setPermissions()`.
-and `check()` will start check permissions
+#### -Start TedPermission 
+TedPermission class requires `setPermissionListener()`, `setPermissions()`, and `check()`
+`check()` will start to check permissions.
 
-`setRationaleMessage()`,`setDeniedMessage()` is optional method.
+`setRationaleMessage()` and `setDeniedMessage()` are optional methods.
 
-```javascript
-
-    new TedPermission(this)
+```java
+    TedPermission.with(this)
     .setPermissionListener(permissionlistener)
     .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
     .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
     .check();
+```
 
+<br/><br/>
+
+
+### RxJava1
+If you use RxJava1, You can use `request()` method instead `check()`
+When Permission check finish, you can receive tedPermissionResult instance.
+tedPermissionResult instance has `isGranted()`, `getDeniedPermissions()`
+```java
+
+    TedRxPermission.with(this)
+        .setDeniedMessage(
+            "If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+        .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
+        .request()
+        .subscribe(tedPermissionResult -> {
+          if (tedPermissionResult.isGranted()) {
+            Toast.makeText(RxJava1Activity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+          } else {
+            Toast.makeText(RxJava1Activity.this,
+                "Permission Denied\n" + tedPermissionResult.getDeniedPermissions().toString(), Toast.LENGTH_SHORT)
+                .show();
+          }
+        }, throwable -> {
+        }, () -> {
+        });
+
+```
+
+<br/><br/>
+
+
+### RxJava2
+Also RxJava2 can use `request()` like RxJava1
+
+```java
+    TedRx2Permission.with(this)
+        .setRationaleTitle(R.string.rationale_title)
+        .setRationaleMessage(R.string.rationale_message) // "we need permission for read contact and find your location"
+        .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
+        .request()
+        .subscribe(tedPermissionResult -> {
+          if (tedPermissionResult.isGranted()) {
+            Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+          } else {
+            Toast.makeText(this,
+                "Permission Denied\n" + tedPermissionResult.getDeniedPermissions().toString(), Toast.LENGTH_SHORT)
+                .show();
+          }
+        }, throwable -> {
+        }, () -> {
+        });
 ```
 
 
 
-
 <br/>
 
-## Proguard
-If you use proguard, you have to add this code.
-```javascript
--keepattributes *Annotation*
--keepclassmembers class ** {
-    @com.squareup.otto.Subscribe public *;
-    @com.squareup.otto.Produce public *;
-}
-````
-
-
-<br/>
-
-##Customize
-You can customize something ...<br />
-
+## Customize
+TedPermission support this method<br />
 
 * `setGotoSettingButton(boolean) (default: true)`
 * `setRationaleTitle(R.string.xxx or String)`
@@ -173,18 +219,12 @@ You can customize something ...<br />
 ![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/Screenshot_cases.png?raw=true)    
 
 
-## Thanks 
-* [Otto](https://github.com/square/otto) - An enhanced Guava-based event bus with emphasis on Android support
-
-
-
-
 <br/><br/>
 
 
 ## License 
  ```code
-Copyright 2016 Ted Park
+Copyright 2017 Ted Park
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -196,4 +236,5 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-limitations under the License.```
+limitations under the License.
+```
