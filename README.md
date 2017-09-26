@@ -43,21 +43,21 @@ Edit `root/app/build.gradle` like below.
 #### Normal
 ```gradle
 dependencies {
-    compile 'gun0912.ted:tedpermission:2.0.0'
+    compile 'gun0912.ted:tedpermission:2.0.3'
 }
 ```
 
 #### RxJava1
 ```gradle
 dependencies {
-    compile 'gun0912.ted:tedpermission-rx1:2.0.0'
+    compile 'gun0912.ted:tedpermission-rx1:2.0.3'
 }
 ```
 
 #### RxJava2
 ```gradle
 dependencies {
-    compile 'gun0912.ted:tedpermission-rx2:2.0.0'
+    compile 'gun0912.ted:tedpermission-rx2:2.0.3'
 }
 ```
 
@@ -174,6 +174,13 @@ TedPermission support this method<br />
 * `setDeniedCloseButtonText(R.string.xxx or String) (default: close / 닫기)`
 * `setGotoSettingButtonText(R.string.xxx or String) (default: setting / 설정)`
 
+Also you can use util function.
+* `isGranted(Context context, String... permissions)`: Check permissions all granted
+* `isDenied(Context context, String... permissions)`: Check permissions all denied
+* `getDeniedPermissions(Context context, String... permissions)`
+* `canRequestPermission(Activity activity, String... permissions)`: If `true` you can request system popup, `false` mean user checked  `Never ask again`
+* `startSettingActivityForResult(Activity activity)`
+* `startSettingActivityForResult(Activity activity, int requestCode)`
 
 
 <br/><br/>
