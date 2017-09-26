@@ -10,6 +10,9 @@ import com.gun0912.tedpermission.util.ObjectUtils;
 
 public abstract class PermissionBuilder<T extends PermissionBuilder> {
 
+    private static final String PREFS_NAME_PERMISSION = "PREFS_NAME_PERMISSION";
+    private static final String PREFS_IS_FIRST_REQUEST = "PREFS_IS_FIRST_REQUEST";
+
     private PermissionListener listener;
     private String[] permissions;
     private CharSequence rationaleTitle;
@@ -30,7 +33,6 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
     }
 
     protected void checkPermissions() {
-
         if (listener == null) {
             throw new IllegalArgumentException("You must setPermissionListener() on TedPermission");
         } else if (ObjectUtils.isEmpty(permissions)) {
@@ -56,7 +58,9 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
         intent.putExtra(TedPermissionActivity.EXTRA_SETTING_BUTTON_TEXT, settingButtonText);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
         TedPermissionActivity.startActivity(context, intent, listener);
+        TedPermissionBase.setFirstRequest(context,permissions);
     }
 
     public T setPermissionListener(PermissionListener listener) {
