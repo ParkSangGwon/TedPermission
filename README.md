@@ -29,9 +29,9 @@ TedPermission makes it easy to check and request android permissions.
 
 
 
+[![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/google_play_150.png?raw=true)](https://play.google.com/store/apps/details?id=com.gun0912.tedpermissiondemo)
+
 <br/><br/>
-
-
 
 ## Setup
 
