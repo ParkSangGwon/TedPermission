@@ -6,9 +6,17 @@ android:
     - tools
     - build-tools-23.0.2
     - android-23
-    - add-on
-    - extra
+    - extra-google-m2repository
+    - extra-android-m2repository
   licenses:
     - 'android-sdk-preview-license-.+'
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
+
+install:
+  - echo y | android update sdk -u -a -t tools
+  - echo y | android update sdk -u -a -t platform-tools
+  - echo y | android update sdk -u -a -t build-tools-25.0.2
+  - echo y | android update sdk -u -a -t android-25
+  - echo y | android update sdk -u -a -t extra-google-m2repository
+  - echo y | android update sdk -u -a -t extra-android-m2repository
