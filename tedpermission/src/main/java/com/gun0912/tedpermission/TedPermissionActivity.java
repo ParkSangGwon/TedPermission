@@ -54,8 +54,11 @@ public class TedPermissionActivity extends AppCompatActivity {
     boolean isShownRationaleDialog;
 
     public static void startActivity(Context context, Intent intent, PermissionListener listener) {
-        context.startActivity(intent);
+        if(TedPermissionActivity.listener != null) {
+            throw new RuntimeException("You can not make the next request until the previous request has been completed.")
+        }
         TedPermissionActivity.listener = listener;
+        context.startActivity(intent);
     }
 
     @Override
@@ -176,6 +179,10 @@ public class TedPermissionActivity extends AppCompatActivity {
 
     private void permissionResult(ArrayList<String> deniedPermissions) {
         Log.v(TedPermission.TAG, "permissionResult(): " + deniedPermissions);
+
+        if(TedPermissionActivity.listener == null) {
+            throw new RuntimeException("listener cannot be null");
+        }
 
         if (ObjectUtils.isEmpty(deniedPermissions)) {
             TedPermissionActivity.listener.onPermissionGranted();
