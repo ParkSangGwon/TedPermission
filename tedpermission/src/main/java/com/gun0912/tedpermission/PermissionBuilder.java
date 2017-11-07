@@ -146,7 +146,7 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
     }
 
     public T setDeniedCloseButtonText(@StringRes int stringRes) {
-        return setDeniedMessage(getText(stringRes));
+        return setDeniedCloseButtonText(getText(stringRes));
     }
 
 }
