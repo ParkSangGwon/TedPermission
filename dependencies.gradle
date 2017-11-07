@@ -1,11 +1,11 @@
 ext {
     versions = [
             'minSdkVersion'    : 9,
-            'compileSdkVersion': 23,
+            'compileSdkVersion': 25,
             'targetSdkVersion' : 23,
-            'buildToolsVersion': '23.0.2',
+            'buildToolsVersion': '25.0.0',
 
-            'supportLibrary'   : '23.1.1',
+            'supportLibrary'   : '25.0.0',
     ]
 
     deps = [
