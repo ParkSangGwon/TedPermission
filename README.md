@@ -43,21 +43,21 @@ Edit `root/app/build.gradle` like below.
 #### Normal
 ```gradle
 dependencies {
-    compile 'gun0912.ted:tedpermission:2.0.3'
+    compile 'gun0912.ted:tedpermission:2.1.0'
 }
 ```
 
 #### RxJava1
 ```gradle
 dependencies {
-    compile 'gun0912.ted:tedpermission-rx1:2.0.3'
+    compile 'gun0912.ted:tedpermission-rx1:2.1.0'
 }
 ```
 
 #### RxJava2
 ```gradle
 dependencies {
-    compile 'gun0912.ted:tedpermission-rx2:2.0.3'
+    compile 'gun0912.ted:tedpermission-rx2:2.1.0'
 }
 ```
 
