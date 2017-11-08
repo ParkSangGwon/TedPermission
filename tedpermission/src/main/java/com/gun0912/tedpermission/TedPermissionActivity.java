@@ -19,7 +19,9 @@ import android.view.WindowManager;
 
 import com.gun0912.tedpermission.util.ObjectUtils;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 
 public class TedPermissionActivity extends AppCompatActivity {
 
@@ -40,7 +42,7 @@ public class TedPermissionActivity extends AppCompatActivity {
     public static final String EXTRA_SETTING_BUTTON_TEXT = "setting_button_text";
     public static final String EXTRA_RATIONALE_CONFIRM_TEXT = "rationale_confirm_text";
     public static final String EXTRA_DENIED_DIALOG_CLOSE_TEXT = "denied_dialog_close_text";
-    private static PermissionListener listener;
+    private static Deque<PermissionListener> permissionListenerStack;
     CharSequence rationaleTitle;
     CharSequence rationale_message;
     CharSequence denyTitle;
@@ -54,8 +56,11 @@ public class TedPermissionActivity extends AppCompatActivity {
     boolean isShownRationaleDialog;
 
     public static void startActivity(Context context, Intent intent, PermissionListener listener) {
+        if (permissionListenerStack == null) {
+            permissionListenerStack = new ArrayDeque<>();
+        }
+        permissionListenerStack.push(listener);
         context.startActivity(intent);
-        TedPermissionActivity.listener = listener;
     }
 
     @Override
@@ -176,13 +181,18 @@ public class TedPermissionActivity extends AppCompatActivity {
 
     private void permissionResult(ArrayList<String> deniedPermissions) {
         Log.v(TedPermission.TAG, "permissionResult(): " + deniedPermissions);
+        if (permissionListenerStack != null) {
+            PermissionListener listener = permissionListenerStack.pop();
 
-        if (ObjectUtils.isEmpty(deniedPermissions)) {
-            TedPermissionActivity.listener.onPermissionGranted();
-        } else {
-            TedPermissionActivity.listener.onPermissionDenied(deniedPermissions);
+            if (ObjectUtils.isEmpty(deniedPermissions)) {
+                listener.onPermissionGranted();
+            } else {
+                listener.onPermissionDenied(deniedPermissions);
+            }
+            if (permissionListenerStack.size() == 0) {
+                permissionListenerStack = null;
+            }
         }
-        TedPermissionActivity.listener = null;
 
         finish();
         overridePendingTransition(0, 0);
