@@ -238,7 +238,7 @@ public class TedPermissionActivity extends AppCompatActivity {
         outState.putCharSequence(EXTRA_DENY_MESSAGE, denyMessage);
         outState.putString(EXTRA_PACKAGE_NAME, packageName);
         outState.putBoolean(EXTRA_SETTING_BUTTON, hasSettingButton);
-        outState.putString(EXTRA_SETTING_BUTTON, deniedCloseButtonText);
+        outState.putString(EXTRA_DENIED_DIALOG_CLOSE_TEXT, deniedCloseButtonText);
         outState.putString(EXTRA_RATIONALE_CONFIRM_TEXT, rationaleConfirmText);
         outState.putString(EXTRA_SETTING_BUTTON_TEXT, settingButtonText);
 
