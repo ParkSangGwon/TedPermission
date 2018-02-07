@@ -2,17 +2,17 @@
 
 # What is TedPermission?
 
-After the update to Android 6.0 Marshmallow, we have to not only declare permissions in `AndroidManifest.xml`, but also request them at runtime. Furthermore, user can on/off permissions in application setting anytime. 
-<br/>When you use **dangerous permissons**(ex. `CAMERA`, `READ_CONTACTS`, `READ_PHONE_STATE`, ...), you must check and request them runtime.<br/>
+After the update to Android 6.0 Marshmallow, we have to not only declare permissions in `AndroidManifest.xml`, but also request them at runtime. Furthermore, the user can turn permissions on/off anytime in application settings. 
+<br/>When you use **dangerous permissons**(ex. `CAMERA`, `READ_CONTACTS`, `READ_PHONE_STATE`, ...), you must check and request them at runtime.<br/>
 (http://developer.android.com/intl/ko/guide/topics/security/permissions.html#normal-dangerous)
 
-You can make your own permission check logic [like this](http://developer.android.com/intl/ko/training/permissions/requesting.html), but  it's so complex and hard to use functions Google offers: `checkSelfPermission()`, `requestPermissions()`, `onRequestPermissionsResult()`, `onActivityResult()`.
+You can make your own permission check logic [like this](http://developer.android.com/intl/ko/training/permissions/requesting.html), but  it's very complex, mainly because functions Google offer are very hard to use: `checkSelfPermission()`, `requestPermissions()`, `onRequestPermissionsResult()`, `onActivityResult()`.
 
 TedPermission makes it easy to check and request android permissions.
 
 
 (For Korean)
-아래 블로그를 통해 마시멜로우 권한관련된 사항을 알아보세요
+아래 블로그를 통해 마시멜로우 권한 관련된 사항을 알아보세요
 <br/>http://gun0912.tistory.com/55
 <br/><br/>
 
@@ -26,8 +26,8 @@ TedPermission makes it easy to check and request android permissions.
 ![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/Screenshot.png?raw=true)    
            
            
-1. Request Permissions.
-2. If user denied permissions, we will show message dialog with Setting button.
+1. Request permissions.
+2. If user denied permissions, a message dialog with a button to go to Settings will appear. 
 
 
 ## Setup
@@ -58,7 +58,7 @@ dependencies {
 }
 ```
 
-If you think this library is useful, please press star button at upside.
+If you think this library is useful, please press the star button at the top.
 <br/>
 <img src="https://phaser.io/content/news/2015/09/10000-stars.png" width="200">
 
@@ -68,8 +68,8 @@ If you think this library is useful, please press star button at upside.
 
 ### Normal
 #### -Make PermissionListener
-We will use PermissionListener for Permission Result.
-You will get result to `onPermissionGranted()`, `onPermissionDenied()`
+We will use `PermissionListener` for handling permission check result.
+You will get result to `onPermissionGranted()` or `onPermissionDenied()` depending on approved permissions.
 
 ```java
 
@@ -89,10 +89,10 @@ You will get result to `onPermissionGranted()`, `onPermissionDenied()`
 ```
 
 #### -Start TedPermission 
-TedPermission class requires `setPermissionListener()`, `setPermissions()`, and `check()`
-`check()` will start to check permissions.
+TedPermission class requires `setPermissionListener()`, `setPermissions()`, and `check()` methods.
+Call `check()` to start checking for permissions.
 
-`setRationaleMessage()` and `setDeniedMessage()` are optional methods.
+`setRationaleMessage()` and `setDeniedMessage()` are optional methods for displaying messages.
 
 ```java
     TedPermission.with(this)
@@ -106,9 +106,9 @@ TedPermission class requires `setPermissionListener()`, `setPermissions()`, and 
 
 
 ### RxJava1
-If you use RxJava1, You can use `request()` method instead `check()`
-When Permission check finish, you can receive tedPermissionResult instance.
-tedPermissionResult instance has `isGranted()`, `getDeniedPermissions()`
+If you use RxJava1, You can use `request()` method instead `check()`.
+When permission check has finished, you will receive `TedPermissionResult` instance.
+`TedPermissionResult` instance has `isGranted()`, `getDeniedPermissions()` methods for checking permission check result.
 ```java
 
     TedRxPermission.with(this)
@@ -134,7 +134,7 @@ tedPermissionResult instance has `isGranted()`, `getDeniedPermissions()`
 
 
 ### RxJava2
-Also RxJava2 can use `request()` like RxJava1
+RxJava2 api is very similiar to RxJava 1. You can use `request()` method to request for permissions like RxJava1.
 
 ```java
     TedRx2Permission.with(this)
@@ -160,7 +160,7 @@ Also RxJava2 can use `request()` like RxJava1
 <br/>
 
 ## Customize
-TedPermission support this method<br />
+TedPermission supports the following methods.<br />
 
 * `setGotoSettingButton(boolean) (default: true)`
 * `setRationaleTitle(R.string.xxx or String)`
@@ -171,11 +171,11 @@ TedPermission support this method<br />
 * `setDeniedCloseButtonText(R.string.xxx or String) (default: close / 닫기)`
 * `setGotoSettingButtonText(R.string.xxx or String) (default: setting / 설정)`
 
-Also you can use util function.
-* `isGranted(Context context, String... permissions)`: Check permissions all granted
-* `isDenied(Context context, String... permissions)`: Check permissions all denied
+Also you can use the following utility functions.
+* `isGranted(Context context, String... permissions)`: Check if all permissions are granted
+* `isDenied(Context context, String... permissions)`: Check if all permissions are denied
 * `getDeniedPermissions(Context context, String... permissions)`
-* `canRequestPermission(Activity activity, String... permissions)`: If `true` you can request system popup, `false` mean user checked  `Never ask again`
+* `canRequestPermission(Activity activity, String... permissions)`: If `true` you can request a system popup, `false` means user checked  `Never ask again`.
 * `startSettingActivityForResult(Activity activity)`
 * `startSettingActivityForResult(Activity activity, int requestCode)`
 
@@ -185,37 +185,37 @@ Also you can use util function.
 
 
 ## Number of Cases
-1. Check permissions -> have permissions<br/>
-: `onPermissionGranted()` called<br/>
+1. Check permissions -> Already have permissions<br/>
+: `onPermissionGranted()` is called.<br/>
 
-2. Check permissions -> don't have permissions<br/>
-: show request dialog<br/>
+2. Check permissions -> Don't have permissions<br/>
+: Request dialog is shown.<br/>
 ![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/request_dialog.png?raw=true)<br/>
 
 
-3. show request dialog -> granted permissions<br/>
-: `onPermissionGranted()` called<br/>
+3. Show request dialog -> User granted permissions<br/>
+: `onPermissionGranted()` is called.<br/>
 
-4. show request dialog -> denied permissions<br/>
-: show denied dialog<br/>
+4. Show request dialog -> User denied one or more permissions<br/>
+: Denied dialog is shown.<br/>
 ![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/denied_dialog.png?raw=true)<br/>
 
-5. show denied dialog -> close<br/>
+5. Show denied dialog -> Close the dialog<br/>
 : `onPermissionDenied()` called<br/>
 
-6. show denied dialog -> setting<br/>
-: `startActivityForResult()` to `setting` activity<br/>
+6. Show denied dialog -> Setting button clicked<br/>
+: `startActivityForResult()` to application Setting Activity.<br/>
 ![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/setting_activity.png?raw=true)<br/>
 
 
-7. setting activity -> `onActivityResult()`<br/>
-: check permission<br/>
+7. Setting Activity -> `onActivityResult()`<br/>
+: Check permissions again<br/>
 
-8. check permission -> granted permissions<br/>
-: `onPermissionGranted()` called<br/>
+8. Check permission -> Permissions are granted<br/>
+: `onPermissionGranted()` is called.<br/>
 
-9. check permission -> denied permissions<br/>
-: `onPermissionDenied()` called<br/>
+9. Check permission -> There are denied permissions<br/>
+: `onPermissionDenied()` is called.<br/>
  
 <br/><br/>
 
