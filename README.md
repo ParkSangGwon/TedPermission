@@ -2,7 +2,7 @@
 
 # What is TedPermission?
 
-After the update to Android 6.0 Marshmallow, we have to not only declare permissions in `AndroidManifest.xml`, but also request them at runtime. Furthermore, user can turn permissions on/off anytime in application settings. 
+After the update to Android 6.0 Marshmallow, we have to not only declare permissions in `AndroidManifest.xml`, but also request them at runtime. Furthermore, the user can turn permissions on/off anytime in application settings. 
 <br/>When you use **dangerous permissons**(ex. `CAMERA`, `READ_CONTACTS`, `READ_PHONE_STATE`, ...), you must check and request them at runtime.<br/>
 (http://developer.android.com/intl/ko/guide/topics/security/permissions.html#normal-dangerous)
 
@@ -172,10 +172,10 @@ TedPermission supports the following methods.<br />
 * `setGotoSettingButtonText(R.string.xxx or String) (default: setting / 설정)`
 
 Also you can use the following utility functions.
-* `isGranted(Context context, String... permissions)`: Check permissions all granted
-* `isDenied(Context context, String... permissions)`: Check permissions all denied
+* `isGranted(Context context, String... permissions)`: Check if all permissions are granted
+* `isDenied(Context context, String... permissions)`: Check if all permissions are denied
 * `getDeniedPermissions(Context context, String... permissions)`
-* `canRequestPermission(Activity activity, String... permissions)`: If `true` you can request system popup, `false` mean user checked  `Never ask again`
+* `canRequestPermission(Activity activity, String... permissions)`: If `true` you can request a system popup, `false` means user checked  `Never ask again`.
 * `startSettingActivityForResult(Activity activity)`
 * `startSettingActivityForResult(Activity activity, int requestCode)`
 
@@ -185,36 +185,36 @@ Also you can use the following utility functions.
 
 
 ## Number of Cases
-1. Check permissions -> have permissions<br/>
+1. Check permissions -> Already have permissions<br/>
 : `onPermissionGranted()` is called.<br/>
 
-2. Check permissions -> don't have permissions<br/>
+2. Check permissions -> Don't have permissions<br/>
 : Request dialog is shown.<br/>
 ![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/request_dialog.png?raw=true)<br/>
 
 
-3. show request dialog -> granted permissions<br/>
+3. Show request dialog -> User granted permissions<br/>
 : `onPermissionGranted()` is called.<br/>
 
-4. show request dialog -> denied permissions<br/>
+4. Show request dialog -> User denied one or more permissions<br/>
 : Denied dialog is shown.<br/>
 ![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/denied_dialog.png?raw=true)<br/>
 
-5. show denied dialog -> close<br/>
+5. Show denied dialog -> Close the dialog<br/>
 : `onPermissionDenied()` called<br/>
 
-6. show denied dialog -> setting<br/>
-: `startActivityForResult()` to `setting` activity.<br/>
+6. Show denied dialog -> Setting button clicked<br/>
+: `startActivityForResult()` to application Setting Activity.<br/>
 ![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/setting_activity.png?raw=true)<br/>
 
 
-7. setting activity -> `onActivityResult()`<br/>
-: Check permission<br/>
+7. Setting Activity -> `onActivityResult()`<br/>
+: Check permissions again<br/>
 
-8. check permission -> granted permissions<br/>
+8. Check permission -> Permissions are granted<br/>
 : `onPermissionGranted()` is called.<br/>
 
-9. check permission -> denied permissions<br/>
+9. Check permission -> There are denied permissions<br/>
 : `onPermissionDenied()` is called.<br/>
  
 <br/><br/>
