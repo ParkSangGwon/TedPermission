@@ -3,18 +3,8 @@
 <resources>
 
   <style name="Theme.Transparent.Permission"
-      parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="android:windowIsTranslucent">true</item>
-    <item name="android:windowBackground">@android:color/transparent</item>
-    <item name="android:windowContentOverlay">@null</item>
-    <item name="android:windowIsFloating">true</item>
-    <item name="android:backgroundDimEnabled">false</item>
-
+      parent="Theme.Transparent.Permission.Base">
     <item name="android:windowActionBar">false</item>
-    <item name="android:windowNoTitle">true</item>
-    <item name="windowNoTitle">true</item>
-    <item name="windowActionBar">false</item>
-
-
   </style>
+
 </resources>
