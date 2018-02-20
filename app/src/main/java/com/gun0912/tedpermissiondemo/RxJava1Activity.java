@@ -34,8 +34,7 @@ public class RxJava1Activity extends AppCompatActivity {
     };
 
     TedRxPermission.with(this)
-        .setDeniedMessage(
-            "If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+        .setDeniedMessage(R.string.denided_message)
         .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
         .request()
         .subscribe(tedPermissionResult -> {

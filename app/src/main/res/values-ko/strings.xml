@@ -2,9 +2,8 @@
     <string name="app_name">TedPermissionDemo</string>
 
 
-    <string name="custom_close_text">Custom Close</string>
-
-    <string name="rationale_title">Permission required</string>
-    <string name="rationale_message">we need permission for read <b>contact</b> and find your <b>location</b></string>
-
+    <string name="rationale_title">권한 요청</string>
+    <string name="rationale_message"><b>주소록</b>과 <b>위치정보</b>를 읽기위해 권한이 필요합니다</string>
+    <string name="denided_title">권한 요청 거절됨</string>
+    <string name="denided_message">권한 요청에 동의하지 않으시면, 서비스를 이용하실 수 없습니다.\n\n[설정] &gt; [권한]에서 권한을 허용해 주십시요.</string>
 </resources>

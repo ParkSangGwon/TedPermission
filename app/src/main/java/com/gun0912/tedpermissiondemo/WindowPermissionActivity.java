@@ -40,7 +40,7 @@ public class WindowPermissionActivity extends AppCompatActivity{
         TedPermission.with(this)
                 .setPermissionListener(permissionlistener)
                 .setRationaleMessage("we need permission for read contact, find your location and system alert window")
-                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                .setDeniedMessage(R.string.denided_message)
                 .setGotoSettingButtonText("setting")
                 .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SYSTEM_ALERT_WINDOW)
                 .check();

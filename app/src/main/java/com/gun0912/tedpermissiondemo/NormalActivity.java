@@ -38,9 +38,8 @@ public class NormalActivity extends AppCompatActivity {
         .setPermissionListener(permissionlistener)
         .setRationaleTitle(R.string.rationale_title)
         .setRationaleMessage(R.string.rationale_message)
-        .setDeniedTitle("Permission denied")
-        .setDeniedMessage(
-            "If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+        .setDeniedTitle(R.string.denided_title)
+        .setDeniedMessage(R.string.denided_message)
         .setGotoSettingButtonText("bla bla")
         .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
         .check();
