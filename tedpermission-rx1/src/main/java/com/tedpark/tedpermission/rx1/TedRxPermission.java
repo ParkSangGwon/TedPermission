@@ -9,6 +9,7 @@ import com.gun0912.tedpermission.TedPermissionResult;
 
 import java.util.ArrayList;
 
+import java.util.List;
 import rx.Observable;
 import rx.Observable.OnSubscribe;
 import rx.Subscriber;
@@ -38,7 +39,7 @@ public class TedRxPermission extends TedPermissionBase {
                         }
 
                         @Override
-                        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                        public void onPermissionDenied(List<String> deniedPermissions) {
                             emitter.onNext(new TedPermissionResult(deniedPermissions));
                             emitter.onCompleted();
                         }

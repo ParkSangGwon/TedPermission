@@ -13,6 +13,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.annotations.NonNull;
+import java.util.List;
 
 public class TedRx2Permission extends TedPermissionBase {
 
@@ -39,7 +40,7 @@ public class TedRx2Permission extends TedPermissionBase {
                         }
 
                         @Override
-                        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                        public void onPermissionDenied(List<String> deniedPermissions) {
                             emitter.onNext(new TedPermissionResult(deniedPermissions));
                             emitter.onComplete();
                         }
