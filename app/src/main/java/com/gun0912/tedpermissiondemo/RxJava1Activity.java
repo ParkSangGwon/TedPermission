@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 import com.gun0912.tedpermission.PermissionListener;
 import com.tedpark.tedpermission.rx1.TedRxPermission;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by TedPark on 16. 2. 21..
@@ -25,7 +25,7 @@ public class RxJava1Activity extends AppCompatActivity {
       }
 
       @Override
-      public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+      public void onPermissionDenied(List<String> deniedPermissions) {
         Toast.makeText(RxJava1Activity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT)
             .show();
       }
