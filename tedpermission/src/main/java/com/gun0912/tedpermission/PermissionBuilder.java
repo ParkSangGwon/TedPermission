@@ -106,6 +106,13 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
         return (T) this;
     }
 
+    public T addPermissions(String[] permissions) {
+        if (permissions != null) {
+            this.permissions.addAll(Arrays.asList(permissions));
+        }
+        return (T) this;
+    }
+
     public T addSinglePermission(String permission) {
         this.permissions.add(permission);
         return (T) this;

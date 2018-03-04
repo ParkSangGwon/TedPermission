@@ -1,4 +1,4 @@
-package com.yurich.tedpermission_kotlin_dsl
+package com.yurich.tedpermission_kotlin_dsl.dsl
 
 import android.content.Context
 import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
@@ -25,6 +25,10 @@ class Dsl(context: Context) {
         tedPermission.addPermissions(this)
     }
 
+    operator fun Array<String>.unaryPlus() {
+        tedPermission.addPermissions(this.asList())
+    }
+
     @PermissionBuilder.ScreenOrientation
     var screenOrientation: Int = SCREEN_ORIENTATION_UNSPECIFIED
         set(newValue) {
@@ -35,7 +39,7 @@ class Dsl(context: Context) {
         Rationale().apply(body)
     }
 
-    fun toSettings(body: GoToSettings.() -> Unit) {
+    fun inSettings(body: GoToSettings.() -> Unit) {
         tedPermission.setGotoSettingButton(true)
         GoToSettings().apply(body)
     }

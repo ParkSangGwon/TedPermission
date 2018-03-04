@@ -43,5 +43,4 @@ dependencies {
     compile project(':tedpermission')
     compile project(':tedpermission-rx2')
     compile project(':tedpermission-rx1')
-    compile project(':tedpermission-kotlin-dsl')
 }

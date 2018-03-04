@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TedPermissionDemoKotlinDsl</string>
+
+    <string name="custom_close_text">Custom Close</string>
+
+    <string name="rationale_title">Permission required</string>
+    <string name="rationale_message">we need permission for read <b>contact</b> and find your <b>location</b></string>
+
+</resources>

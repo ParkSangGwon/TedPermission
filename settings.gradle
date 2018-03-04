@@ -1,1 +1,1 @@
-include ':app', ':tedpermission', ':tedpermission-rx1', ':tedpermission-rx2', ':tedpermission-kotlin-dsl'
+include ':app', ':tedpermission', ':tedpermission-rx1', ':tedpermission-rx2', ':tedpermission-kotlin-dsl', ':app-kotlin'

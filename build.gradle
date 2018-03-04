@@ -6,6 +6,10 @@ buildscript {
         jcenter()
         mavenCentral()
 
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
@@ -19,6 +23,7 @@ buildscript {
 
     apply from: 'dependencies.gradle'
 
+
 }
 
 
@@ -26,6 +31,10 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
 
     group = GROUP
@@ -35,4 +44,3 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
