@@ -4,8 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+
+import com.gun0912.tedpermission.util.ObjectUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -13,21 +14,38 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static android.content.pm.ActivityInfo.*;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_BEHIND;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_FULL_USER;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LOCKED;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_NOSENSOR;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_SENSOR;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT;
 
-@SuppressWarnings("unchecked")
 public abstract class PermissionBuilder<T extends PermissionBuilder> {
 
     private static final String PREFS_NAME_PERMISSION = "PREFS_NAME_PERMISSION";
     private static final String PREFS_IS_FIRST_REQUEST = "PREFS_IS_FIRST_REQUEST";
 
     private PermissionListener listener;
+
     private final List<String> permissions = new ArrayList<>();
 
     private CharSequence rationaleTitle;
     private CharSequence rationaleMessage;
+
     private CharSequence denyTitle;
     private CharSequence denyMessage;
+
     private CharSequence settingButtonText;
 
     private boolean hasSettingBtn = true;
@@ -50,7 +68,7 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
     protected void checkPermissions() {
         if (listener == null) {
             throw new IllegalArgumentException("You must setPermissionListener() on TedPermission");
-        } else if (permissions.isEmpty()) {
+        } else if (ObjectUtils.isEmpty(permissions)) {
             throw new IllegalArgumentException("You must setPermissions() on TedPermission");
         }
 
@@ -60,7 +78,7 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
         }
 
         Intent intent = new Intent(context, TedPermissionActivity.class);
-        intent.putExtra(TedPermissionActivity.EXTRA_PERMISSIONS, permissionsAsStringArray());
+        intent.putExtra(TedPermissionActivity.EXTRA_PERMISSIONS, ObjectUtils.stringListAsStringArray(permissions));
 
         intent.putExtra(TedPermissionActivity.EXTRA_RATIONALE_TITLE, rationaleTitle);
         intent.putExtra(TedPermissionActivity.EXTRA_RATIONALE_MESSAGE, rationaleMessage);
@@ -76,12 +94,7 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
         TedPermissionActivity.startActivity(context, intent, listener);
-        TedPermissionBase.setFirstRequest(context, permissionsAsStringArray());
-    }
-
-    @NonNull
-    private String[] permissionsAsStringArray() {
-        return permissions.toArray(new String[permissions.size()]);
+        TedPermissionBase.setFirstRequest(context, permissions);
     }
 
     public T setPermissionListener(PermissionListener listener) {
@@ -102,13 +115,6 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
     public T addPermissions(List<String> permissions) {
         if (permissions != null) {
             this.permissions.addAll(permissions);
-        }
-        return (T) this;
-    }
-
-    public T addPermissions(String[] permissions) {
-        if (permissions != null) {
-            this.permissions.addAll(Arrays.asList(permissions));
         }
         return (T) this;
     }
@@ -208,10 +214,13 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
             SCREEN_ORIENTATION_SENSOR_PORTRAIT,
             SCREEN_ORIENTATION_REVERSE_LANDSCAPE,
             SCREEN_ORIENTATION_REVERSE_PORTRAIT,
-            SCREEN_ORIENTATION_FULL_SENSOR
+            SCREEN_ORIENTATION_FULL_SENSOR,
+            SCREEN_ORIENTATION_USER_LANDSCAPE,
+            SCREEN_ORIENTATION_USER_PORTRAIT,
+            SCREEN_ORIENTATION_FULL_USER,
+            SCREEN_ORIENTATION_LOCKED
     })
     @Retention(RetentionPolicy.SOURCE)
-    public @interface ScreenOrientation {
-    }
+    public @interface ScreenOrientation {}
 
 }

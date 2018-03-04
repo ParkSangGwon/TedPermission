@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.yurich.tedpermission_kotlin_dsl" />
+<manifest package="com.gun0912.tedpermission_kotlin_dsl" />

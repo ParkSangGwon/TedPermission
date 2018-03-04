@@ -1,10 +1,10 @@
-package com.yurich.app_kotlin
+package com.gun0912.app_kotlin
 
 import android.Manifest
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import com.yurich.tedpermission_kotlin_dsl.dsl.checkPermissions
+import com.gun0912.tedpermission_kotlin_dsl.dsl.checkPermissions
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -14,9 +14,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         checkPermissions {
+
             +Manifest.permission.CAMERA
-            +Manifest.permission.READ_CONTACTS
-            +listOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+            +Manifest.permission.ACCESS_COARSE_LOCATION
+
+            +listOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
             withPermissionListener {
 
@@ -40,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                 message("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
             }
 
-            inSettings {
+            onProceedingToSettings {
                 closeButtonText("Go to settings")
             }
 

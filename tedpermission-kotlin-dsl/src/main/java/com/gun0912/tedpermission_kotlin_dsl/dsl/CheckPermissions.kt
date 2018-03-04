@@ -1,6 +1,6 @@
 @file:JvmName("CheckPermissions")
 
-package com.yurich.tedpermission_kotlin_dsl.dsl
+package com.gun0912.tedpermission_kotlin_dsl.dsl
 
 import android.content.Context
 

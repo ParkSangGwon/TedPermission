@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by TedPark on 2017. 9. 26..
@@ -106,7 +107,7 @@ public abstract class TedPermissionBase {
         fragment.startActivityForResult(getSettingIntent(fragment.getActivity()), requestCode);
     }
 
-    static void setFirstRequest(Context context, @NonNull String[] permissions) {
+    static void setFirstRequest(Context context, List<String> permissions) {
         for (String permission : permissions) {
             setFirstRequest(context, permission);
         }

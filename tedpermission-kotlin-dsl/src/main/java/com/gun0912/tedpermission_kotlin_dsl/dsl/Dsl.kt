@@ -1,11 +1,11 @@
-package com.yurich.tedpermission_kotlin_dsl.dsl
+package com.gun0912.tedpermission_kotlin_dsl.dsl
 
 import android.content.Context
 import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
 import android.support.annotation.StringRes
 import com.gun0912.tedpermission.PermissionBuilder
 import com.gun0912.tedpermission.TedPermission
-import com.yurich.tedpermission_kotlin_dsl.listener.PermissionListenerBuilder
+import com.gun0912.tedpermission_kotlin_dsl.listener.PermissionListenerBuilder
 
 class Dsl(context: Context) {
 
@@ -39,7 +39,7 @@ class Dsl(context: Context) {
         Rationale().apply(body)
     }
 
-    fun inSettings(body: GoToSettings.() -> Unit) {
+    fun onProceedingToSettings(body: GoToSettings.() -> Unit) {
         tedPermission.setGotoSettingButton(true)
         GoToSettings().apply(body)
     }
