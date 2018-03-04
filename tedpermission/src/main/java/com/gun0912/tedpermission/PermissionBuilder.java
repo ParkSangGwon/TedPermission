@@ -13,18 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_BEHIND;
-import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
-import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_NOSENSOR;
-import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
-import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
-import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
-import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_SENSOR;
-import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
-import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT;
-import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
-import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER;
+import static android.content.pm.ActivityInfo.*;
 
 @SuppressWarnings("unchecked")
 public abstract class PermissionBuilder<T extends PermissionBuilder> {
@@ -96,13 +85,24 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
     }
 
     public T setPermissionListener(PermissionListener listener) {
-        this.listener = listener;
+        if (listener != null) {
+            this.listener = listener;
+        }
         return (T) this;
     }
 
     public T setPermissions(String... permissions) {
-        this.permissions.clear();
-        this.permissions.addAll(Arrays.asList(permissions));
+        if (permissions != null) {
+            this.permissions.clear();
+            this.permissions.addAll(Arrays.asList(permissions));
+        }
+        return (T) this;
+    }
+
+    public T addPermissions(List<String> permissions) {
+        if (permissions != null) {
+            this.permissions.addAll(permissions);
+        }
         return (T) this;
     }
 
@@ -111,15 +111,26 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
         return (T) this;
     }
 
-    public T setRationaleMessage(@StringRes int stringRes) {
-        return setRationaleMessage(getText(stringRes));
+    private CharSequence getText(@StringRes int stringRes) {
+        return context.getText(stringRes);
     }
 
-    private CharSequence getText(@StringRes int stringRes) {
-        if (stringRes <= 0) {
-            throw new IllegalArgumentException("Invalid String resource id");
-        }
-        return context.getText(stringRes);
+    public T setGotoSettingButton(boolean hasSettingBtn) {
+        this.hasSettingBtn = hasSettingBtn;
+        return (T) this;
+    }
+
+    public T setGotoSettingButtonText(@StringRes int stringRes) {
+        return setGotoSettingButtonText(getText(stringRes));
+    }
+
+    public T setGotoSettingButtonText(CharSequence rationaleConfirmText) {
+        this.settingButtonText = rationaleConfirmText;
+        return (T) this;
+    }
+
+    public T setRationaleMessage(@StringRes int stringRes) {
+        return setRationaleMessage(getText(stringRes));
     }
 
     public T setRationaleMessage(CharSequence rationaleMessage) {
@@ -134,6 +145,15 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
 
     public T setRationaleTitle(CharSequence rationaleMessage) {
         this.rationaleTitle = rationaleMessage;
+        return (T) this;
+    }
+
+    public T setRationaleConfirmText(@StringRes int stringRes) {
+        return setRationaleConfirmText(getText(stringRes));
+    }
+
+    public T setRationaleConfirmText(CharSequence rationaleConfirmText) {
+        this.rationaleConfirmText = rationaleConfirmText;
         return (T) this;
     }
 
@@ -155,29 +175,6 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
         return (T) this;
     }
 
-    public T setGotoSettingButton(boolean hasSettingBtn) {
-        this.hasSettingBtn = hasSettingBtn;
-        return (T) this;
-    }
-
-    public T setGotoSettingButtonText(@StringRes int stringRes) {
-        return setGotoSettingButtonText(getText(stringRes));
-    }
-
-    public T setGotoSettingButtonText(CharSequence rationaleConfirmText) {
-        this.settingButtonText = rationaleConfirmText;
-        return (T) this;
-    }
-
-    public T setRationaleConfirmText(@StringRes int stringRes) {
-        return setRationaleConfirmText(getText(stringRes));
-    }
-
-    public T setRationaleConfirmText(CharSequence rationaleConfirmText) {
-        this.rationaleConfirmText = rationaleConfirmText;
-        return (T) this;
-    }
-
     public T setDeniedCloseButtonText(CharSequence deniedCloseButtonText) {
         this.deniedCloseButtonText = deniedCloseButtonText;
         return (T) this;
@@ -187,7 +184,7 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
         return setDeniedCloseButtonText(getText(stringRes));
     }
 
-    public T setScreenOrientation(int requestedOrientation) {
+    public T setScreenOrientation(@ScreenOrientation int requestedOrientation) {
         this.requestedOrientation = requestedOrientation;
         return (T) this;
     }
@@ -207,7 +204,7 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
             SCREEN_ORIENTATION_FULL_SENSOR
     })
     @Retention(RetentionPolicy.SOURCE)
-    @interface ScreenOrientation {
+    public @interface ScreenOrientation {
     }
 
 }

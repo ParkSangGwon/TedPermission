@@ -9,7 +9,7 @@ public class TedPermissionResult {
   private ArrayList<String> deniedPermissions;
 
   public TedPermissionResult(ArrayList<String> deniedPermissions) {
-    this.granted = deniedPermissions == null || deniedPermissions.isEmpty();
+    this.granted = ObjectUtils.isEmpty(deniedPermissions);
     this.deniedPermissions = deniedPermissions;
   }
 
