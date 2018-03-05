@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             onProceedingToSettings {
-                closeButtonText("Go to settings")
+                closeButtonText(R.string.custom_close_text)
             }
 
         }
