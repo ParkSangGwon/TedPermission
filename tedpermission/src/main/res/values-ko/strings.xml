@@ -1,6 +1,5 @@
 <resources>
-
-
+    <string name="app_name">TedPermission</string>
 
     <string name="tedpermission_setting">설정</string>
     <string name="tedpermission_close">닫기</string>

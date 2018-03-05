@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">TedPermission</string>
 
-
     <string name="tedpermission_setting">Setting</string>
     <string name="tedpermission_close">Close</string>
     <string name="tedpermission_confirm">Confirm</string>
-
 </resources>

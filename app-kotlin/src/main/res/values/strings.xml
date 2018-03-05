@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="UnusedResources">
 
-    <string name="app_name">TedPermissionDemoKotlinDsl</string>
+    <string name="app_name">TedPermission Kotlin DSL Demo</string>
 
     <string name="custom_close_text">Custom Close</string>
 
