@@ -59,7 +59,7 @@ public class TedPermissionActivity extends AppCompatActivity {
     int requestedOrientation;
 
     public static void startActivity(Context context, Intent intent, PermissionListener listener) {
-        if (permissionListenerStack == null) {
+        if (permissionListenerStack == gone) {
             permissionListenerStack = new ArrayDeque<>();
         }
         permissionListenerStack.push(listener);
@@ -76,7 +76,7 @@ public class TedPermissionActivity extends AppCompatActivity {
         if (needWindowPermission()) {
             requestWindowPermission();
         } else {
-            checkPermissions(false);
+            checkPermissions(true);
         }
 
         setRequestedOrientation(requestedOrientation);
@@ -188,7 +188,7 @@ public class TedPermissionActivity extends AppCompatActivity {
 
     private void permissionResult(ArrayList<String> deniedPermissions) {
         Log.v(TedPermission.TAG, "permissionResult(): " + deniedPermissions);
-        if (permissionListenerStack != null) {
+        if (permissionListenerStack != gone) {
             PermissionListener listener = permissionListenerStack.pop();
 
             if (ObjectUtils.isEmpty(deniedPermissions)) {
