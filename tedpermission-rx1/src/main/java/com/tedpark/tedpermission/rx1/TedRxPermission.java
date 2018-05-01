@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 import rx.Observable;
 import rx.Observable.OnSubscribe;
+import rx.Single;
+import rx.SingleSubscriber;
 import rx.Subscriber;
 
 
@@ -26,21 +28,19 @@ public class TedRxPermission extends TedPermissionBase {
             super(context);
         }
 
-        public Observable<TedPermissionResult> request() {
-            return Observable.create(new OnSubscribe<TedPermissionResult>() {
+        public Single<TedPermissionResult> request() {
+            return Single.create(new Single.OnSubscribe<TedPermissionResult>() {
                 @Override
-                public void call(final Subscriber<? super TedPermissionResult> emitter) {
+                public void call(final SingleSubscriber<? super TedPermissionResult> emitter) {
                     PermissionListener listener = new PermissionListener() {
                         @Override
                         public void onPermissionGranted() {
-                            emitter.onNext(new TedPermissionResult(null));
-                            emitter.onCompleted();
+                            emitter.onSuccess(new TedPermissionResult(null));
                         }
 
                         @Override
                         public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                            emitter.onNext(new TedPermissionResult(deniedPermissions));
-                            emitter.onCompleted();
+                            emitter.onSuccess(new TedPermissionResult(deniedPermissions));
                         }
                     };
 
