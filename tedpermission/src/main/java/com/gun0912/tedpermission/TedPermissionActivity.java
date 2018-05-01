@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ public class TedPermissionActivity extends AppCompatActivity {
     public static final String EXTRA_SETTING_BUTTON_TEXT = "setting_button_text";
     public static final String EXTRA_RATIONALE_CONFIRM_TEXT = "rationale_confirm_text";
     public static final String EXTRA_DENIED_DIALOG_CLOSE_TEXT = "denied_dialog_close_text";
+    public static final String EXTRA_SCREEN_ORIENTATION = "screen_orientation";
     private static Deque<PermissionListener> permissionListenerStack;
     CharSequence rationaleTitle;
     CharSequence rationale_message;
@@ -54,6 +56,7 @@ public class TedPermissionActivity extends AppCompatActivity {
     String deniedCloseButtonText;
     String rationaleConfirmText;
     boolean isShownRationaleDialog;
+    int requestedOrientation;
 
     public static void startActivity(Context context, Intent intent, PermissionListener listener) {
         if (permissionListenerStack == null) {
@@ -75,6 +78,8 @@ public class TedPermissionActivity extends AppCompatActivity {
         } else {
             checkPermissions(false);
         }
+
+        setRequestedOrientation(requestedOrientation);
     }
 
 
@@ -93,6 +98,7 @@ public class TedPermissionActivity extends AppCompatActivity {
             deniedCloseButtonText = savedInstanceState.getString(EXTRA_DENIED_DIALOG_CLOSE_TEXT);
 
             settingButtonText = savedInstanceState.getString(EXTRA_SETTING_BUTTON_TEXT);
+            requestedOrientation = savedInstanceState.getInt(EXTRA_SCREEN_ORIENTATION);
         } else {
 
             Intent intent = getIntent();
@@ -106,6 +112,7 @@ public class TedPermissionActivity extends AppCompatActivity {
             rationaleConfirmText = intent.getStringExtra(EXTRA_RATIONALE_CONFIRM_TEXT);
             deniedCloseButtonText = intent.getStringExtra(EXTRA_DENIED_DIALOG_CLOSE_TEXT);
             settingButtonText = intent.getStringExtra(EXTRA_SETTING_BUTTON_TEXT);
+            requestedOrientation = intent.getIntExtra(EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         }
 
@@ -238,7 +245,7 @@ public class TedPermissionActivity extends AppCompatActivity {
         outState.putCharSequence(EXTRA_DENY_MESSAGE, denyMessage);
         outState.putString(EXTRA_PACKAGE_NAME, packageName);
         outState.putBoolean(EXTRA_SETTING_BUTTON, hasSettingButton);
-        outState.putString(EXTRA_SETTING_BUTTON, deniedCloseButtonText);
+        outState.putString(EXTRA_DENIED_DIALOG_CLOSE_TEXT, deniedCloseButtonText);
         outState.putString(EXTRA_RATIONALE_CONFIRM_TEXT, rationaleConfirmText);
         outState.putString(EXTRA_SETTING_BUTTON_TEXT, settingButtonText);
 

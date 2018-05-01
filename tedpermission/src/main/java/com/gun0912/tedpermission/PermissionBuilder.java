@@ -2,6 +2,7 @@ package com.gun0912.tedpermission;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.support.annotation.StringRes;
 
@@ -24,12 +25,14 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
 
     private CharSequence deniedCloseButtonText;
     private CharSequence rationaleConfirmText;
+    private int requestedOrientation;
     private Context context;
 
     public PermissionBuilder(Context context) {
         this.context = context;
         deniedCloseButtonText = context.getString(R.string.tedpermission_close);
         rationaleConfirmText = context.getString(R.string.tedpermission_confirm);
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
     }
 
     protected void checkPermissions() {
@@ -56,6 +59,7 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
         intent.putExtra(TedPermissionActivity.EXTRA_DENIED_DIALOG_CLOSE_TEXT, deniedCloseButtonText);
         intent.putExtra(TedPermissionActivity.EXTRA_RATIONALE_CONFIRM_TEXT, rationaleConfirmText);
         intent.putExtra(TedPermissionActivity.EXTRA_SETTING_BUTTON_TEXT, settingButtonText);
+        intent.putExtra(TedPermissionActivity.EXTRA_SCREEN_ORIENTATION, requestedOrientation);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
@@ -147,6 +151,11 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
 
     public T setDeniedCloseButtonText(@StringRes int stringRes) {
         return setDeniedCloseButtonText(getText(stringRes));
+    }
+
+    public T setScreenOrientation(int requestedOrientation) {
+        this.requestedOrientation = requestedOrientation;
+        return (T) this;
     }
 
 }
