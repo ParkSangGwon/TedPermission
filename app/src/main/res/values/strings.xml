@@ -5,6 +5,6 @@
     <string name="custom_close_text">Custom Close</string>
 
     <string name="rationale_title">Permission required</string>
-    <string name="rationale_message">we need permission for read <b>contact</b> and find your <b>location</b></string>
+    <string name="rationale_message">we need permission for write <b>storage</b> and find your <b>location</b></string>
 
 </resources>

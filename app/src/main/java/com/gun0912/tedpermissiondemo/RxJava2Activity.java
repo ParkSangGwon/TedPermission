@@ -19,7 +19,7 @@ public class RxJava2Activity extends AppCompatActivity {
     TedRx2Permission.with(this)
         .setRationaleTitle(R.string.rationale_title)
         .setRationaleMessage(R.string.rationale_message) // "we need permission for read contact and find your location"
-        .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
+        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION)
         .request()
         .subscribe(tedPermissionResult -> {
           if (tedPermissionResult.isGranted()) {
