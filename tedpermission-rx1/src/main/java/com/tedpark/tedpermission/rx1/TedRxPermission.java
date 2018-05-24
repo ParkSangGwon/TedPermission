@@ -1,18 +1,13 @@
 package com.tedpark.tedpermission.rx1;
 
 import android.content.Context;
-
 import com.gun0912.tedpermission.PermissionBuilder;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermissionBase;
 import com.gun0912.tedpermission.TedPermissionResult;
-
-import java.util.ArrayList;
-
 import java.util.List;
-import rx.Observable;
-import rx.Observable.OnSubscribe;
-import rx.Subscriber;
+import rx.Single;
+import rx.SingleSubscriber;
 
 
 public class TedRxPermission extends TedPermissionBase {
@@ -27,21 +22,19 @@ public class TedRxPermission extends TedPermissionBase {
             super(context);
         }
 
-        public Observable<TedPermissionResult> request() {
-            return Observable.create(new OnSubscribe<TedPermissionResult>() {
+        public Single<TedPermissionResult> request() {
+            return Single.create(new Single.OnSubscribe<TedPermissionResult>() {
                 @Override
-                public void call(final Subscriber<? super TedPermissionResult> emitter) {
+                public void call(final SingleSubscriber<? super TedPermissionResult> emitter) {
                     PermissionListener listener = new PermissionListener() {
                         @Override
                         public void onPermissionGranted() {
-                            emitter.onNext(new TedPermissionResult(null));
-                            emitter.onCompleted();
+                            emitter.onSuccess(new TedPermissionResult(null));
                         }
 
                         @Override
                         public void onPermissionDenied(List<String> deniedPermissions) {
-                            emitter.onNext(new TedPermissionResult(deniedPermissions));
-                            emitter.onCompleted();
+                            emitter.onSuccess(new TedPermissionResult(deniedPermissions));
                         }
                     };
 
