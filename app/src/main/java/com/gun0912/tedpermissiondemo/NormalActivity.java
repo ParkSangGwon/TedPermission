@@ -41,7 +41,7 @@ public class NormalActivity extends AppCompatActivity {
         .setDeniedTitle(R.string.denided_title)
         .setDeniedMessage(R.string.denided_message)
         .setGotoSettingButtonText("bla bla")
-        .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
+        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION)
         .check();
 
 

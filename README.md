@@ -38,23 +38,26 @@ TedPermission makes it easy to check and request android permissions.
 Edit `root/app/build.gradle` like below.
 
 #### Normal
+[ ![Download](https://api.bintray.com/packages/tkdrnjs0912/maven/tedpermission/images/download.svg) ](https://bintray.com/tkdrnjs0912/maven/tedpermission/_latestVersion)
 ```gradle
 dependencies {
-    compile 'gun0912.ted:tedpermission:2.1.0'
+    implementation 'gun0912.ted:tedpermission:x.y.z'
 }
 ```
 
 #### RxJava1
+[ ![Download](https://api.bintray.com/packages/tkdrnjs0912/maven/tedpermission-rx1/images/download.svg) ](https://bintray.com/tkdrnjs0912/maven/tedpermission-rx1/_latestVersion)
 ```gradle
 dependencies {
-    compile 'gun0912.ted:tedpermission-rx1:2.1.0'
+    implementation 'gun0912.ted:tedpermission-rx1:x.y.z'
 }
 ```
 
 #### RxJava2
+[ ![Download](https://api.bintray.com/packages/tkdrnjs0912/maven/tedpermission-rx2/images/download.svg) ](https://bintray.com/tkdrnjs0912/maven/tedpermission-rx2/_latestVersion)
 ```gradle
 dependencies {
-    compile 'gun0912.ted:tedpermission-rx2:2.1.0'
+    implementation 'gun0912.ted:tedpermission-rx2:x.y.z'
 }
 ```
 
@@ -125,7 +128,6 @@ When permission check has finished, you will receive `TedPermissionResult` insta
                 .show();
           }
         }, throwable -> {
-        }, () -> {
         });
 
 ```
@@ -151,7 +153,6 @@ RxJava2 api is very similiar to RxJava 1. You can use `request()` method to requ
                 .show();
           }
         }, throwable -> {
-        }, () -> {
         });
 ```
 

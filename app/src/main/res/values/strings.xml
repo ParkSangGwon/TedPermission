@@ -3,7 +3,7 @@
 
 
     <string name="rationale_title">Permission required</string>
-    <string name="rationale_message">we need permission for read <b>contact</b> and find your <b>location</b></string>
+    <string name="rationale_message">we need permission for write <b>storage</b> and find your <b>location</b></string>
     <string name="denided_title">Permission denied</string>
     <string name="denided_message">If you reject permission,you can not use this service \n\nPlease turn on permissions at [Setting]  &gt; [Permission]</string>
 </resources>

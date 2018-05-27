@@ -42,7 +42,7 @@ public class WindowPermissionActivity extends AppCompatActivity{
                 .setRationaleMessage("we need permission for read contact, find your location and system alert window")
                 .setDeniedMessage(R.string.denided_message)
                 .setGotoSettingButtonText("setting")
-                .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SYSTEM_ALERT_WINDOW)
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SYSTEM_ALERT_WINDOW)
                 .check();
     }
 }

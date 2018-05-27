@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+
 import com.gun0912.tedpermission.PermissionListener;
 import com.tedpark.tedpermission.rx1.TedRxPermission;
+
 import java.util.ArrayList;
 
 /**
@@ -14,28 +16,29 @@ import java.util.ArrayList;
  */
 public class RxJava1Activity extends AppCompatActivity {
 
-  @Override
-  protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    PermissionListener permissionlistener = new PermissionListener() {
-      @Override
-      public void onPermissionGranted() {
-        Toast.makeText(RxJava1Activity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
-      }
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                Toast.makeText(RxJava1Activity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+            }
 
-      @Override
-      public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-        Toast.makeText(RxJava1Activity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT)
-            .show();
-      }
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                Toast.makeText(RxJava1Activity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT)
+                        .show();
+            }
 
 
-    };
+        };
 
     TedRxPermission.with(this)
-        .setDeniedMessage(R.string.denided_message)
-        .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
+        .setDeniedMessage(
+            R.string.denided_message)
+        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION)
         .request()
         .subscribe(tedPermissionResult -> {
           if (tedPermissionResult.isGranted()) {
@@ -46,9 +49,8 @@ public class RxJava1Activity extends AppCompatActivity {
                 .show();
           }
         }, throwable -> {
-        }, () -> {
         });
 
 
-  }
+    }
 }

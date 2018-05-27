@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
 import io.reactivex.annotations.NonNull;
 
 public class TedRx2Permission extends TedPermissionBase {
@@ -26,22 +29,19 @@ public class TedRx2Permission extends TedPermissionBase {
             super(context);
         }
 
-        public Observable<TedPermissionResult> request() {
-            return Observable.create(new ObservableOnSubscribe<TedPermissionResult>() {
+        public Single<TedPermissionResult> request() {
+            return Single.create(new SingleOnSubscribe<TedPermissionResult>() {
                 @Override
-                public void subscribe(@NonNull final ObservableEmitter<TedPermissionResult> emitter) throws Exception {
-
+                public void subscribe(final SingleEmitter<TedPermissionResult> emitter) throws Exception {
                     PermissionListener listener = new PermissionListener() {
                         @Override
                         public void onPermissionGranted() {
-                            emitter.onNext(new TedPermissionResult(null));
-                            emitter.onComplete();
+                            emitter.onSuccess(new TedPermissionResult(null));
                         }
 
                         @Override
                         public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                            emitter.onNext(new TedPermissionResult(deniedPermissions));
-                            emitter.onComplete();
+                            emitter.onSuccess(new TedPermissionResult(deniedPermissions));
                         }
                     };
 
@@ -51,7 +51,6 @@ public class TedRx2Permission extends TedPermissionBase {
                     } catch (Exception exception) {
                         emitter.onError(exception);
                     }
-
                 }
             });
         }
