@@ -94,7 +94,7 @@ public abstract class TedPermissionBase {
         activity.startActivityForResult(getSettingIntent(activity), requestCode);
     }
 
-    private static Intent getSettingIntent(Context context) {
+    public static Intent getSettingIntent(Context context) {
         return new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).setData(Uri.parse("package:" + context.getPackageName()));
     }
 
