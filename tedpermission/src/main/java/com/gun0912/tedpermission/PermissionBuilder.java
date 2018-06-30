@@ -14,7 +14,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static android.content.pm.ActivityInfo.*;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_BEHIND;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_FULL_USER;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LOCKED;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_NOSENSOR;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_SENSOR;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT;
 
 public abstract class PermissionBuilder<T extends PermissionBuilder> {
 
@@ -206,6 +221,7 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
             SCREEN_ORIENTATION_LOCKED
     })
     @Retention(RetentionPolicy.SOURCE)
-    public @interface ScreenOrientation {}
+    public @interface ScreenOrientation {
+    }
 
 }
