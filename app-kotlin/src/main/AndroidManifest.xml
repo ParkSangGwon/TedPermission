@@ -4,9 +4,13 @@
     package="com.gun0912.app_kotlin">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-permission android:name="android.permission.CAMERA" />
 
     <!-- It is supposed to be a demo. It is not supposed to be indexed by Google Play -->

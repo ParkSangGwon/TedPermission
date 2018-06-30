@@ -11,7 +11,7 @@ class Dsl(context: Context) {
 
     val tedPermission = TedPermission.with(context)
 
-    fun withPermissionListener(body: PermissionListenerBuilder.() -> Unit) {
+    inline fun withPermissionListener(crossinline body: PermissionListenerBuilder.() -> Unit) {
         tedPermission.setPermissionListener(
                 PermissionListenerBuilder().apply(body).build()
         )
@@ -35,16 +35,16 @@ class Dsl(context: Context) {
             tedPermission.setScreenOrientation(newValue)
         }
 
-    fun rationale(body: Rationale.() -> Unit) {
+    inline fun rationale(crossinline body: Rationale.() -> Unit) {
         Rationale().apply(body)
     }
 
-    fun onProceedingToSettings(body: GoToSettings.() -> Unit) {
+    inline fun onProceedingToSettings(crossinline body: GoToSettings.() -> Unit) {
         tedPermission.setGotoSettingButton(true)
         GoToSettings().apply(body)
     }
 
-    fun onDeny(body: Denial.() -> Unit) {
+    inline fun onDeny(crossinline body: Denial.() -> Unit) {
         Denial().apply(body)
     }
 
@@ -54,24 +54,24 @@ class Dsl(context: Context) {
 
     inner class Rationale {
 
-        fun title(title: CharSequence) {
-            tedPermission.setRationaleTitle(title)
+        fun title(title: () -> CharSequence) {
+            tedPermission.setRationaleTitle(title())
         }
 
         fun title(@StringRes title: Int) {
             tedPermission.setRationaleTitle(title)
         }
 
-        fun message(message: CharSequence) {
-            tedPermission.setRationaleMessage(message)
+        fun message(message: () -> CharSequence) {
+            tedPermission.setRationaleMessage(message())
         }
 
         fun message(@StringRes message: Int) {
             tedPermission.setRationaleMessage(message)
         }
 
-        fun confirm(confirm: CharSequence) {
-            tedPermission.setRationaleConfirmText(confirm)
+        fun confirm(confirm: () -> CharSequence) {
+            tedPermission.setRationaleConfirmText(confirm())
         }
 
         fun confirm(@StringRes confirm: Int) {
@@ -86,8 +86,8 @@ class Dsl(context: Context) {
             tedPermission.setGotoSettingButtonText(buttonText)
         }
 
-        fun closeButtonText(buttonText: CharSequence) {
-            tedPermission.setGotoSettingButtonText(buttonText)
+        fun closeButtonText(buttonText: () -> CharSequence) {
+            tedPermission.setGotoSettingButtonText(buttonText())
         }
 
     }
@@ -98,24 +98,24 @@ class Dsl(context: Context) {
             tedPermission.setDeniedMessage(message)
         }
 
-        fun message(message: CharSequence) {
-            tedPermission.setDeniedMessage(message)
+        fun message(message: () -> CharSequence) {
+            tedPermission.setDeniedMessage(message())
         }
 
         fun title(@StringRes title: Int) {
             tedPermission.setDeniedTitle(title)
         }
 
-        fun title(title: CharSequence) {
-            tedPermission.setDeniedTitle(title)
+        fun title(title: () -> CharSequence) {
+            tedPermission.setDeniedTitle(title())
         }
 
         fun closeButtonText(@StringRes buttonText: Int) {
             tedPermission.setDeniedCloseButtonText(buttonText)
         }
 
-        fun closeButtonText(buttonText: CharSequence) {
-            tedPermission.setDeniedCloseButtonText(buttonText)
+        fun closeButtonText(buttonText: () -> CharSequence) {
+            tedPermission.setDeniedCloseButtonText(buttonText())
         }
     }
 }

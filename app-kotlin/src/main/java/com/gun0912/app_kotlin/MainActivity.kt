@@ -1,6 +1,8 @@
 package com.gun0912.app_kotlin
 
 import android.Manifest
+import android.annotation.TargetApi
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
@@ -13,12 +15,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        requestPermissionsForCamera()
+
+        if (Build.VERSION.SDK_INT >= 16) {
+            requestPermissionsForStorage()
+        } else {
+            requestPermissionsForStorageOnPreJellyBean()
+        }
+
+        requestLocationPermission()
+
         checkPermissions {
 
-            +Manifest.permission.CAMERA
-            +Manifest.permission.ACCESS_COARSE_LOCATION
-
-            +listOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            +Manifest.permission.READ_CONTACTS
 
             withPermissionListener {
 
@@ -38,14 +47,81 @@ class MainActivity : AppCompatActivity() {
             }
 
             onDeny {
-                title("Permission denied")
-                message("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                title { "Permission denied" }
+                message {
+                    "If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]"
+                }
             }
 
             onProceedingToSettings {
                 closeButtonText(R.string.custom_close_text)
             }
 
+        }
+    }
+
+    private fun requestLocationPermission() {
+        checkPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION) {
+            withPermissionListener {
+
+                onPermissionGranted {
+                    Toast.makeText(this@MainActivity, "Permission for locations is granted", Toast.LENGTH_SHORT).show()
+                }
+
+                onPermissionDenied {
+                    denied_permissions.text = it?.joinToString(", ")
+                }
+
+            }
+        }
+    }
+
+    @TargetApi(16)
+    private fun requestPermissionsForStorage() {
+        checkPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE) {
+            withPermissionListener {
+
+                onPermissionGranted {
+                    Toast.makeText(this@MainActivity, "Permission for storage is granted", Toast.LENGTH_SHORT).show()
+                }
+
+                onPermissionDenied {
+                    denied_permissions.text = it?.joinToString(", ")
+                }
+
+            }
+        }
+    }
+
+    private fun requestPermissionsForStorageOnPreJellyBean() {
+        checkPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE) {
+            withPermissionListener {
+
+                onPermissionGranted {
+                    Toast.makeText(this@MainActivity, "Permission for storage on Pre-JellyBean is granted", Toast.LENGTH_SHORT).show()
+                }
+
+                onPermissionDenied {
+                    denied_permissions.text = it?.joinToString(", ")
+                }
+
+            }
+        }
+    }
+
+    private fun requestPermissionsForCamera() {
+        checkPermissions(Manifest.permission.CAMERA) {
+            withPermissionListener {
+
+                onPermissionGranted {
+                    Toast.makeText(this@MainActivity, "Permission for camera is granted", Toast.LENGTH_SHORT).show()
+                }
+
+                onPermissionDenied {
+                    denied_permissions.text = it?.joinToString(", ")
+                }
+
+            }
         }
     }
 }
