@@ -83,7 +83,7 @@ You will get result to `onPermissionGranted()` or `onPermissionDenied()` dependi
         }
 
         @Override
-        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+        public void onPermissionDenied(List<String> deniedPermissions) {
             Toast.makeText(MainActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
         }
 
