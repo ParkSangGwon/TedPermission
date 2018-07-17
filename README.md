@@ -4,7 +4,7 @@
 
 After the update to Android 6.0 Marshmallow, we have to not only declare permissions in `AndroidManifest.xml`, but also request them at runtime. Furthermore, the user can turn permissions on/off anytime in application settings. 
 <br/>When you use **dangerous permissons**(ex. `CAMERA`, `READ_CONTACTS`, `READ_PHONE_STATE`, ...), you must check and request them at runtime.<br/>
-(http://developer.android.com/intl/ko/guide/topics/security/permissions.html#normal-dangerous)
+(https://developer.android.com/guide/topics/permissions/overview?hl=en#normal-dangerous)
 
 You can make your own permission check logic [like this](http://developer.android.com/intl/ko/training/permissions/requesting.html), but  it's very complex, mainly because functions Google offer are very hard to use: `checkSelfPermission()`, `requestPermissions()`, `onRequestPermissionsResult()`, `onActivityResult()`.
 
