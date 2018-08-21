@@ -1,14 +1,14 @@
 package com.gun0912.tedpermission;
 
 import com.gun0912.tedpermission.util.ObjectUtils;
-import java.util.ArrayList;
+import java.util.List;
 
 public class TedPermissionResult {
 
   private boolean granted;
-  private ArrayList<String> deniedPermissions;
+  private List<String> deniedPermissions;
 
-  public TedPermissionResult(ArrayList<String> deniedPermissions) {
+  public TedPermissionResult(List<String> deniedPermissions) {
     this.granted = ObjectUtils.isEmpty(deniedPermissions);
     this.deniedPermissions = deniedPermissions;
   }
@@ -17,7 +17,7 @@ public class TedPermissionResult {
     return granted;
   }
 
-  public ArrayList<String> getDeniedPermissions() {
+  public List<String> getDeniedPermissions() {
     return deniedPermissions;
   }
 }

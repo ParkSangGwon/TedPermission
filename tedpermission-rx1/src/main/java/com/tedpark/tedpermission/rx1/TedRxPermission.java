@@ -1,19 +1,13 @@
 package com.tedpark.tedpermission.rx1;
 
 import android.content.Context;
-
 import com.gun0912.tedpermission.PermissionBuilder;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermissionBase;
 import com.gun0912.tedpermission.TedPermissionResult;
-
-import java.util.ArrayList;
-
-import rx.Observable;
-import rx.Observable.OnSubscribe;
+import java.util.List;
 import rx.Single;
 import rx.SingleSubscriber;
-import rx.Subscriber;
 
 
 public class TedRxPermission extends TedPermissionBase {
@@ -39,7 +33,7 @@ public class TedRxPermission extends TedPermissionBase {
                         }
 
                         @Override
-                        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                        public void onPermissionDenied(List<String> deniedPermissions) {
                             emitter.onSuccess(new TedPermissionResult(deniedPermissions));
                         }
                     };

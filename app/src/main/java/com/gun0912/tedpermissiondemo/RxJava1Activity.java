@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
-
 import com.gun0912.tedpermission.PermissionListener;
 import com.tedpark.tedpermission.rx1.TedRxPermission;
-
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by TedPark on 16. 2. 21..

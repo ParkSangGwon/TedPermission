@@ -23,6 +23,7 @@ import com.gun0912.tedpermission.util.ObjectUtils;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 
 public class TedPermissionActivity extends AppCompatActivity {
 
@@ -158,7 +159,7 @@ public class TedPermissionActivity extends AppCompatActivity {
 
     private void checkPermissions(boolean fromOnActivityResult) {
 
-        ArrayList<String> needPermissions = new ArrayList<>();
+        List<String> needPermissions = new ArrayList<>();
 
         for (String permission : permissions) {
             if (permission.equals(Manifest.permission.SYSTEM_ALERT_WINDOW)) {
@@ -186,7 +187,7 @@ public class TedPermissionActivity extends AppCompatActivity {
         }
     }
 
-    private void permissionResult(ArrayList<String> deniedPermissions) {
+    private void permissionResult(List<String> deniedPermissions) {
         Log.v(TedPermission.TAG, "permissionResult(): " + deniedPermissions);
         if (permissionListenerStack != null) {
             PermissionListener listener = permissionListenerStack.pop();
@@ -211,7 +212,7 @@ public class TedPermissionActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
-    private void showRationaleDialog(final ArrayList<String> needPermissions) {
+    private void showRationaleDialog(final List<String> needPermissions) {
 
         new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert)
                 .setTitle(rationaleTitle)
@@ -231,7 +232,7 @@ public class TedPermissionActivity extends AppCompatActivity {
 
     }
 
-    public void requestPermissions(ArrayList<String> needPermissions) {
+    public void requestPermissions(List<String> needPermissions) {
         ActivityCompat.requestPermissions(this, needPermissions.toArray(new String[needPermissions.size()]),
                 REQ_CODE_PERMISSION_REQUEST);
     }
@@ -256,7 +257,7 @@ public class TedPermissionActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
 
-        ArrayList<String> deniedPermissions = TedPermissionBase.getDeniedPermissions(this, permissions);
+        List<String> deniedPermissions = TedPermissionBase.getDeniedPermissions(this, permissions);
 
         if (deniedPermissions.isEmpty()) {
             permissionResult(null);
@@ -265,7 +266,7 @@ public class TedPermissionActivity extends AppCompatActivity {
         }
     }
 
-    public void showPermissionDenyDialog(final ArrayList<String> deniedPermissions) {
+    public void showPermissionDenyDialog(final List<String> deniedPermissions) {
 
         if (TextUtils.isEmpty(denyMessage)) {
             // denyMessage 설정 안함
@@ -303,7 +304,7 @@ public class TedPermissionActivity extends AppCompatActivity {
         builder.show();
     }
 
-    public boolean shouldShowRequestPermissionRationale(ArrayList<String> needPermissions) {
+    public boolean shouldShowRequestPermissionRationale(List<String> needPermissions) {
 
         if (needPermissions == null) {
             return false;
