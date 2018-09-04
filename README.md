@@ -4,7 +4,7 @@
 
 After the update to Android 6.0 Marshmallow, we have to not only declare permissions in `AndroidManifest.xml`, but also request them at runtime. Furthermore, the user can turn permissions on/off anytime in application settings. 
 <br/>When you use **dangerous permissons**(ex. `CAMERA`, `READ_CONTACTS`, `READ_PHONE_STATE`, ...), you must check and request them at runtime.<br/>
-(http://developer.android.com/intl/ko/guide/topics/security/permissions.html#normal-dangerous)
+(https://developer.android.com/guide/topics/permissions/overview?hl=en#normal-dangerous)
 
 You can make your own permission check logic [like this](http://developer.android.com/intl/ko/training/permissions/requesting.html), but  it's very complex, mainly because functions Google offer are very hard to use: `checkSelfPermission()`, `requestPermissions()`, `onRequestPermissionsResult()`, `onActivityResult()`.
 
@@ -38,23 +38,26 @@ TedPermission makes it easy to check and request android permissions.
 Edit `root/app/build.gradle` like below.
 
 #### Normal
+[ ![Download](https://api.bintray.com/packages/tkdrnjs0912/maven/tedpermission/images/download.svg) ](https://bintray.com/tkdrnjs0912/maven/tedpermission/_latestVersion)
 ```gradle
 dependencies {
-    compile 'gun0912.ted:tedpermission:2.1.1'
+    implementation 'gun0912.ted:tedpermission:x.y.z'
 }
 ```
 
 #### RxJava1
+[ ![Download](https://api.bintray.com/packages/tkdrnjs0912/maven/tedpermission-rx1/images/download.svg) ](https://bintray.com/tkdrnjs0912/maven/tedpermission-rx1/_latestVersion)
 ```gradle
 dependencies {
-    compile 'gun0912.ted:tedpermission-rx1:2.1.1'
+    implementation 'gun0912.ted:tedpermission-rx1:x.y.z'
 }
 ```
 
 #### RxJava2
+[ ![Download](https://api.bintray.com/packages/tkdrnjs0912/maven/tedpermission-rx2/images/download.svg) ](https://bintray.com/tkdrnjs0912/maven/tedpermission-rx2/_latestVersion)
 ```gradle
 dependencies {
-    compile 'gun0912.ted:tedpermission-rx2:2.1.1'
+    implementation 'gun0912.ted:tedpermission-rx2:x.y.z'
 }
 ```
 
@@ -80,7 +83,7 @@ You will get result to `onPermissionGranted()` or `onPermissionDenied()` dependi
         }
 
         @Override
-        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+        public void onPermissionDenied(List<String> deniedPermissions) {
             Toast.makeText(MainActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
         }
 
@@ -125,7 +128,6 @@ When permission check has finished, you will receive `TedPermissionResult` insta
                 .show();
           }
         }, throwable -> {
-        }, () -> {
         });
 
 ```
@@ -151,7 +153,6 @@ RxJava2 api is very similiar to RxJava 1. You can use `request()` method to requ
                 .show();
           }
         }, throwable -> {
-        }, () -> {
         });
 ```
 

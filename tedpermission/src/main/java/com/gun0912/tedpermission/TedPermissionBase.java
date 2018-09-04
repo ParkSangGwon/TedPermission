@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by TedPark on 2017. 9. 26..
@@ -40,8 +41,8 @@ public abstract class TedPermissionBase {
         return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
     }
 
-    public static ArrayList<String> getDeniedPermissions(Context context, @NonNull String... permissions) {
-        ArrayList<String> deniedPermissions = new ArrayList<>();
+    public static List<String> getDeniedPermissions(Context context, @NonNull String... permissions) {
+        List<String> deniedPermissions = new ArrayList<>();
         for (String permission : permissions) {
             if (isDenied(context, permission)) {
                 deniedPermissions.add(permission);
@@ -94,7 +95,7 @@ public abstract class TedPermissionBase {
         activity.startActivityForResult(getSettingIntent(activity), requestCode);
     }
 
-    private static Intent getSettingIntent(Context context) {
+    public static Intent getSettingIntent(Context context) {
         return new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).setData(Uri.parse("package:" + context.getPackageName()));
     }
 
