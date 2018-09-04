@@ -99,7 +99,7 @@ public class TedPermissionActivity extends AppCompatActivity {
             deniedCloseButtonText = savedInstanceState.getString(EXTRA_DENIED_DIALOG_CLOSE_TEXT);
 
             settingButtonText = savedInstanceState.getString(EXTRA_SETTING_BUTTON_TEXT);
-            requestedOrientation = savedInstanceState.getInt(EXTRA_SCREEN_ORIENTATION);
+            requestedOrientation = savedInstanceState.getInt(EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         } else {
 
             Intent intent = getIntent();
