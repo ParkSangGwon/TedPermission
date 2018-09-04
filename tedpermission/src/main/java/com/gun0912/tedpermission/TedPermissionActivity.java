@@ -189,6 +189,10 @@ public class TedPermissionActivity extends AppCompatActivity {
 
     private void permissionResult(List<String> deniedPermissions) {
         Log.v(TedPermission.TAG, "permissionResult(): " + deniedPermissions);
+
+        finish();
+        overridePendingTransition(0, 0);
+
         if (permissionListenerStack != null) {
             PermissionListener listener = permissionListenerStack.pop();
 
@@ -202,8 +206,6 @@ public class TedPermissionActivity extends AppCompatActivity {
             }
         }
 
-        finish();
-        overridePendingTransition(0, 0);
     }
 
     @Override
