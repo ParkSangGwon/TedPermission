@@ -72,7 +72,7 @@ If you think this library is useful, please press the star button at the top.
 ### Normal
 #### -Make PermissionListener
 We will use `PermissionListener` for handling permission check result.
-You will get result to `onPermissionGranted()` or `onPermissionDenied()` depending on approved permissions.
+You will get the result to `onPermissionGranted()` or `onPermissionDenied()` depending on approved permissions.
 
 ```java
 
