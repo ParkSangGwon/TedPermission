@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TedPermission 데모</string>
+
+    <string name="custom_close_text">맞춤 닫기</string>
+
+    <string name="rationale_title">권한이 필요합니다</string>
+    <string name="rationale_message">
+        <b> 연락처 </b>에 대한 권한이 필요하며 <b> 위치 </b>
+    </string>
+
+</resources>

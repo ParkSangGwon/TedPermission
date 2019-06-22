@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TedPermission Kotlin DSL 데모</string>
+
+    <string name="custom_close_text">맞춤 닫기</string>
+
+    <string name="rationale_title">권한이 필요합니다</string>
+    <string name="rationale_message">
+        우리는 권한이 필요함을 읽을<b>연락처</b>을 찾아<b>위치</b>,<b>카메라</b><b>외부 저장 장치에 쓰기</b>
+    </string>
+
+
+</resources>

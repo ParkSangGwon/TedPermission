@@ -107,7 +107,7 @@ public abstract class TedPermissionBase {
         fragment.startActivityForResult(getSettingIntent(fragment.getActivity()), requestCode);
     }
 
-    static void setFirstRequest(Context context, @NonNull String[] permissions) {
+    static void setFirstRequest(Context context, List<String> permissions) {
         for (String permission : permissions) {
             setFirstRequest(context, permission);
         }
