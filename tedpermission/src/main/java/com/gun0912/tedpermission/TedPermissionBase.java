@@ -1,11 +1,13 @@
 package com.gun0912.tedpermission;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -38,7 +40,15 @@ public abstract class TedPermissionBase {
     }
 
     private static boolean isGranted(Context context, @NonNull String permission) {
-        return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
+        if (permission.equals(Manifest.permission.SYSTEM_ALERT_WINDOW)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                return Settings.canDrawOverlays(context);
+            } else {
+                return true;
+            }
+        } else {
+            return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
+        }
     }
 
     public static List<String> getDeniedPermissions(Context context, @NonNull String... permissions) {
