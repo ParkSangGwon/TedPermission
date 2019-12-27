@@ -4,6 +4,7 @@ import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
@@ -12,12 +13,14 @@ import java.util.List;
 /**
  * Created by babosamo on 16. 10. 4..
  */
-public class WindowPermissionActivity extends AppCompatActivity{
+public class WindowPermissionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        boolean isAlertWindowPermissionGranted = TedPermission.isGranted(this, Manifest.permission.SYSTEM_ALERT_WINDOW);
+        Log.d("ted", "isAlertWindowPermissionGranted: " + isAlertWindowPermissionGranted);
 
 
         PermissionListener permissionlistener = new PermissionListener() {
