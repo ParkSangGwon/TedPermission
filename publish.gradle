@@ -1,13 +1,11 @@
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-
 Properties properties = new Properties()
 try {
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
-} catch (FileNotFoundException ignore) {}
-
-
+} catch (FileNotFoundException ignore) {
+}
 
 bintray {
     user = properties.getProperty("bintray.user")
@@ -24,7 +22,7 @@ bintray {
         issueTrackerUrl = ISSUE_URL
 
         licenses = ['Apache-2.0']
-       // labels = ['aar', 'android', 'rxjava']
+        // labels = ['aar', 'android', 'rxjava']
 
         publish = true
         publicDownloadNumbers = true
@@ -54,7 +52,7 @@ install {
                 developer {
                     id DEVELOPER_ID
                     name DEVELOPER_NAME
-                //    email 'gun0912@naver.com'
+                    // email 'gun0912@naver.com'
                 }
             }
             scm {

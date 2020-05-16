@@ -22,9 +22,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':tedpermission')
-    compile deps.rx.rxJava2
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api project(':tedpermission')
+    api deps.rx.rxJava2
 }
 
 apply from: rootProject.file('publish.gradle')

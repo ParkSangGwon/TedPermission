@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 
-
 android {
     compileSdkVersion versions.compileSdkVersion
     buildToolsVersion versions.buildToolsVersion
@@ -19,12 +18,11 @@ android {
     lintOptions {
         abortOnError false
     }
-
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile deps.support.appcompat
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api deps.support.appcompat
 }
 
 apply from: rootProject.file('publish.gradle')
