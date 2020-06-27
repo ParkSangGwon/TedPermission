@@ -11,10 +11,6 @@ android {
         versionCode 1
         versionName "1.0"
 
-        jackOptions {
-            enabled true
-        }
-
     }
     buildTypes {
         release {
@@ -38,9 +34,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile project(':tedpermission')
-    compile project(':tedpermission-rx2')
-    compile project(':tedpermission-rx1')
+    implementation project(':tedpermission')
+    implementation project(':tedpermission-rx2')
+    implementation project(':tedpermission-rx1')
 }

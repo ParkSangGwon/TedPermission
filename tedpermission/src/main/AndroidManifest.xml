@@ -1,15 +1,13 @@
-<manifest package="com.gun0912.tedpermission"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gun0912.tedpermission">
 
-    <application
-        >
+    <application>
 
         <activity
             android:name=".TedPermissionActivity"
             android:configChanges="mcc|mnc|locale|keyboard|keyboardHidden|screenLayout|fontScale|uiMode|orientation|screenSize|layoutDirection"
             android:screenOrientation="unspecified"
-            android:theme="@style/Theme.Transparent.Permission"
-            />
+            android:theme="@style/Theme.Transparent.Permission" />
 
     </application>
 
