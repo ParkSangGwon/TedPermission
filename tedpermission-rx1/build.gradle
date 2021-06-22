@@ -28,4 +28,4 @@ dependencies {
     api deps.rx.rxJava1
 }
 
-apply from: rootProject.file('publish.gradle')
+apply plugin: "com.vanniktech.maven.publish"
