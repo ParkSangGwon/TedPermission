@@ -41,7 +41,7 @@ Edit `root/app/build.gradle` like below.
 [ ![Download](https://api.bintray.com/packages/tkdrnjs0912/maven/tedpermission/images/download.svg) ](https://bintray.com/tkdrnjs0912/maven/tedpermission/_latestVersion)
 ```gradle
 dependencies {
-    implementation 'gun0912.ted:tedpermission:x.y.z'
+    implementation 'io.github.ParkSangGwon:tedpermission:x.y.z'
 }
 ```
 
@@ -49,15 +49,15 @@ dependencies {
 [ ![Download](https://api.bintray.com/packages/tkdrnjs0912/maven/tedpermission-rx1/images/download.svg) ](https://bintray.com/tkdrnjs0912/maven/tedpermission-rx1/_latestVersion)
 ```gradle
 dependencies {
-    implementation 'gun0912.ted:tedpermission-rx1:x.y.z'
+    implementation 'io.github.ParkSangGwon:tedpermission-rx1:x.y.z'
 }
 ```
 
 #### RxJava2
-[ ![Download](https://api.bintray.com/packages/tkdrnjs0912/maven/tedpermission-rx2/images/download.svg) ](https://bintray.com/tkdrnjs0912/maven/tedpermission-rx2/_latestVersion)
+[ ![Download](https://api.bintray.com/packages/tkdrnjs0912/maven/tedpermission-rx2/images/download.svg) ](https://bintray.com/tkdrnjs0912/maven/tedpermission-rx1/_latestVersion)
 ```gradle
 dependencies {
-    implementation 'gun0912.ted:tedpermission-rx2:x.y.z'
+    implementation 'io.github.ParkSangGwon:tedpermission-rx2:x.y.z'
 }
 ```
 
