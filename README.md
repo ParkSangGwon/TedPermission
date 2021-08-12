@@ -40,6 +40,11 @@ Edit `root/app/build.gradle` like below.
 #### Normal
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.ParkSangGwon/tedpermission.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ParkSangGwon%22%20AND%20a:%tedpermission%22)
 ```gradle
+repositories {
+  google()
+  mavenCentral()
+}
+
 dependencies {
     implementation 'io.github.ParkSangGwon:tedpermission:x.y.z'
 }
@@ -48,6 +53,11 @@ dependencies {
 #### RxJava1
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.ParkSangGwon/tedpermission-rx1.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ParkSangGwon%22%20AND%20a:%tedpermission-rx1%22)
 ```gradle
+repositories {
+  google()
+  mavenCentral()
+}
+
 dependencies {
     implementation 'io.github.ParkSangGwon:tedpermission-rx1:x.y.z'
 }
@@ -56,6 +66,11 @@ dependencies {
 #### RxJava2
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.ParkSangGwon/tedpermission-rx2.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ParkSangGwon%22%20AND%20a:%tedpermission-rx2%22)
 ```gradle
+repositories {
+  google()
+  mavenCentral()
+}
+
 dependencies {
     implementation 'io.github.ParkSangGwon:tedpermission-rx2:x.y.z'
 }
