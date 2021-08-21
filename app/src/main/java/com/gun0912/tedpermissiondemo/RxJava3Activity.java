@@ -8,14 +8,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gun0912.tedpermission.PermissionListener;
-import com.tedpark.tedpermission.rx1.TedRxPermission;
+import com.tedpark.tedpermission.rx3.TedRxPermission;
 
 import java.util.List;
 
 /**
  * Created by TedPark on 16. 2. 21..
  */
-public class RxJava1Activity extends AppCompatActivity {
+public class RxJava3Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,12 +24,12 @@ public class RxJava1Activity extends AppCompatActivity {
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                Toast.makeText(RxJava1Activity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RxJava3Activity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onPermissionDenied(List<String> deniedPermissions) {
-                Toast.makeText(RxJava1Activity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT)
+                Toast.makeText(RxJava3Activity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT)
                         .show();
             }
 
@@ -43,9 +43,9 @@ public class RxJava1Activity extends AppCompatActivity {
                 .request()
                 .subscribe(tedPermissionResult -> {
                     if (tedPermissionResult.isGranted()) {
-                        Toast.makeText(RxJava1Activity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RxJava3Activity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(RxJava1Activity.this,
+                        Toast.makeText(RxJava3Activity.this,
                                 "Permission Denied\n" + tedPermissionResult.getDeniedPermissions().toString(), Toast.LENGTH_SHORT)
                                 .show();
                     }
