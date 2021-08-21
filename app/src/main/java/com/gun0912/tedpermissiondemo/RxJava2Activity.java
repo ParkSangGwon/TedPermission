@@ -18,7 +18,7 @@ public class RxJava2Activity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        TedRx2Permission.with(this)
+        TedRx2Permission.create()
                 .setRationaleTitle(R.string.rationale_title)
                 .setRationaleMessage(R.string.rationale_message) // "we need permission for read contact and find your location"
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION)
