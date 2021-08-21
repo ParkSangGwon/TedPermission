@@ -50,19 +50,6 @@ dependencies {
 }
 ```
 
-#### RxJava1
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.ParkSangGwon/tedpermission-rx1.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ParkSangGwon%22%20AND%20a:%tedpermission-rx1%22)
-```gradle
-repositories {
-  google()
-  mavenCentral()
-}
-
-dependencies {
-    implementation 'io.github.ParkSangGwon:tedpermission-rx1:x.y.z'
-}
-```
-
 #### RxJava2
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.ParkSangGwon/tedpermission-rx2.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ParkSangGwon%22%20AND%20a:%tedpermission-rx2%22)
 ```gradle
@@ -73,6 +60,19 @@ repositories {
 
 dependencies {
     implementation 'io.github.ParkSangGwon:tedpermission-rx2:x.y.z'
+}
+```
+
+#### RxJava3
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.ParkSangGwon/tedpermission-rx3.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ParkSangGwon%22%20AND%20a:%tedpermission-rx3%22)
+```gradle
+repositories {
+  google()
+  mavenCentral()
+}
+
+dependencies {
+    implementation 'io.github.ParkSangGwon:tedpermission-rx3:x.y.z'
 }
 ```
 
@@ -124,9 +124,6 @@ Call `check()` to start checking for permissions.
 
 
 ### RxJava1
-If you use RxJava1, You can use `request()` method instead `check()`.
-When permission check has finished, you will receive `TedPermissionResult` instance.
-`TedPermissionResult` instance has `isGranted()`, `getDeniedPermissions()` methods for checking permission check result.
 ```java
 
     TedRxPermission.with(this)
@@ -150,8 +147,10 @@ When permission check has finished, you will receive `TedPermissionResult` insta
 <br/><br/>
 
 
-### RxJava2
-RxJava2 api is very similiar to RxJava 1. You can use `request()` method to request for permissions like RxJava1.
+### RxJava
+If you use RxJava, You can use `request()` method instead `check()`.
+When permission check has finished, you will receive `TedPermissionResult` instance.
+`TedPermissionResult` instance has `isGranted()`, `getDeniedPermissions()` methods for checking permission check result.
 
 ```java
     TedRx2Permission.with(this)
