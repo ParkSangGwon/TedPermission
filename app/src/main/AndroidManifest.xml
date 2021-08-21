@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".RxJava1Activity"/>
+        <activity android:name=".RxJava3Activity"/>
         <activity android:name=".RxJava2Activity"/>
         <activity android:name=".NormalActivity"/>
       <activity android:name=".WindowPermissionActivity"/>

@@ -1,4 +1,4 @@
-package com.tedpark.tedpermission.rx1;
+package com.tedpark.tedpermission.rx3;
 
 import android.content.Context;
 
@@ -9,8 +9,10 @@ import com.gun0912.tedpermission.TedPermissionResult;
 
 import java.util.List;
 
-import rx.Single;
-import rx.SingleSubscriber;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.SingleEmitter;
+import io.reactivex.rxjava3.core.SingleOnSubscribe;
 
 
 public class TedRxPermission extends TedPermissionBase {
@@ -26,9 +28,9 @@ public class TedRxPermission extends TedPermissionBase {
         }
 
         public Single<TedPermissionResult> request() {
-            return Single.create(new Single.OnSubscribe<TedPermissionResult>() {
+            return Single.create(new SingleOnSubscribe<TedPermissionResult>() {
                 @Override
-                public void call(final SingleSubscriber<? super TedPermissionResult> emitter) {
+                public void subscribe(@NonNull final SingleEmitter<TedPermissionResult> emitter) {
                     PermissionListener listener = new PermissionListener() {
                         @Override
                         public void onPermissionGranted() {

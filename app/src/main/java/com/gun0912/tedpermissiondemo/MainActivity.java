@@ -16,8 +16,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         setContentView(R.layout.activity_main);
         findViewById(R.id.btn_normal).setOnClickListener(this);
-        findViewById(R.id.btn_rxjava1).setOnClickListener(this);
         findViewById(R.id.btn_rxjava2).setOnClickListener(this);
+        findViewById(R.id.btn_rxjava3).setOnClickListener(this);
         findViewById(R.id.btn_windowPermission).setOnClickListener(this);
 
     }
@@ -33,14 +33,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 intent = new Intent(this, NormalActivity.class);
                 break;
 
-            case R.id.btn_rxjava1:
-                intent = new Intent(this, RxJava1Activity.class);
-                break;
-
             case R.id.btn_rxjava2:
                 intent = new Intent(this, RxJava2Activity.class);
                 break;
 
+            case R.id.btn_rxjava3:
+                intent = new Intent(this, RxJava3Activity.class);
+                break;
 
             case R.id.btn_windowPermission:
                 intent = new Intent(this, WindowPermissionActivity.class);

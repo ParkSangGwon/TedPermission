@@ -35,9 +35,9 @@ android {
 dependencies {
     implementation project(':tedpermission')
     implementation project(':tedpermission-rx2')
-    implementation project(':tedpermission-rx1')
+    implementation project(':tedpermission-rx3')
 
     implementation deps.androidx.appcompat
-    implementation deps.rx.rxJava1
     implementation deps.rx.rxJava2
+    implementation deps.rx.rxJava3
 }

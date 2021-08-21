@@ -24,7 +24,7 @@ android {
 dependencies {
     api project(':tedpermission')
     implementation deps.androidx.appcompat
-    implementation deps.rx.rxJava1
+    implementation deps.rx.rxJava3
 }
 
 apply plugin: "com.vanniktech.maven.publish"
