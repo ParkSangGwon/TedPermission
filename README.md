@@ -113,35 +113,11 @@ Call `check()` to start checking for permissions.
 `setRationaleMessage()` and `setDeniedMessage()` are optional methods for displaying messages.
 
 ```java
-    TedPermission.with(this)
+    TedPermission.create()
     .setPermissionListener(permissionlistener)
     .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
     .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
     .check();
-```
-
-<br/><br/>
-
-
-### RxJava1
-```java
-
-    TedRxPermission.with(this)
-        .setDeniedMessage(
-            "If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
-        .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
-        .request()
-        .subscribe(tedPermissionResult -> {
-          if (tedPermissionResult.isGranted()) {
-            Toast.makeText(RxJava1Activity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
-          } else {
-            Toast.makeText(RxJava1Activity.this,
-                "Permission Denied\n" + tedPermissionResult.getDeniedPermissions().toString(), Toast.LENGTH_SHORT)
-                .show();
-          }
-        }, throwable -> {
-        });
-
 ```
 
 <br/><br/>
@@ -153,7 +129,7 @@ When permission check has finished, you will receive `TedPermissionResult` insta
 `TedPermissionResult` instance has `isGranted()`, `getDeniedPermissions()` methods for checking permission check result.
 
 ```java
-    TedRx2Permission.with(this)
+    TedRx2Permission.create()
         .setRationaleTitle(R.string.rationale_title)
         .setRationaleMessage(R.string.rationale_message) // "we need permission for read contact and find your location"
         .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -187,12 +163,12 @@ TedPermission supports the following methods.<br />
 * `setGotoSettingButtonText(R.string.xxx or String) (default: setting / 설정)`
 
 Also you can use the following utility functions.
-* `isGranted(Context context, String... permissions)`: Check if all permissions are granted
-* `isDenied(Context context, String... permissions)`: Check if all permissions are denied
-* `getDeniedPermissions(Context context, String... permissions)`
+* `isGranted(String... permissions)`: Check if all permissions are granted
+* `isDenied(String... permissions)`: Check if all permissions are denied
+* `getDeniedPermissions(String... permissions)`
 * `canRequestPermission(Activity activity, String... permissions)`: If `true` you can request a system popup, `false` means user checked  `Never ask again`.
-* `startSettingActivityForResult(Activity activity)`
-* `startSettingActivityForResult(Activity activity, int requestCode)`
+* `startSettingActivityForResult()`
+* `startSettingActivityForResult(int requestCode)`
 
 
 <br/><br/>
