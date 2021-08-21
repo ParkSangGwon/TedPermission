@@ -1,23 +1,17 @@
 package com.gun0912.tedpermission;
 
-import android.content.Context;
+public class TedPermission extends TedPermissionBase {
+    public static final String TAG = TedPermission.class.getSimpleName();
 
-public class TedPermission extends TedPermissionBase{
-  public static final String TAG=TedPermission.class.getSimpleName();
-
-  public static Builder with(Context context) {
-    return new Builder(context);
-  }
+    public static Builder create() {
+        return new Builder();
+    }
 
     public static class Builder extends PermissionBuilder<Builder> {
 
-    private Builder(Context context) {
-      super(context);
-    }
+        public void check() {
+            checkPermissions();
+        }
 
-    public void check() {
-      checkPermissions();
     }
-
-  }
 }
