@@ -9,6 +9,10 @@
             android:screenOrientation="unspecified"
             android:theme="@style/Theme.Transparent.Permission" />
 
+        <provider
+            android:name=".provider.TedPermissionProvider"
+            android:authorities="${applicationId}.tedpermissionprovider"
+            android:exported="false" />
     </application>
 
 </manifest>

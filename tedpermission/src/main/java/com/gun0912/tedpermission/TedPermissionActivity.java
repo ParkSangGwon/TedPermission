@@ -168,7 +168,7 @@ public class TedPermissionActivity extends AppCompatActivity {
                     needPermissions.add(permission);
                 }
             } else {
-                if (TedPermissionBase.isDenied(this, permission)) {
+                if (TedPermissionBase.isDenied(permission)) {
                     needPermissions.add(permission);
                 }
             }
@@ -261,7 +261,7 @@ public class TedPermissionActivity extends AppCompatActivity {
                                            @NonNull int[] grantResults) {
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        List<String> deniedPermissions = TedPermissionBase.getDeniedPermissions(this, permissions);
+        List<String> deniedPermissions = TedPermissionBase.getDeniedPermissions(permissions);
 
         if (deniedPermissions.isEmpty()) {
             permissionResult(null);

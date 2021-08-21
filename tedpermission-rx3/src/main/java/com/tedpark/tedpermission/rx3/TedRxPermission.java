@@ -1,7 +1,5 @@
 package com.tedpark.tedpermission.rx3;
 
-import android.content.Context;
-
 import com.gun0912.tedpermission.PermissionBuilder;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermissionBase;
@@ -17,15 +15,11 @@ import io.reactivex.rxjava3.core.SingleOnSubscribe;
 
 public class TedRxPermission extends TedPermissionBase {
 
-    public static Builder with(Context context) {
-        return new Builder(context);
+    public static Builder create() {
+        return new Builder();
     }
 
     public static class Builder extends PermissionBuilder<Builder> {
-
-        private Builder(Context context) {
-            super(context);
-        }
 
         public Single<TedPermissionResult> request() {
             return Single.create(new SingleOnSubscribe<TedPermissionResult>() {

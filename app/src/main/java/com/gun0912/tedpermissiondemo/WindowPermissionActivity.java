@@ -22,7 +22,7 @@ public class WindowPermissionActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        boolean isAlertWindowPermissionGranted = TedPermission.isGranted(this, Manifest.permission.SYSTEM_ALERT_WINDOW);
+        boolean isAlertWindowPermissionGranted = TedPermission.isGranted(Manifest.permission.SYSTEM_ALERT_WINDOW);
         Log.d("ted", "isAlertWindowPermissionGranted: " + isAlertWindowPermissionGranted);
 
 
@@ -41,7 +41,7 @@ public class WindowPermissionActivity extends AppCompatActivity {
         };
 
 
-        TedPermission.with(this)
+        TedPermission.create()
                 .setPermissionListener(permissionlistener)
                 .setRationaleMessage("we need permission for read contact, find your location and system alert window")
                 .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")

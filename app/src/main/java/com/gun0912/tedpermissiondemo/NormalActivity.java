@@ -37,7 +37,7 @@ public class NormalActivity extends AppCompatActivity {
         };
 
 
-        TedPermission.with(this)
+        TedPermission.create()
                 .setPermissionListener(permissionlistener)
                 .setRationaleTitle(R.string.rationale_title)
                 .setRationaleMessage(R.string.rationale_message)
