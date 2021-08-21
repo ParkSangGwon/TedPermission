@@ -11,7 +11,7 @@ import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
 
-public class TedRx2Permission extends TedPermissionBase {
+public class TedRxPermission extends TedPermissionBase {
 
     public static Builder create() {
         return new Builder();
