@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
-import android.support.annotation.StringRes;
+
+
+import androidx.annotation.StringRes;
 
 import com.gun0912.tedpermission.util.ObjectUtils;
 
@@ -82,9 +84,6 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
     }
 
     private CharSequence getText(@StringRes int stringRes) {
-        if (stringRes <= 0) {
-            throw new IllegalArgumentException("Invalid String resource id");
-        }
         return context.getText(stringRes);
     }
 

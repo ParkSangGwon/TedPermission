@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion versions.compileSdkVersion
-    buildToolsVersion versions.buildToolsVersion
 
     defaultConfig {
         minSdkVersion versions.minSdkVersion
@@ -23,9 +22,9 @@ android {
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
     api project(':tedpermission')
-    api deps.rx.rxJava1
+    implementation deps.androidx.appcompat
+    implementation deps.rx.rxJava1
 }
 
 apply plugin: "com.vanniktech.maven.publish"
