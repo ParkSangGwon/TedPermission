@@ -1,11 +1,14 @@
 package com.tedpark.tedpermission.rx1;
 
 import android.content.Context;
+
 import com.gun0912.tedpermission.PermissionBuilder;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermissionBase;
 import com.gun0912.tedpermission.TedPermissionResult;
+
 import java.util.List;
+
 import rx.Single;
 import rx.SingleSubscriber;
 

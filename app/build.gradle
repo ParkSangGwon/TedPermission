@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion versions.compileSdkVersion
-    buildToolsVersion versions.buildToolsVersion
 
     defaultConfig {
         applicationId "com.gun0912.tedpermissiondemo"
@@ -34,9 +33,11 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation project(':tedpermission')
     implementation project(':tedpermission-rx2')
     implementation project(':tedpermission-rx1')
+
+    implementation deps.androidx.appcompat
+    implementation deps.rx.rxJava1
+    implementation deps.rx.rxJava2
 }
