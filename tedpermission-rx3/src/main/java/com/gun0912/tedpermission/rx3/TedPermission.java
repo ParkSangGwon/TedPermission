@@ -1,4 +1,4 @@
-package com.tedpark.tedpermission.rx2;
+package com.gun0912.tedpermission.rx3;
 
 import com.gun0912.tedpermission.PermissionBuilder;
 import com.gun0912.tedpermission.PermissionListener;
@@ -7,11 +7,13 @@ import com.gun0912.tedpermission.TedPermissionResult;
 
 import java.util.List;
 
-import io.reactivex.Single;
-import io.reactivex.SingleEmitter;
-import io.reactivex.SingleOnSubscribe;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.SingleEmitter;
+import io.reactivex.rxjava3.core.SingleOnSubscribe;
 
-public class TedRxPermission extends TedPermissionBase {
+
+public class TedPermission extends TedPermissionBase {
 
     public static Builder create() {
         return new Builder();
@@ -22,7 +24,7 @@ public class TedRxPermission extends TedPermissionBase {
         public Single<TedPermissionResult> request() {
             return Single.create(new SingleOnSubscribe<TedPermissionResult>() {
                 @Override
-                public void subscribe(final SingleEmitter<TedPermissionResult> emitter) throws Exception {
+                public void subscribe(@NonNull final SingleEmitter<TedPermissionResult> emitter) {
                     PermissionListener listener = new PermissionListener() {
                         @Override
                         public void onPermissionGranted() {
@@ -45,5 +47,6 @@ public class TedRxPermission extends TedPermissionBase {
             });
         }
     }
+
 
 }
