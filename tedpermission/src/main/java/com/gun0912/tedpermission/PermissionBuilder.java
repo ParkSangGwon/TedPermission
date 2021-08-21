@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 
-
 import androidx.annotation.StringRes;
 
+import com.gun0912.tedpermission.provider.TedPermissionProvider;
 import com.gun0912.tedpermission.util.ObjectUtils;
 
 
@@ -16,6 +16,7 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
     private static final String PREFS_NAME_PERMISSION = "PREFS_NAME_PERMISSION";
     private static final String PREFS_IS_FIRST_REQUEST = "PREFS_IS_FIRST_REQUEST";
 
+    private final Context context = TedPermissionProvider.context;
     private PermissionListener listener;
     private String[] permissions;
     private CharSequence rationaleTitle;
@@ -24,18 +25,9 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
     private CharSequence denyMessage;
     private CharSequence settingButtonText;
     private boolean hasSettingBtn = true;
-
-    private CharSequence deniedCloseButtonText;
-    private CharSequence rationaleConfirmText;
-    private int requestedOrientation;
-    private Context context;
-
-    public PermissionBuilder(Context context) {
-        this.context = context;
-        deniedCloseButtonText = context.getString(R.string.tedpermission_close);
-        rationaleConfirmText = context.getString(R.string.tedpermission_confirm);
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
-    }
+    private CharSequence deniedCloseButtonText = context.getString(R.string.tedpermission_close);
+    private CharSequence rationaleConfirmText = context.getString(R.string.tedpermission_confirm);
+    private int requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
 
     protected void checkPermissions() {
         if (listener == null) {
@@ -66,7 +58,7 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
         TedPermissionActivity.startActivity(context, intent, listener);
-        TedPermissionBase.setFirstRequest(context,permissions);
+        TedPermissionBase.setFirstRequest(permissions);
     }
 
     public T setPermissionListener(PermissionListener listener) {
