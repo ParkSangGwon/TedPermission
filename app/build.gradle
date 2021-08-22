@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion versions.compileSdkVersion
@@ -37,8 +39,11 @@ dependencies {
     implementation project(':tedpermission-normal')
     implementation project(':tedpermission-rx2')
     implementation project(':tedpermission-rx3')
+    implementation project(':tedpermission-coroutine')
 
     implementation deps.androidx.appcompat
     implementation deps.rx.rxJava2
     implementation deps.rx.rxJava3
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
 }

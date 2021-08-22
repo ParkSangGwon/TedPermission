@@ -23,7 +23,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="RxJava3" />
-    
+
+    <Button
+        android:id="@+id/btn_coroutine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Coroutine" />
+
     <Button
         android:id="@+id/btn_windowPermission"
         android:layout_width="wrap_content"
