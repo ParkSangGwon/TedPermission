@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         findViewById(R.id.btn_normal).setOnClickListener(this);
         findViewById(R.id.btn_rxjava2).setOnClickListener(this);
         findViewById(R.id.btn_rxjava3).setOnClickListener(this);
+        findViewById(R.id.btn_coroutine).setOnClickListener(this);
         findViewById(R.id.btn_windowPermission).setOnClickListener(this);
 
         boolean isGranted = TedPermission.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION);
@@ -49,6 +50,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
             case R.id.btn_rxjava3:
                 intent = new Intent(this, RxJava3Activity.class);
+                break;
+
+            case R.id.btn_coroutine:
+                intent = new Intent(this, CoroutineActivity.class);
                 break;
 
             case R.id.btn_windowPermission:
