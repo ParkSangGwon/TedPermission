@@ -42,15 +42,15 @@ repositories {
 }
 
 dependencies {
-    // normal
+    // Normal
     implementation 'io.github.ParkSangGwon:tedpermission-normal:x.y.z'
     
-    // coroutine
+    // Coroutine
     implementation 'io.github.ParkSangGwon:tedpermission-coroutine:x.y.z'
 
-    // rx2
+    // RxJava2
     implementation 'io.github.ParkSangGwon:tedpermission-rx2:x.y.z'
-    // rx3
+    // RxJava3
     implementation 'io.github.ParkSangGwon:tedpermission-rx3:x.y.z'
 }
 ```
