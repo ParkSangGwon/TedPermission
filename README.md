@@ -31,13 +31,9 @@ TedPermission makes it easy to check and request android permissions.
 
 
 ## Setup
+- Edit `root/app/build.gradle` like below.
+- You can choose only one library depend on your code style `normal`/`coroutine`/`rxJava2`/`rxJava3`
 
-
-### Gradle
-
-Edit `root/app/build.gradle` like below.
-
-#### Normal
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.ParkSangGwon/tedpermission.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ParkSangGwon%22%20AND%20a:%tedpermission%22)
 ```gradle
 repositories {
@@ -46,35 +42,19 @@ repositories {
 }
 
 dependencies {
+    // normal
     implementation 'io.github.ParkSangGwon:tedpermission-normal:x.y.z'
-}
-```
+    
+    // coroutine
+    implementation 'io.github.ParkSangGwon:tedpermission-coroutine:x.y.z'
 
-#### RxJava2
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.ParkSangGwon/tedpermission-rx2.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ParkSangGwon%22%20AND%20a:%tedpermission-rx2%22)
-```gradle
-repositories {
-  google()
-  mavenCentral()
-}
-
-dependencies {
+    // rx2
     implementation 'io.github.ParkSangGwon:tedpermission-rx2:x.y.z'
-}
-```
-
-#### RxJava3
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.ParkSangGwon/tedpermission-rx3.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ParkSangGwon%22%20AND%20a:%tedpermission-rx3%22)
-```gradle
-repositories {
-  google()
-  mavenCentral()
-}
-
-dependencies {
+    // rx3
     implementation 'io.github.ParkSangGwon:tedpermission-rx3:x.y.z'
 }
 ```
+
 
 If you think this library is useful, please press the star button at the top.
 <br/>
@@ -122,6 +102,16 @@ Call `check()` to start checking for permissions.
 
 <br/><br/>
 
+### Coroutine
+If you use kotlin and coroutine, You can use `check()`function.
+`TedPermissionResult` instance has `isGranted()`, `getDeniedPermissions()` methods for checking permission check result.
+```kotlin
+val permissionResult =
+    TedPermission.create()
+        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION)
+        .check()
+```
+Also if you want know only granted result, you can use `checkGranted(): boolean`
 
 ### RxJava
 If you use RxJava, You can use `request()` method instead `check()`.
