@@ -112,6 +112,8 @@ val permissionResult =
         .check()
 ```
 Also if you want know only granted result, you can use `checkGranted(): boolean`
+<br/><br/>
+
 
 ### RxJava
 If you use RxJava, You can use `request()` method instead `check()`.
@@ -209,7 +211,7 @@ Also you can use the following utility functions.
 
 ## License 
  ```code
-Copyright 2017 Ted Park
+Copyright 2021 Ted Park
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
