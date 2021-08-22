@@ -46,7 +46,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.github.ParkSangGwon:tedpermission:x.y.z'
+    implementation 'io.github.ParkSangGwon:tedpermission-normal:x.y.z'
 }
 ```
 
@@ -114,10 +114,10 @@ Call `check()` to start checking for permissions.
 
 ```java
     TedPermission.create()
-    .setPermissionListener(permissionlistener)
-    .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
-    .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
-    .check();
+        .setPermissionListener(permissionlistener)
+        .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+        .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
+        .check();
 ```
 
 <br/><br/>
@@ -129,7 +129,7 @@ When permission check has finished, you will receive `TedPermissionResult` insta
 `TedPermissionResult` instance has `isGranted()`, `getDeniedPermissions()` methods for checking permission check result.
 
 ```java
-    TedRx2Permission.create()
+    TedPermission.create()
         .setRationaleTitle(R.string.rationale_title)
         .setRationaleMessage(R.string.rationale_message) // "we need permission for read contact and find your location"
         .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
