@@ -22,5 +22,3 @@ android {
 dependencies {
     implementation deps.androidx.appcompat
 }
-
-apply plugin: "com.vanniktech.maven.publish"
