@@ -7,7 +7,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.tedpark.tedpermission.rx2.TedRxPermission;
+import com.gun0912.tedpermission.rx2.TedPermission;
+
 
 /**
  * Created by TedPark on 16. 2. 21..
@@ -18,7 +19,7 @@ public class RxJava2Activity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        TedRxPermission.create()
+        TedPermission.create()
                 .setRationaleTitle(R.string.rationale_title)
                 .setRationaleMessage(R.string.rationale_message) // "we need permission for read contact and find your location"
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION)

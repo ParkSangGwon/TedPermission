@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gun0912.tedpermission.PermissionListener;
-import com.tedpark.tedpermission.rx3.TedRxPermission;
+import com.gun0912.tedpermission.rx3.TedPermission;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class RxJava3Activity extends AppCompatActivity {
 
         };
 
-        TedRxPermission.create()
+        TedPermission.create()
                 .setDeniedMessage(
                         "If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION)

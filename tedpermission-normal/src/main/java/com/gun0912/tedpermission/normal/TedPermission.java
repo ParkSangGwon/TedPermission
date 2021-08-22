@@ -1,4 +1,7 @@
-package com.gun0912.tedpermission;
+package com.gun0912.tedpermission.normal;
+
+import com.gun0912.tedpermission.PermissionBuilder;
+import com.gun0912.tedpermission.TedPermissionBase;
 
 public class TedPermission extends TedPermissionBase {
     public static final String TAG = TedPermission.class.getSimpleName();

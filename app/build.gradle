@@ -34,6 +34,7 @@ android {
 
 dependencies {
     implementation project(':tedpermission')
+    implementation project(':tedpermission-normal')
     implementation project(':tedpermission-rx2')
     implementation project(':tedpermission-rx3')
 
