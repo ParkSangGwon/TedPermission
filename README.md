@@ -35,6 +35,9 @@ TedPermission makes it easy to check and request android permissions.
 - You can choose only one library depend on your code style `normal`/`coroutine`/`rxJava2`/`rxJava3`
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.ParkSangGwon/tedpermission-normal.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ParkSangGwon%22%20AND%20a:%tedpermission-normal%22)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.ParkSangGwon/tedpermission-rx2.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ParkSangGwon%22%20AND%20a:%tedpermission-rx2%22)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.ParkSangGwon/tedpermission-rx3.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ParkSangGwon%22%20AND%20a:%tedpermission-rx3%22)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.ParkSangGwon/tedpermission-coroutine.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ParkSangGwon%22%20AND%20a:%tedpermission-coroutine%22)
 ```gradle
 repositories {
   google()
