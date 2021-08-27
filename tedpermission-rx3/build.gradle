@@ -22,7 +22,7 @@ android {
 }
 
 dependencies {
-    implementation project(':tedpermission')
+    api project(':tedpermission')
     implementation deps.androidx.appcompat
     implementation deps.rx.rxJava3
 }
