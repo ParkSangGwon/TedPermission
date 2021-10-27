@@ -58,7 +58,7 @@ public abstract class PermissionBuilder<T extends PermissionBuilder> {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
         TedPermissionActivity.startActivity(context, intent, listener);
-        TedPermissionBase.setFirstRequest(permissions);
+        TedPermissionUtil.setFirstRequest(permissions);
     }
 
     public T setPermissionListener(PermissionListener listener) {

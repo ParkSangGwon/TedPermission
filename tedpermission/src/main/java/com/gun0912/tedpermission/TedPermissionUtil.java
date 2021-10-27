@@ -25,7 +25,7 @@ import java.util.List;
  * Created by TedPark on 2017. 9. 26..
  */
 
-public abstract class TedPermissionBase {
+public class TedPermissionUtil {
     public static final int REQ_CODE_REQUEST_SETTING = 2000;
     private static final String PREFS_NAME_PERMISSION = "PREFS_NAME_PERMISSION";
     private static final String PREFS_IS_FIRST_REQUEST = "IS_FIRST_REQUEST";

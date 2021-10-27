@@ -11,7 +11,6 @@ import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
@@ -168,7 +167,7 @@ public class TedPermissionActivity extends AppCompatActivity {
                     needPermissions.add(permission);
                 }
             } else {
-                if (TedPermissionBase.isDenied(permission)) {
+                if (TedPermissionUtil.isDenied(permission)) {
                     needPermissions.add(permission);
                 }
             }
@@ -259,7 +258,7 @@ public class TedPermissionActivity extends AppCompatActivity {
                                            @NonNull int[] grantResults) {
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        List<String> deniedPermissions = TedPermissionBase.getDeniedPermissions(permissions);
+        List<String> deniedPermissions = TedPermissionUtil.getDeniedPermissions(permissions);
 
         if (deniedPermissions.isEmpty()) {
             permissionResult(null);
@@ -297,7 +296,7 @@ public class TedPermissionActivity extends AppCompatActivity {
             builder.setPositiveButton(settingButtonText, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    TedPermissionBase.startSettingActivityForResult(TedPermissionActivity.this);
+                    TedPermissionUtil.startSettingActivityForResult(TedPermissionActivity.this);
 
                 }
             });
@@ -356,7 +355,7 @@ public class TedPermissionActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case TedPermissionBase.REQ_CODE_REQUEST_SETTING:
+            case TedPermissionUtil.REQ_CODE_REQUEST_SETTING:
                 checkPermissions(true);
                 break;
             case REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST:   // 최초 ALERT WINDOW 요청에 대한 결과
