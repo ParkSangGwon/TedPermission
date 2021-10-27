@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.gun0912.tedpermission.TedPermissionUtil;
 import com.gun0912.tedpermission.normal.TedPermission;
 
 import java.util.List;
@@ -27,9 +28,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         findViewById(R.id.btn_coroutine).setOnClickListener(this);
         findViewById(R.id.btn_windowPermission).setOnClickListener(this);
 
-        boolean isGranted = TedPermission.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION);
+        boolean isGranted = TedPermissionUtil.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION);
         Log.d("ted", "isGranted: " + isGranted);
-        List<String> deniedPermissions = TedPermission.getDeniedPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION);
+        List<String> deniedPermissions = TedPermissionUtil.getDeniedPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION);
         Log.d("ted", "deniedPermissions: " + deniedPermissions);
     }
 

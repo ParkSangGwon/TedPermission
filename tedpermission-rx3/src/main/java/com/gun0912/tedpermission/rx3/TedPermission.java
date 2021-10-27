@@ -2,7 +2,6 @@ package com.gun0912.tedpermission.rx3;
 
 import com.gun0912.tedpermission.PermissionBuilder;
 import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermissionBase;
 import com.gun0912.tedpermission.TedPermissionResult;
 
 import java.util.List;
@@ -13,7 +12,7 @@ import io.reactivex.rxjava3.core.SingleEmitter;
 import io.reactivex.rxjava3.core.SingleOnSubscribe;
 
 
-public class TedPermission extends TedPermissionBase {
+public class TedPermission {
 
     public static Builder create() {
         return new Builder();

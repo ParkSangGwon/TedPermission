@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermissionUtil;
 import com.gun0912.tedpermission.normal.TedPermission;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class WindowPermissionActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        boolean isAlertWindowPermissionGranted = TedPermission.isGranted(Manifest.permission.SYSTEM_ALERT_WINDOW);
+        boolean isAlertWindowPermissionGranted = TedPermissionUtil.isGranted(Manifest.permission.SYSTEM_ALERT_WINDOW);
         Log.d("ted", "isAlertWindowPermissionGranted: " + isAlertWindowPermissionGranted);
 
 
