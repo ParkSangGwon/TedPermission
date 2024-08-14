@@ -61,7 +61,7 @@ public class TedPermissionUtil {
     public static boolean isMediaFullOrPartialGranted(@NonNull String permission) {
         boolean isPartialAccessGranted =
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
-                        && ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) == PackageManager.PERMISSION_GRANTED;
+                        && isGranted(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED);
 
         return isGranted(permission) || isPartialAccessGranted;
     }
