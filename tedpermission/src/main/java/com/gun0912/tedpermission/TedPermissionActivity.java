@@ -259,12 +259,24 @@ public class TedPermissionActivity extends AppCompatActivity {
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         List<String> deniedPermissions = TedPermissionUtil.getDeniedPermissions(permissions);
-
+        for (String permission : deniedPermissions) {
+            if (isMediaPartialAccessGranted(permission)) {
+                deniedPermissions.remove(permission);
+                break;
+            }
+        }
         if (deniedPermissions.isEmpty()) {
             permissionResult(null);
         } else {
             showPermissionDenyDialog(deniedPermissions);
         }
+    }
+
+    private boolean isMediaPartialAccessGranted(@NonNull String permission) {
+        if (!permission.equals(Manifest.permission.READ_MEDIA_IMAGES) && !permission.equals(Manifest.permission.READ_MEDIA_VIDEO)) {
+            return false;
+        }
+        return TedPermissionUtil.isMediaFullOrPartialGranted(permission);
     }
 
     public void showPermissionDenyDialog(final List<String> deniedPermissions) {
