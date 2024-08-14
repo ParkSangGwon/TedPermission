@@ -33,7 +33,7 @@ TedPermission makes it easy to check and request android permissions.
 ## Setup
 - Edit `root/app/build.gradle` like below.
 - You can choose only one library depend on your code style `normal`/`coroutine`/`rxJava2`/`rxJava3`
-- Replace `x.y.z` with the version shown in the 'Maven Central' button below, or the specific version you want (e.g. replace `x.y.z` with `3.4.1` if you want 3.4.1).
+- Replace `x.y.z` with the version shown in the 'Maven Central' button below, or the specific version you want (e.g. replace `x.y.z` with `3.4.2` if you want 3.4.2).
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.ParkSangGwon/tedpermission-normal.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ParkSangGwon%22%20AND%20a:%tedpermission-normal%22)
 
@@ -45,15 +45,15 @@ repositories {
 
 dependencies {
     // Normal
-    implementation("io.github.ParkSangGwon:tedpermission-normal:3.4.1")
+    implementation("io.github.ParkSangGwon:tedpermission-normal:3.4.2")
     
     // Coroutine
-    implementation("io.github.ParkSangGwon:tedpermission-coroutine:3.4.1")
+    implementation("io.github.ParkSangGwon:tedpermission-coroutine:3.4.2")
 
     // RxJava2
-    implementation("io.github.ParkSangGwon:tedpermission-rx2:3.4.1")
+    implementation("io.github.ParkSangGwon:tedpermission-rx2:3.4.2")
     // RxJava3
-    implementation("io.github.ParkSangGwon:tedpermission-rx3:3.4.1")
+    implementation("io.github.ParkSangGwon:tedpermission-rx3:3.4.2")
 }
 ```
 
