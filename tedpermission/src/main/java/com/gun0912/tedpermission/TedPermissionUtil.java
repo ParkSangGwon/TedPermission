@@ -53,19 +53,17 @@ public class TedPermissionUtil {
             } else {
                 return true;
             }
-        } else if (permission.equals(Manifest.permission.READ_MEDIA_VIDEO) || permission.equals(Manifest.permission.READ_MEDIA_IMAGES)) {
-            return isFullOrPartialAccessGranted(permission);
         } else {
             return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
         }
     }
 
-    private static boolean isFullOrPartialAccessGranted(@NonNull String permission) {
+    public static boolean isMediaFullOrPartialGranted(@NonNull String permission) {
         boolean isPartialAccessGranted =
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
                         && ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) == PackageManager.PERMISSION_GRANTED;
 
-        return isPartialAccessGranted || ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
+        return isGranted(permission) || isPartialAccessGranted;
     }
 
     public static List<String> getDeniedPermissions(@NonNull String... permissions) {
