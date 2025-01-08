@@ -7,12 +7,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.WindowManager;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +36,8 @@ public class TedPermissionActivity extends AppCompatActivity {
 
     public static final int REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST = 30;
     public static final int REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST_SETTING = 31;
+    public static final int REQ_CODE_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION_REQUEST = 32;
+    public static final int REQ_CODE_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION_REQUEST_SETTING = 33;
 
 
     public static final String EXTRA_PERMISSIONS = "permissions";
@@ -58,6 +64,8 @@ public class TedPermissionActivity extends AppCompatActivity {
     String rationaleConfirmText;
     boolean isShownRationaleDialog;
     int requestedOrientation;
+    ActivityResultLauncher<Intent> startActivityForResultLauncher;
+    int requestCode;
 
     public static void startActivity(Context context, Intent intent, PermissionListener listener) {
         if (permissionListenerStack == null) {
@@ -73,16 +81,56 @@ public class TedPermissionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         setupFromSavedInstanceState(savedInstanceState);
-        // check windows
-        if (needWindowPermission()) {
-            requestWindowPermission();
-        } else {
-            checkPermissions(false);
-        }
+
+        setActivityResult();
+
+        checkPermissionSetting();
 
         setRequestedOrientation(requestedOrientation);
     }
 
+    private void setActivityResult() {
+        startActivityForResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(), result -> {
+                    switch (requestCode) {
+                        case TedPermissionUtil.REQ_CODE_REQUEST_SETTING:
+                            checkPermissions(true);
+                            break;
+                        case REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST:   // 최초 ALERT WINDOW 요청에 대한 결과
+                            if (!hasWindowPermission() && !TextUtils.isEmpty(denyMessage)) {  // 권한이 거부되고 denyMessage 가 있는 경우
+                                showWindowPermissionDenyDialog();
+                            } else {     // 권한있거나 또는 denyMessage가 없는 경우는 일반 permission 을 확인한다.
+                                checkPermissionSetting();
+                            }
+                            break;
+                        case REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST_SETTING:   //  ALERT WINDOW 권한 설정 실패후 재 요청에 대한 결과
+                            checkPermissionSetting();
+                            break;
+                        case REQ_CODE_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION_REQUEST:
+                            if (!hasExternalStorageManagerPermission() && !TextUtils.isEmpty(denyMessage)) {
+                                showExternalStorageManagerPermissionDenyDialog();
+                            } else {
+                                checkPermissionSetting();
+                            }
+                            break;
+                        case REQ_CODE_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION_REQUEST_SETTING:
+                            checkPermissionSetting();
+                            break;
+                    }
+                });
+    }
+
+    private void checkPermissionSetting(){
+        if (needWindowPermission() || needExternalStorageManagerPermission()) {
+            if (needExternalStorageManagerPermission()) {
+                requestExternalStorageManagerPermission();
+            } else if (needWindowPermission()) {
+                requestWindowPermission();
+            }
+        } else {
+            checkPermissions(false);
+        }
+    }
 
     private void setupFromSavedInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
@@ -147,13 +195,17 @@ public class TedPermissionActivity extends AppCompatActivity {
                     .setNegativeButton(rationaleConfirmText, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            startActivityForResult(intent, REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST);
+                            //startActivityForResult(intent, REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST);
+                            requestCode = REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST;
+                            startActivityForResultLauncher.launch(intent);
                         }
                     })
                     .show();
             isShownRationaleDialog = true;
         } else {
-            startActivityForResult(intent, REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST);
+            //startActivityForResult(intent, REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST);
+            requestCode = REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST;
+            startActivityForResultLauncher.launch(intent);
         }
     }
 
@@ -164,6 +216,10 @@ public class TedPermissionActivity extends AppCompatActivity {
         for (String permission : permissions) {
             if (permission.equals(Manifest.permission.SYSTEM_ALERT_WINDOW)) {
                 if (!hasWindowPermission()) {
+                    needPermissions.add(permission);
+                }
+            } else if(permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE) && Build.VERSION.SDK_INT >= VERSION_CODES.R){
+                if (!hasExternalStorageManagerPermission()) {
                     needPermissions.add(permission);
                 }
             } else {
@@ -308,7 +364,8 @@ public class TedPermissionActivity extends AppCompatActivity {
             builder.setPositiveButton(settingButtonText, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    TedPermissionUtil.startSettingActivityForResult(TedPermissionActivity.this);
+                    requestCode = TedPermissionUtil.REQ_CODE_REQUEST_SETTING;
+                    TedPermissionUtil.startSettingActivityForResult(startActivityForResultLauncher);
 
                 }
             });
@@ -356,7 +413,84 @@ public class TedPermissionActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     Uri uri = Uri.fromParts("package", packageName, null);
                     final Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, uri);
-                    startActivityForResult(intent, REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST_SETTING);
+                    //startActivityForResult(intent, REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST_SETTING);
+                    requestCode = REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST_SETTING;
+                    startActivityForResultLauncher.launch(intent);
+                }
+            });
+
+        }
+        builder.show();
+    }
+
+    private boolean needExternalStorageManagerPermission() {
+        for (String permission : permissions) {
+            if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                return !hasExternalStorageManagerPermission();
+            }
+        }
+        return false;
+    }
+
+    @TargetApi(VERSION_CODES.R)
+    private boolean hasExternalStorageManagerPermission() {
+        return Environment.isExternalStorageManager();
+    }
+
+    @TargetApi(VERSION_CODES.R)
+    private void requestExternalStorageManagerPermission() {
+
+        final Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.setData(Uri.parse(String.format("package:%s",this.getPackageName())));
+
+        if (!TextUtils.isEmpty(rationale_message)) {
+            new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert)
+                    .setMessage(rationale_message)
+                    .setCancelable(false)
+
+                    .setNegativeButton(rationaleConfirmText, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            requestCode = REQ_CODE_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION_REQUEST;
+                            startActivityForResultLauncher.launch(intent);
+                        }
+                    })
+                    .show();
+            isShownRationaleDialog = true;
+        } else {
+            requestCode = REQ_CODE_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION_REQUEST;
+            startActivityForResultLauncher.launch(intent);
+        }
+    }
+
+    @TargetApi(VERSION_CODES.R)
+    public void showExternalStorageManagerPermissionDenyDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert);
+        builder.setMessage(denyMessage)
+                .setCancelable(false)
+                .setNegativeButton(deniedCloseButtonText, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        checkPermissions(false);
+                    }
+                });
+
+        if (hasSettingButton) {
+            if (TextUtils.isEmpty(settingButtonText)) {
+                settingButtonText = getString(R.string.tedpermission_setting);
+            }
+
+            final Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+            intent.addCategory("android.intent.category.DEFAULT");
+            intent.setData(Uri.parse(String.format("package:%s",this.getPackageName())));
+
+            builder.setPositiveButton(settingButtonText, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    requestCode = REQ_CODE_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION_REQUEST;
+                    startActivityForResultLauncher.launch(intent);
                 }
             });
 
@@ -366,23 +500,6 @@ public class TedPermissionActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case TedPermissionUtil.REQ_CODE_REQUEST_SETTING:
-                checkPermissions(true);
-                break;
-            case REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST:   // 최초 ALERT WINDOW 요청에 대한 결과
-                if (!hasWindowPermission() && !TextUtils.isEmpty(denyMessage)) {  // 권한이 거부되고 denyMessage 가 있는 경우
-                    showWindowPermissionDenyDialog();
-                } else {     // 권한있거나 또는 denyMessage가 없는 경우는 일반 permission 을 확인한다.
-                    checkPermissions(false);
-                }
-                break;
-            case REQ_CODE_SYSTEM_ALERT_WINDOW_PERMISSION_REQUEST_SETTING:   //  ALERT WINDOW 권한 설정 실패후 재 요청에 대한 결과
-                checkPermissions(false);
-                break;
-            default:
-                super.onActivityResult(requestCode, resultCode, data);
-        }
-
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

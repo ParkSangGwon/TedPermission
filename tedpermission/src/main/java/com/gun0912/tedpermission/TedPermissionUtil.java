@@ -11,10 +11,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 import com.gun0912.tedpermission.provider.TedPermissionProvider;
 
@@ -112,24 +112,12 @@ public class TedPermissionUtil {
         return context.getSharedPreferences(PREFS_NAME_PERMISSION, Context.MODE_PRIVATE);
     }
 
-    public static void startSettingActivityForResult(Activity activity) {
-        startSettingActivityForResult(activity, REQ_CODE_REQUEST_SETTING);
-    }
-
-    public static void startSettingActivityForResult(Activity activity, int requestCode) {
-        activity.startActivityForResult(getSettingIntent(), requestCode);
+    public static void startSettingActivityForResult(ActivityResultLauncher<Intent> startActivityForResultLauncher) {
+        startActivityForResultLauncher.launch(getSettingIntent());
     }
 
     public static Intent getSettingIntent() {
         return new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).setData(Uri.parse("package:" + context.getPackageName()));
-    }
-
-    public static void startSettingActivityForResult(Fragment fragment) {
-        startSettingActivityForResult(fragment, REQ_CODE_REQUEST_SETTING);
-    }
-
-    public static void startSettingActivityForResult(Fragment fragment, int requestCode) {
-        fragment.startActivityForResult(getSettingIntent(), requestCode);
     }
 
     static void setFirstRequest(@NonNull String[] permissions) {
